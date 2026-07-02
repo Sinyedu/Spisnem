@@ -1,0 +1,39 @@
+{
+  "name": "restaurant-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.1.1",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@fastify/jwt": "^10.1.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "fastify": "^5.9.0",
+    "pg": "^8.22.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^26.0.1",
+    "@types/pg": "^8.20.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
