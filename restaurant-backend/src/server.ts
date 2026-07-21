@@ -1,14 +1,17 @@
-import { buildApp } from "./app";
-import { env } from "./config/env";
+import { buildApp } from "./app.js";
+import { env } from "./config/env.js";
 
-const app = buildApp();
+const app = await buildApp();
+
+for (const signal of ["SIGINT", "SIGTERM"] as const) {
+  process.on(signal, () => {
+    app.close().then(() => process.exit(0));
+  });
+}
 
 try {
-  await app.listen({
-    port: env.PORT,
-    host: "0.0.0.0",
-  });
-} catch (err) {
-  app.log.error(err);
+  await app.listen({ port: env.PORT, host: env.HOST });
+} catch (error) {
+  app.log.error(error);
   process.exit(1);
 }
