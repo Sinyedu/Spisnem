@@ -1,25 +1,18 @@
 import Fastify from "fastify";
-import { registerCors } from "./plugins/cors";
-import { registerErrorHandler } from "./plugins/error-handler";
-import { healthRoutes } from "./modules/health/health.routes";
-import { tableRoutes } from "./modules/tables/tables.routes";
-import { menuRoutes } from "./modules/menu/menu.routes";
-import { orderRoutes } from "./modules/orders/orders.routes";
-import { restaurantRoutes } from "./modules/restaurants/restaurant.routes";
+import { env } from "./config/env.js";
+import { registerCors } from "./plugins/cors.js";
+import { registerErrorHandler } from "./plugins/error-handler.js";
+import { healthRoutes } from "./modules/health/health.routes.js";
 
-export function buildApp() {
+export async function buildApp() {
   const app = Fastify({
-    logger: true,
+    logger: env.NODE_ENV !== "test",
   });
 
-  registerCors(app);
+  await registerCors(app);
   registerErrorHandler(app);
 
-  app.register(healthRoutes, { prefix: "/api/health" });
-  app.register(restaurantRoutes, { prefix: "/api/restaurants" });
-  app.register(tableRoutes, { prefix: "/api/tables" });
-  app.register(menuRoutes, { prefix: "/api/menu" });
-  app.register(orderRoutes, { prefix: "/api/orders" });
+  await app.register(healthRoutes, { prefix: "/api/health" });
 
   return app;
 }
