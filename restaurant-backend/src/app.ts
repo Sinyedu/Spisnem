@@ -6,6 +6,8 @@ import { registerDatabase } from "./plugins/database.js";
 import { registerErrorHandler } from "./plugins/error-handler.js";
 import { authRoutes } from "./modules/auth/auth.routes.js";
 import { healthRoutes } from "./modules/health/health.routes.js";
+import { staffMenuRoutes } from "./modules/menu/menu.routes.js";
+import { publicRestaurantRoutes } from "./modules/restaurants/restaurant.routes.js";
 
 export async function buildApp() {
   const app = Fastify({
@@ -19,6 +21,10 @@ export async function buildApp() {
 
   await app.register(healthRoutes, { prefix: "/api/health" });
   await app.register(authRoutes, { prefix: "/api/auth" });
+
+  await app.register(publicRestaurantRoutes, { prefix: "/api/public" });
+
+  await app.register(staffMenuRoutes, { prefix: "/api/staff/menu" });
 
   return app;
 }
