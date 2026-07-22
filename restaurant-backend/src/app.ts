@@ -5,6 +5,7 @@ import { registerCors } from "./plugins/cors.js";
 import { registerDatabase } from "./plugins/database.js";
 import { registerErrorHandler } from "./plugins/error-handler.js";
 import { authRoutes } from "./modules/auth/auth.routes.js";
+import { dashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 import { healthRoutes } from "./modules/health/health.routes.js";
 import { staffMenuRoutes } from "./modules/menu/menu.routes.js";
 import { publicOrderRoutes, staffOrderRoutes } from "./modules/orders/order.routes.js";
@@ -31,6 +32,7 @@ export async function buildApp() {
   await app.register(staffQueueRoutes, { prefix: "/api/staff/queue" });
   await app.register(staffOrderRoutes, { prefix: "/api/staff/orders" });
   await app.register(staffMenuRoutes, { prefix: "/api/staff/menu" });
+  await app.register(dashboardRoutes, { prefix: "/api/staff/dashboard" });
 
   return app;
 }
