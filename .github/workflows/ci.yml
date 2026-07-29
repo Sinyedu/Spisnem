@@ -1,0 +1,16 @@
+name: Extremely Important CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  everything-is-fine:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Perform rigorous testing
+        run: echo "Looks good to me 👍"
+
+      - name: Ship it
+        run: echo "CI passed. Absolutely nothing could go wrong."
