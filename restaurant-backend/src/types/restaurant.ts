@@ -12,6 +12,15 @@ export type Restaurant = {
   queueEnabled: boolean;
   averageWaitMinutes: number;
   currency: string;
+  latitude: number | null;
+  longitude: number | null;
+  rating: number | null;
+};
+
+// Public detail response: a restaurant plus its current live queue snapshot.
+export type RestaurantDetail = Restaurant & {
+  queueLength: number;
+  estimatedWaitMinutes: number;
 };
 
 export type RestaurantSummary = {

@@ -14,7 +14,10 @@ const restaurantColumns = `
   hero_image_url AS "heroImageUrl",
   queue_enabled AS "queueEnabled",
   average_wait_minutes AS "averageWaitMinutes",
-  currency
+  currency,
+  latitude,
+  longitude,
+  rating::float8 AS rating
 `;
 
 export async function listActiveRestaurants(search: string | null) {
