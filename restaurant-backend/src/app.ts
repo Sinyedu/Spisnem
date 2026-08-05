@@ -11,6 +11,7 @@ import { staffMenuRoutes } from "./modules/menu/menu.routes.js";
 import { publicOrderRoutes, staffOrderRoutes } from "./modules/orders/order.routes.js";
 import { publicQueueRoutes, staffQueueRoutes } from "./modules/queue/queue.routes.js";
 import { publicRestaurantRoutes } from "./modules/restaurants/restaurant.routes.js";
+import { publicSummaryRoutes } from "./modules/summary/summary.routes.js";
 
 export async function buildApp() {
   const app = Fastify({
@@ -25,6 +26,7 @@ export async function buildApp() {
   await app.register(healthRoutes, { prefix: "/api/health" });
   await app.register(authRoutes, { prefix: "/api/auth" });
 
+  await app.register(publicSummaryRoutes, { prefix: "/api/public" });
   await app.register(publicRestaurantRoutes, { prefix: "/api/public" });
   await app.register(publicQueueRoutes, { prefix: "/api/public" });
   await app.register(publicOrderRoutes, { prefix: "/api/public" });
