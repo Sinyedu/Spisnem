@@ -1,0 +1,138 @@
+.queue {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: calc(1rem + var(--header-safe)) 1.25rem 0.5rem;
+  }
+
+  &__restaurant {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  &__spacer {
+    width: 2.75rem;
+  }
+
+  &__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    background: var(--surface-2);
+    color: var(--text-muted);
+
+    &--waiting {
+      background: var(--accent-bg);
+      color: var(--accent);
+    }
+
+    &--notified {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    &--seated {
+      background: rgba(34, 197, 94, 0.15);
+      color: #15803d;
+    }
+  }
+
+  &__title {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    max-width: 16rem;
+  }
+
+  &__note {
+    color: var(--text-muted);
+    max-width: 18rem;
+  }
+
+  &__position {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 1rem 0 0.5rem;
+    padding: 1.75rem 2.5rem;
+    border-radius: var(--radius-xl);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  &__position-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+
+  &__position-value {
+    font-family: var(--display);
+    font-size: 4.5rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  &__wait {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 1rem;
+
+    dt {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-subtle);
+      margin-bottom: 0.2rem;
+    }
+
+    dd {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+
+  &__footer {
+    flex: none;
+    padding: 1rem 1.25rem calc(1.25rem + var(--footer-safe));
+  }
+
+  &--ready &__title {
+    color: var(--accent);
+  }
+}

@@ -1,0 +1,42 @@
+.join {
+  &__sub {
+    margin-top: -0.25rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  &__stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+
+    button {
+      display: grid;
+      place-items: center;
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: var(--radius-sm);
+      background: var(--surface-2);
+      color: var(--fg);
+    }
+  }
+
+  &__count {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  &__submit {
+    margin-top: 0.35rem;
+  }
+}

@@ -1,0 +1,234 @@
+.discover {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  &__top {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: calc(0.9rem + var(--header-safe)) 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    background: linear-gradient(var(--bg) 55%, rgba(247, 246, 243, 0));
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 1rem;
+    min-height: 3.1rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+    color: var(--text-muted);
+
+    input {
+      flex: 1;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      color: var(--fg);
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: var(--text-subtle);
+      }
+    }
+  }
+
+  &__chips {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__map {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__leaflet {
+    width: 100%;
+    height: 100%;
+    background: #e8e4dc;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(247, 246, 243, 0.7);
+    z-index: 15;
+  }
+
+  &__error {
+    max-width: 16rem;
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  // Bottom peek sheet
+  &__sheet {
+    position: absolute;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surface);
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(calc(100% - 3.75rem));
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+    &--open {
+      transform: translateY(0);
+    }
+  }
+
+  &__sheet-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.05rem 1.25rem;
+    color: var(--accent);
+  }
+
+  &__sheet-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__list {
+    max-height: 55dvh;
+    overflow-y: auto;
+    padding: 0 1rem calc(1.25rem + var(--footer-safe));
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.6rem;
+    border-radius: var(--radius-md);
+    text-align: left;
+    transition: background 0.15s ease;
+
+    &:active {
+      background: var(--surface-2);
+    }
+  }
+
+  &__thumb {
+    flex: none;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2) center / cover no-repeat;
+  }
+
+  &__item-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  &__item-name {
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  &__item-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__empty {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  &__locate {
+    position: absolute;
+    z-index: 25;
+    right: 1rem;
+    bottom: 5rem;
+    display: grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--fg);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// Leaflet marker pins (rendered via divIcon, so styled globally)
+.map-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+
+  &--red {
+    background: var(--accent);
+  }
+
+  &--dark {
+    background: var(--fg);
+  }
+}
+
+.map-user {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(58, 122, 254, 0.25);
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #3a7afe;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(58, 122, 254, 0.5);
+  }
+}
