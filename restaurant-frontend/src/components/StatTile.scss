@@ -1,0 +1,36 @@
+.stat-tile {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    color: var(--text-muted);
+  }
+
+  &__value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  &--accent &__icon {
+    color: var(--accent);
+  }
+}

@@ -1,0 +1,29 @@
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+
+  &__viewport {
+    position: relative;
+    width: 100%;
+    max-width: var(--app-max-width);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+
+  // On larger screens, frame the app like a phone in a neutral field.
+  @media (min-width: 40rem) {
+    background: #e9e6df;
+    padding: 1.75rem 0;
+
+    &__viewport {
+      min-height: calc(100dvh - 3.5rem);
+      border-radius: 2.25rem;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+  }
+}

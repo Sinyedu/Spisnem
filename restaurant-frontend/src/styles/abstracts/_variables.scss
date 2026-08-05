@@ -1,42 +1,47 @@
+@use "./colors" as *;
+
 :root {
-  // --text: #6b6375;
-  // --text-h: #08060d;
-  // --bg: #fff;
-  // --border: #e5e4e7;
-  // --code-bg: #f4f3ec;
-  // --accent: #aa3bff;
-  // --accent-bg: rgba(170, 59, 255, 0.1);
-  // --accent-border: rgba(170, 59, 255, 0.5);
-  // --social-bg: rgba(244, 243, 236, 0.5);
-  // --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
-  //   rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  // Brand accent (brick red)
+  --accent: #{$color-highlight};
+  --accent-strong: #a82f22;
+  --accent-fg: #ffffff;
+  --accent-bg: rgba(193, 57, 43, 0.1);
+  --accent-border: rgba(193, 57, 43, 0.35);
 
-  $border-radius-small: 0.125rem;
-  $border-radius-large: 0.5rem;
-  $border-radius-full: 100%;
+  // Text
+  --fg: #{$color-foreground};
+  --text: #{$color-foreground};
+  --text-muted: #6b6b6b;
+  --text-subtle: #9a9a9a;
 
-  $drop-shadow: 0 0.25rem 0.25rem rgb(0 0 0 / 25%);
+  // Surfaces
+  --bg: #{$color-background};
+  --surface: #ffffff;
+  --surface-2: #f0efeb;
+  --border: #e7e5e0;
+  --blip: #{$color-blip};
 
-  $opacity-primary: 15%;
-  $opacity-secondary: 10%;
-
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+  // Type families
+  --sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: "Cormorant Variable", Georgia, "Times New Roman", serif;
+  --display: "Cormorant Variable", Georgia, "Times New Roman", serif;
   --mono: ui-monospace, Consolas, monospace;
-}
 
-// @media (prefers-color-scheme: dark) {
-//   :root {
-//     --text: #9ca3af;
-//     --text-h: #f3f4f6;
-//     --bg: #16171d;
-//     --border: #2e303a;
-//     --code-bg: #1f2028;
-//     --accent: #c084fc;
-//     --accent-bg: rgba(192, 132, 252, 0.15);
-//     --accent-border: rgba(192, 132, 252, 0.5);
-//     --social-bg: rgba(47, 48, 58, 0.5);
-//     --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
-//       rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-//   }
-// }
+  // Radii
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-pill: 999px;
+
+  // Shadows
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.16);
+
+  // Layout
+  --app-max-width: 30rem;
+  --space: 1rem;
+  --header-safe: env(safe-area-inset-top, 0px);
+  --footer-safe: env(safe-area-inset-bottom, 0px);
+}

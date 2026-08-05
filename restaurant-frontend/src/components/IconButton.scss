@@ -1,0 +1,21 @@
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--fg);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.12s ease,
+    background 0.15s ease;
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &--active {
+    color: var(--accent);
+  }
+}

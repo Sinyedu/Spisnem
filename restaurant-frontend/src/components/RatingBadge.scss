@@ -1,0 +1,38 @@
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  line-height: 1;
+
+  &--sm {
+    padding: 0.32rem 0.6rem;
+    font-size: 0.82rem;
+  }
+
+  &--md {
+    padding: 0.45rem 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  &--red {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  &--dark {
+    background: var(--fg);
+    color: #fff;
+  }
+
+  &--light {
+    background: var(--surface);
+    color: var(--fg);
+    box-shadow: var(--shadow-sm);
+
+    svg {
+      color: var(--accent);
+    }
+  }
+}
