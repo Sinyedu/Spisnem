@@ -1,0 +1,77 @@
+.auth {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: calc(1.25rem + var(--header-safe)) 1.5rem calc(2rem + var(--footer-safe));
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    margin-top: 2rem;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -0.4rem;
+  }
+
+  &__link {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+
+    &--strong {
+      color: var(--fg);
+      text-decoration: underline;
+    }
+  }
+
+  &__submit {
+    margin-top: 0.5rem;
+  }
+
+  &__footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 1.75rem 0;
+    color: var(--text-subtle);
+    font-size: 0.82rem;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+  }
+
+  &__social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  &__social-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.1rem;
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+}

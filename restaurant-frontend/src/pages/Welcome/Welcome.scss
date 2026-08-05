@@ -1,0 +1,143 @@
+.welcome {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: calc(2rem + var(--header-safe)) 1.5rem calc(2rem + var(--footer-safe));
+
+  &__hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+  }
+
+  &__badge {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 9rem;
+    height: 9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__mark {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(193, 57, 43, 0.35);
+  }
+
+  &__ring {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.1;
+    animation: ripple 3.4s ease-out infinite;
+
+    &--1 {
+      width: 7rem;
+      height: 7rem;
+    }
+
+    &--2 {
+      width: 9rem;
+      height: 9rem;
+      animation-delay: 1.1s;
+    }
+  }
+
+  &__pill {
+    position: absolute;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    &--open {
+      top: 0.2rem;
+      right: -1.2rem;
+    }
+
+    &--rating {
+      bottom: 0.4rem;
+      left: -1rem;
+
+      svg {
+        color: var(--accent);
+      }
+    }
+  }
+
+  &__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--blip);
+  }
+
+  &__wordmark {
+    text-align: center;
+  }
+
+  &__tagline {
+    max-width: 18rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+
+  &__page {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #d8d5ce;
+
+    &--active {
+      width: 1.4rem;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+    }
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.18;
+  }
+  70% {
+    opacity: 0.04;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
