@@ -11,6 +11,7 @@ const envSchema = z.object({
   PUBLIC_APP_URL: z.string().default("http://localhost:5173"),
   SEED_ADMIN_EMAIL: z.email().default("admin@spisnem.dk"),
   SEED_ADMIN_PASSWORD: z.string().min(8).default("development-password"),
+  OVERPASS_URL: z.url().default("https://overpass-api.de/api/interpreter"),
 });
 
 const parsed = envSchema.safeParse(process.env);
