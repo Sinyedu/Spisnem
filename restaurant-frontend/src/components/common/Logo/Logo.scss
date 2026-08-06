@@ -1,0 +1,102 @@
+.logo {
+  position: relative;
+
+  width: 200px;
+  height: 200px;
+
+  display: grid;
+  place-items: center;
+
+
+  span {
+    position: absolute;
+
+    border-radius: 50%;
+    background: #c1392b;
+  }
+
+
+  &__center {
+    width: 75px;
+    height: 75px;
+
+    opacity: 1;
+
+    z-index: 3;
+  }
+
+
+  &__middle {
+    width: 145px;
+    height: 145px;
+
+    opacity: .15;
+
+    z-index: 2;
+  }
+
+
+  &__outer {
+    width: 200px;
+    height: 200px;
+
+    opacity: .05;
+
+    z-index: 1;
+  }
+
+
+  &--scanning {
+
+    .logo__middle {
+      animation: signalPulseMiddle 1s ease-in-out 3;
+    }
+
+
+    .logo__outer {
+      animation: signalPulseOuter 1s ease-in-out 3;
+      animation-delay: 0.25s;
+    }
+  }
+}
+
+
+@keyframes signalPulseMiddle {
+
+  0% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+
+
+  50% {
+    opacity: 0.35;
+    transform: scale(1.12);
+  }
+
+
+  100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+}
+
+@keyframes signalPulseOuter {
+
+  0% {
+    opacity: 0.05;
+    transform: scale(1);
+  }
+
+
+  50% {
+    opacity: 0.2;
+    transform: scale(1.18);
+  }
+
+
+  100% {
+    opacity: 0.05;
+    transform: scale(1);
+  }
+}

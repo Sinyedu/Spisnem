@@ -1,0 +1,72 @@
+.login-intro {
+  position: fixed;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  background: white;
+
+  z-index: 100;
+
+  animation: hideIntro 0.6s ease forwards;
+  animation-delay: 3.5s;
+
+
+  &__logo {
+    animation:
+      radarScan 1s ease-in-out 3,
+      moveLogo 0.6s ease forwards;
+
+    animation-delay:
+      0s,
+      3s;
+  }
+}
+
+
+.login-content {
+  opacity: 0;
+  transform: translateY(20px);
+
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/*
+    Move logo from center to position
+*/
+@keyframes moveLogo {
+
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-220px);
+  }
+}
+
+
+/*
+    Remove overlay
+*/
+@keyframes hideIntro {
+
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
