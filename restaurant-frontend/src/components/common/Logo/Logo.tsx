@@ -1,8 +1,8 @@
 import "./Logo.scss";
 
-interface LogoProps {
+type LogoProps = {
   className?: string;
-}
+};
 
 function Logo({ className = "" }: LogoProps) {
   return (

@@ -4,9 +4,8 @@ export type ButtonVariant = "primary" | "secondary" | "ghost" | "extra" | "fille
 
 export type ButtonSize = "XS" | "small" | "medium" | "large"
 
-export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant
   size?: ButtonSize
   fullWidth?: boolean
-  }
+}
