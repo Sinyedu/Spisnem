@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Logo from "../../common/Logo/Logo";
 
 import "./LoginIntro.scss";
 
 
-interface LoginIntroProps {
-  children: React.ReactNode;
+type LoginIntroProps = {
+  children: ReactNode;
 }
 
 
