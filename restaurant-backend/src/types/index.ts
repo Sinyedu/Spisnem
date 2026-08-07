@@ -5,3 +5,4 @@ export type * from "./menu.js";
 export type * from "./order.js";
 export type * from "./queue.js";
 export type * from "./restaurant.js";
+export type * from "./summary.js";

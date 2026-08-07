@@ -48,6 +48,17 @@ describe("api", { skip: databaseAvailable ? false : "no seeded database" }, () =
     assert.equal(body.data.status, "waiting");
     assert.ok(body.data.position >= 1);
   });
+
+  test("public summary returns restaurant counts", async () => {
+    const response = await app.inject({ method: "GET", url: "/api/public/summary" });
+
+    assert.equal(response.statusCode, 200);
+    const summary = response.json().data;
+    assert.equal(typeof summary.restaurants, "number");
+    assert.equal(typeof summary.openNow, "number");
+    assert.ok(summary.restaurants >= 1, "seeded spisnem should be counted");
+    assert.ok(summary.openNow <= summary.restaurants);
+  });
 });
 
 if (!databaseAvailable) {
