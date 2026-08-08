@@ -17,6 +17,7 @@ jobs:
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPOSITORY: ${{ github.repository }}
+
         run: |
           jq -n \
             --arg title "$PR_TITLE" \
@@ -26,12 +27,20 @@ jobs:
             --arg number "$PR_NUMBER" \
             '{
               username: "PR Bot",
+
+              content: "<@&1519365174979592343>",
+
+              allowed_mentions: {
+                roles: ["1519365174979592343"]
+              },
+
               embeds: [
                 {
                   title: "🔀 New Pull Request",
                   description: ("### " + $title + "\nA new pull request is ready for review."),
                   url: $url,
                   color: 5814783,
+
                   fields: [
                     {
                       name: "📦 Repository",
@@ -49,9 +58,11 @@ jobs:
                       inline: true
                     }
                   ],
+
                   footer: {
                     text: "GitHub • Click the title to view the pull request"
                   },
+
                   timestamp: (now | todate)
                 }
               ]
