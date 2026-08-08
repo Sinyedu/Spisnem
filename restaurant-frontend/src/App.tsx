@@ -1,8 +1,8 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Welcome from "./pages/Welcome/Welcome";
-import Home from "./pages/Home/Home";
 import "./App.scss";
 
+// Temporary target for screens that arrive in later PRs (sign in, sign up, discover).
 function ComingSoon() {
   return (
     <main className="coming-soon">
@@ -17,7 +17,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/home" element={<Home />} />
 
         {/* Any unfinished or unknown route */}
         <Route path="*" element={<ComingSoon />} />
