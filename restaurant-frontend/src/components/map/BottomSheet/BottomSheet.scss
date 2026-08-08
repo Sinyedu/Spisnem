@@ -1,4 +1,5 @@
 @use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
 
 .sheet {
   position: absolute;
@@ -8,9 +9,9 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  border-radius: 1.25rem 1.25rem 0 0;
+  border-radius: 1rem 1rem 0 0;
   background: #fff;
-  box-shadow: 0 -0.5rem 1.75rem rgba(0, 0, 0, 0.12);
+  box-shadow: 0 -0.5rem 1.5rem rgb(0 0 0 / 12%);
 
   &__grip {
     display: grid;
@@ -23,7 +24,7 @@
   &__handle {
     width: 2.5rem;
     height: 0.25rem;
-    border-radius: 999px;
+    border-radius: $border-radius-pill;
     background: #d8d5ce;
   }
 
@@ -32,7 +33,7 @@
     overflow-y: auto;
     // Momentum scrolling without the drag leaking to the sheet itself.
     overscroll-behavior: contain;
-    padding: 0 1.25rem env(safe-area-inset-bottom);
+    padding: 0 1rem env(safe-area-inset-bottom);
     color: $color-foreground;
   }
 }

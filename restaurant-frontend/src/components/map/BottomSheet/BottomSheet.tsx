@@ -2,7 +2,7 @@ import { useRef, useState, type PointerEvent, type ReactNode } from "react";
 import "./BottomSheet.scss";
 
 // Resting heights as a fraction of the screen: peek, half, full.
-const SNAPS = [0.14, 0.5, 0.88];
+const SNAPS = [0.15, 0.5, 0.9];
 const CLOSED = SNAPS[0];
 const OPEN = SNAPS[SNAPS.length - 1];
 
@@ -44,7 +44,7 @@ function BottomSheet({ children }: BottomSheetProps) {
       className="sheet"
       style={{
         height: `${height * 100}%`,
-        transition: dragging ? "none" : "height 0.28s ease",
+        transition: dragging ? "none" : "height 0.25s ease",
       }}
     >
       <div

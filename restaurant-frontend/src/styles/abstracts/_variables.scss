@@ -2,6 +2,8 @@ $border-thin: 0.1rem solid #e1e0de;
 
 $border-radius-small: 0.125rem;
 $border-radius-large: 0.5rem;
+// Larger than any element we round, so pills stay pill-shaped at any height.
+$border-radius-pill: 100rem;
 $border-radius-full: 100%;
 
 $drop-shadow: 0 0.25rem 0.25rem rgb(0 0 0 / 25%);
