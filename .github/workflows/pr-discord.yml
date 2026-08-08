@@ -1,8 +1,16 @@
-name: Discord PR Notification
+name: Discord PR Notifications
 
 on:
   pull_request:
-    types: [opened]
+    types:
+      - opened
+      - closed
+      - reopened
+      - ready_for_review
+
+  pull_request_review:
+    types:
+      - submitted
 
 jobs:
   notify:
@@ -12,19 +20,97 @@ jobs:
       - name: Send PR notification to Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          EVENT_NAME: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_URL: ${{ github.event.pull_request.html_url }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPOSITORY: ${{ github.repository }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          REVIEWER: ${{ github.event.review.user.login }}
+          REVIEW_STATE: ${{ github.event.review.state }}
+          MERGED: ${{ github.event.pull_request.merged }}
+          ACTOR: ${{ github.actor }}
 
         run: |
+          TITLE=""
+          DESCRIPTION=""
+          COLOR=5814783
+          PERSON_FIELD=""
+          PERSON=""
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+
+            if [ "$ACTION" = "opened" ]; then
+              TITLE="🔀 New Pull Request"
+              DESCRIPTION="A new pull request is ready for review."
+              COLOR=5814783
+              PERSON_FIELD="👤 Opened by"
+              PERSON="$PR_AUTHOR"
+
+            elif [ "$ACTION" = "closed" ] && [ "$MERGED" = "true" ]; then
+              TITLE="🟣 Pull Request Merged"
+              DESCRIPTION="The pull request has been merged."
+              COLOR=10181046
+              PERSON_FIELD="👤 Merged by"
+              PERSON="$ACTOR"
+
+            elif [ "$ACTION" = "closed" ]; then
+              TITLE="❌ Pull Request Closed"
+              DESCRIPTION="The pull request was closed without merging."
+              COLOR=15158332
+              PERSON_FIELD="👤 Closed by"
+              PERSON="$ACTOR"
+
+            elif [ "$ACTION" = "reopened" ]; then
+              TITLE="♻️ Pull Request Reopened"
+              DESCRIPTION="The pull request has been reopened."
+              COLOR=15844367
+              PERSON_FIELD="👤 Reopened by"
+              PERSON="$ACTOR"
+
+            elif [ "$ACTION" = "ready_for_review" ]; then
+              TITLE="👀 Ready for Review"
+              DESCRIPTION="The pull request is now ready for review."
+              COLOR=3447003
+              PERSON_FIELD="👤 Author"
+              PERSON="$PR_AUTHOR"
+
+            else
+              exit 0
+            fi
+
+          elif [ "$EVENT_NAME" = "pull_request_review" ]; then
+
+            if [ "$REVIEW_STATE" = "approved" ]; then
+              TITLE="✅ Pull Request Approved"
+              DESCRIPTION="The pull request has been approved."
+              COLOR=5763719
+              PERSON_FIELD="👤 Reviewed by"
+              PERSON="$REVIEWER"
+
+            elif [ "$REVIEW_STATE" = "changes_requested" ]; then
+              TITLE="⚠️ Changes Requested"
+              DESCRIPTION="Changes have been requested on the pull request."
+              COLOR=16705372
+              PERSON_FIELD="👤 Reviewed by"
+              PERSON="$REVIEWER"
+
+            else
+              exit 0
+            fi
+          fi
+
           jq -n \
-            --arg title "$PR_TITLE" \
+            --arg title "$TITLE" \
+            --arg description "$DESCRIPTION" \
+            --arg prTitle "$PR_TITLE" \
             --arg url "$PR_URL" \
-            --arg author "$PR_AUTHOR" \
             --arg repo "$REPOSITORY" \
             --arg number "$PR_NUMBER" \
+            --arg personField "$PERSON_FIELD" \
+            --arg person "$PERSON" \
+            --argjson color "$COLOR" \
             '{
               username: "PR Bot",
 
@@ -36,10 +122,10 @@ jobs:
 
               embeds: [
                 {
-                  title: "🔀 New Pull Request",
-                  description: ("### " + $title + "\nA new pull request is ready for review."),
+                  title: $title,
                   url: $url,
-                  color: 5814783,
+                  description: ("### " + $prTitle + "\n" + $description),
+                  color: $color,
 
                   fields: [
                     {
@@ -48,8 +134,8 @@ jobs:
                       inline: true
                     },
                     {
-                      name: "👤 Opened by",
-                      value: $author,
+                      name: $personField,
+                      value: $person,
                       inline: true
                     },
                     {
