@@ -1,4 +1,4 @@
-import type { FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 import { idParamSchema } from "../../shared/schemas.js";
 import {
   createCategorySchema,
