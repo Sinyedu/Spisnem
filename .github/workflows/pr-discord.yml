@@ -10,9 +10,54 @@ jobs:
 
     steps:
       - name: Send PR notification to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
         run: |
-          curl -H "Content-Type: application/json" \
-          -d '{
-            "content": "🔀 **New Pull Request!**\n\n**${{ github.event.pull_request.title }}**\nOpened by: `${{ github.event.pull_request.user.login }}`\n\n${{ github.event.pull_request.html_url }}"
-          }' \
-          "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          jq -n \
+            --arg title "$PR_TITLE" \
+            --arg url "$PR_URL" \
+            --arg author "$PR_AUTHOR" \
+            --arg repo "$REPOSITORY" \
+            --arg number "$PR_NUMBER" \
+            '{
+              username: "PR Bot",
+              embeds: [
+                {
+                  title: "🔀 New Pull Request",
+                  description: ("### " + $title + "\nA new pull request is ready for review."),
+                  url: $url,
+                  color: 5814783,
+                  fields: [
+                    {
+                      name: "📦 Repository",
+                      value: $repo,
+                      inline: true
+                    },
+                    {
+                      name: "👤 Opened by",
+                      value: $author,
+                      inline: true
+                    },
+                    {
+                      name: "🔢 PR",
+                      value: ("#" + $number),
+                      inline: true
+                    }
+                  ],
+                  footer: {
+                    text: "GitHub • Click the title to view the pull request"
+                  },
+                  timestamp: (now | todate)
+                }
+              ]
+            }' > payload.json
+
+          curl \
+            -H "Content-Type: application/json" \
+            -d @payload.json \
+            "$DISCORD_WEBHOOK_URL"
