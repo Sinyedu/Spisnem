@@ -1,0 +1,10 @@
+{
+  "name": "spisnem",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev:backend": "pnpm --dir restaurant-backend run dev",
+    "dev:frontend": "pnpm --dir restaurant-frontend run dev",
+    "start:all": "pnpm run \"/^dev:/\""
+  }
+}

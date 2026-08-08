@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# The root package.json has no dependencies; pnpm still regenerates an empty
+# lockfile for it. Each package keeps its own lockfile, which stays tracked.
+/pnpm-lock.yaml
+
 # Build output
 dist/
 
