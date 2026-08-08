@@ -48,7 +48,9 @@ export default function Welcome() {
         <button className="btn btn--secondary" onClick={() => navigate("/signin")}>
           Sign in
         </button>
-        <button className="btn btn--ghost" onClick={() => navigate("/discover")}>
+        {/* /map is the landing screen once you are in — sign in and sign up send you
+            here too, as soon as those screens exist. */}
+        <button className="btn btn--ghost" onClick={() => navigate("/map")}>
           Continue as guest
         </button>
 
