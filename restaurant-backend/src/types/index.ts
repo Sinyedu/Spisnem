@@ -2,7 +2,6 @@ export type * from "./auth.js";
 export type * from "./dashboard.js";
 export type * from "./database.js";
 export type * from "./menu.js";
-export type * from "./order.js";
 export type * from "./queue.js";
 export type * from "./restaurant.js";
 export type * from "./summary.js";
