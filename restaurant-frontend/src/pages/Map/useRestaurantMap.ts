@@ -170,13 +170,6 @@ export function useRestaurantMap() {
         if (typeof id === "string") selectRestaurant(id);
       });
 
-      instance.on("mouseenter", RESTAURANTS_LAYER, () => {
-        instance.getCanvas().style.cursor = "pointer";
-      });
-      instance.on("mouseleave", RESTAURANTS_LAYER, () => {
-        instance.getCanvas().style.cursor = "";
-      });
-
       void loadRestaurants();
     });
 
@@ -195,5 +188,5 @@ export function useRestaurantMap() {
     };
   }, [loadRestaurants, selectRestaurant]);
 
-  return { container, restaurants, selectedId, selectRestaurant, searchTerm, search, failed };
+  return { container, restaurants, selectedId, searchTerm, search, failed };
 }

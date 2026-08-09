@@ -11,7 +11,6 @@ export type Restaurant = {
   heroImageUrl: string | null;
   cuisine: string | null;
   priceLevel: number | null;
-  coverImageUrl: string | null;
   queueEnabled: boolean;
   averageWaitMinutes: number;
   currency: string;
@@ -29,7 +28,7 @@ export type MapRestaurant = {
   slug: string;
   cuisine: string | null;
   priceLevel: number | null;
-  coverImageUrl: string | null;
+  heroImageUrl: string | null;
   latitude: number;
   longitude: number;
 };

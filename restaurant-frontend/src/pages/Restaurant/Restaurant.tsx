@@ -4,12 +4,11 @@ import { RESTAURANT_PLACEHOLDER_IMAGE, getRestaurant } from "../../lib/restauran
 import type { Restaurant as RestaurantType } from "../../types/api";
 import "./Restaurant.scss";
 
-// Each becomes a real section as ordering, menus and queueing land.
+// Each becomes a real section as menus and queueing land.
 const SECTIONS = [
   { title: "Menu", body: "Dishes and prices appear here once the menu is connected." },
   { title: "Opening hours", body: "Opening hours are not part of the restaurant record yet." },
   { title: "Queue", body: "Join the queue and watch your place update live." },
-  { title: "Table", body: "Scan a table code to order without queueing." },
 ];
 
 function Restaurant() {
@@ -34,7 +33,7 @@ function Restaurant() {
   return (
     <main className="restaurant">
       <header className="restaurant__cover">
-        <img src={restaurant?.coverImageUrl ?? RESTAURANT_PLACEHOLDER_IMAGE} alt="" />
+        <img src={restaurant?.heroImageUrl ?? RESTAURANT_PLACEHOLDER_IMAGE} alt="" />
         <button className="restaurant__back" onClick={() => navigate(-1)} aria-label="Go back">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M15 5l-7 7 7 7" />

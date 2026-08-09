@@ -13,7 +13,7 @@ export type RestaurantProperties = {
   slug: string;
   cuisine: string | null;
   priceLevel: number | null;
-  coverImageUrl: string | null;
+  heroImageUrl: string | null;
 };
 
 // A feature flattened for the UI, with the point coordinates folded in.

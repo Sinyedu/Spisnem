@@ -19,18 +19,12 @@ const WATER_SOURCE_LAYERS = new Set(["water", "waterway"]);
 const ROAD_SOURCE_LAYERS = new Set(["transportation", "aeroway"]);
 
 /**
- * Recolours the basemap to the Spisnem palette and drops OSM's own points of
- * interest, so the only businesses on the map are the ones we serve.
- * Positron carries no poi layers, but other base styles do.
+ * Recolours the basemap to the Spisnem palette. Positron carries no POI layers, so
+ * the only businesses on the map are already the ones we serve.
  */
 export function applyMapTheme(map: MapLibreMap) {
   for (const layer of map.getStyle().layers) {
     const sourceLayer = "source-layer" in layer ? layer["source-layer"] : undefined;
-
-    if (sourceLayer === "poi") {
-      map.removeLayer(layer.id);
-      continue;
-    }
 
     if (layer.type === "background") {
       map.setPaintProperty(layer.id, "background-color", COLOURS.background);

@@ -31,7 +31,7 @@ function RestaurantList({ restaurants, selectedId, searchTerm, failed }: Restaur
               >
                 <img
                   className="restaurants__image"
-                  src={restaurant.coverImageUrl ?? RESTAURANT_PLACEHOLDER_IMAGE}
+                  src={restaurant.heroImageUrl ?? RESTAURANT_PLACEHOLDER_IMAGE}
                   alt=""
                 />
                 <span className="restaurants__text">

@@ -14,7 +14,6 @@ const restaurantColumns = `
   hero_image_url AS "heroImageUrl",
   cuisine,
   price_level AS "priceLevel",
-  cover_image_url AS "coverImageUrl",
   queue_enabled AS "queueEnabled",
   average_wait_minutes AS "averageWaitMinutes",
   currency
@@ -45,7 +44,7 @@ export async function findActiveRestaurantBySlug(slug: string, db: Db = pool) {
 export async function listActiveRestaurantsInBounds(bounds: MapBounds) {
   const result = await pool.query<MapRestaurant>(
     `SELECT id, name, slug, cuisine, price_level AS "priceLevel",
-            cover_image_url AS "coverImageUrl", latitude, longitude
+            hero_image_url AS "heroImageUrl", latitude, longitude
      FROM restaurants
      WHERE is_active = true
        AND latitude BETWEEN $1 AND $2
