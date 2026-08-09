@@ -2,15 +2,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { MapLibreMap, setWorkerUrl, type GeoJSONSource } from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { getRestaurantsInBounds } from "../../lib/restaurants";
-import type { MapRestaurant } from "../../types/api";
+import type { MapRestaurant, RestaurantFeatureCollection } from "../../types/api";
 import {
   MAP_STYLE,
+  MARKER_RADIUS,
   RESTAURANTS_LAYER,
   RESTAURANTS_SOURCE,
   RESTAURANT_MARKER_PAINT,
+  SELECTED_MARKER_RADIUS,
   START_CENTER,
   START_ZOOM,
   limitForZoom,
+  selectedZoom,
 } from "./map.constants";
 import { applyMapTheme } from "./mapTheme";
 
@@ -20,20 +23,59 @@ import { applyMapTheme } from "./mapTheme";
 // maplibre at the result is the only thing that works in dev and in the build.
 setWorkerUrl(maplibreWorkerUrl);
 
+const EMPTY: RestaurantFeatureCollection = { type: "FeatureCollection", features: [] };
+
+function matches(restaurant: MapRestaurant, term: string) {
+  return `${restaurant.name} ${restaurant.cuisine ?? ""}`.toLowerCase().includes(term);
+}
+
+function flatten(collection: RestaurantFeatureCollection): MapRestaurant[] {
+  return collection.features.map((feature) => ({
+    ...feature.properties,
+    longitude: feature.geometry.coordinates[0],
+    latitude: feature.geometry.coordinates[1],
+  }));
+}
+
 /**
- * Owns the MapLibre instance: creation, the restaurant layer, and reloading
- * restaurants whenever the viewport settles. Returns the ref to attach to the
- * canvas element plus the restaurants currently in view.
+ * Owns the MapLibre instance: creation, the restaurant layer, reloading restaurants
+ * when the viewport settles, and keeping the map and the list showing the same
+ * filtered set.
  */
 export function useRestaurantMap() {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<MapLibreMap>(null);
+
+  // Everything the last request returned, before the search filter is applied.
+  const loaded = useRef<MapRestaurant[]>([]);
+  const query = useRef("");
+
   const [restaurants, setRestaurants] = useState<MapRestaurant[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [failed, setFailed] = useState(false);
 
   // Only the newest viewport matters, so an in-flight request is dropped when the
   // map moves again.
   const pending = useRef<AbortController>(null);
+
+  // The map and the list always render the same filtered set.
+  const render = useCallback(() => {
+    const term = query.current.trim().toLowerCase();
+    const visible = term ? loaded.current.filter((r) => matches(r, term)) : loaded.current;
+
+    map.current?.getSource<GeoJSONSource>(RESTAURANTS_SOURCE)?.setData({
+      type: "FeatureCollection",
+      features: visible.map(({ longitude, latitude, ...properties }) => ({
+        type: "Feature",
+        id: properties.id,
+        geometry: { type: "Point", coordinates: [longitude, latitude] },
+        properties,
+      })),
+    });
+
+    setRestaurants(visible);
+  }, []);
 
   const loadRestaurants = useCallback(async () => {
     if (!map.current) return;
@@ -56,11 +98,44 @@ export function useRestaurantMap() {
         controller.signal,
       );
 
-      map.current.getSource<GeoJSONSource>(RESTAURANTS_SOURCE)?.setData(collection);
-      setRestaurants(collection.features.map((feature) => feature.properties));
+      loaded.current = flatten(collection);
+      setFailed(false);
+      render();
     } catch (error) {
-      if (!controller.signal.aborted) console.error("[map]", error);
+      if (controller.signal.aborted) return;
+      console.error("[map]", error);
+      loaded.current = [];
+      setFailed(true);
+      render();
     }
+  }, [render]);
+
+  const search = useCallback(
+    (term: string) => {
+      query.current = term;
+      setSearchTerm(term);
+      render();
+    },
+    [render],
+  );
+
+  const selectRestaurant = useCallback((id: string) => {
+    setSelectedId(id);
+
+    map.current?.setPaintProperty(RESTAURANTS_LAYER, "circle-radius", [
+      "case",
+      ["==", ["get", "id"], id],
+      SELECTED_MARKER_RADIUS,
+      MARKER_RADIUS,
+    ]);
+
+    const target = loaded.current.find((restaurant) => restaurant.id === id);
+    if (!target || !map.current) return;
+
+    map.current.flyTo({
+      center: [target.longitude, target.latitude],
+      zoom: selectedZoom(map.current.getZoom()),
+    });
   }, []);
 
   useEffect(() => {
@@ -82,11 +157,7 @@ export function useRestaurantMap() {
     instance.on("load", () => {
       applyMapTheme(instance);
 
-      instance.addSource(RESTAURANTS_SOURCE, {
-        type: "geojson",
-        data: { type: "FeatureCollection", features: [] },
-      });
-
+      instance.addSource(RESTAURANTS_SOURCE, { type: "geojson", data: EMPTY });
       instance.addLayer({
         id: RESTAURANTS_LAYER,
         type: "circle",
@@ -96,7 +167,7 @@ export function useRestaurantMap() {
 
       instance.on("click", RESTAURANTS_LAYER, (event) => {
         const id = event.features?.[0]?.properties?.id;
-        if (typeof id === "string") setSelectedId(id);
+        if (typeof id === "string") selectRestaurant(id);
       });
 
       instance.on("mouseenter", RESTAURANTS_LAYER, () => {
@@ -122,7 +193,7 @@ export function useRestaurantMap() {
       instance.remove();
       map.current = null;
     };
-  }, [loadRestaurants]);
+  }, [loadRestaurants, selectRestaurant]);
 
-  return { container, restaurants, selectedId, selectRestaurant: setSelectedId };
+  return { container, restaurants, selectedId, selectRestaurant, searchTerm, search, failed };
 }

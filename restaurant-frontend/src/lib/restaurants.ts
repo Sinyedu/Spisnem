@@ -1,4 +1,4 @@
-import type { MapBounds, RestaurantFeatureCollection } from "../types/api";
+import type { MapBounds, Restaurant, RestaurantFeatureCollection } from "../types/api";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
 
@@ -17,4 +17,12 @@ export async function getRestaurantsInBounds(
   const response = await fetch(`${API_URL}/public/restaurants/map?${query}`, { signal });
   if (!response.ok) throw new Error(`restaurant map request failed (${response.status})`);
   return (await response.json()) as RestaurantFeatureCollection;
+}
+
+// One restaurant. See backend GET /api/public/restaurants/:slug.
+export async function getRestaurant(slug: string, signal?: AbortSignal): Promise<Restaurant> {
+  const response = await fetch(`${API_URL}/public/restaurants/${slug}`, { signal });
+  if (!response.ok) throw new Error(`restaurant request failed (${response.status})`);
+  const body = (await response.json()) as { data: Restaurant };
+  return body.data;
 }

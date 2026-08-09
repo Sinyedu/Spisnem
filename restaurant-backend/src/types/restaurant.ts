@@ -9,6 +9,9 @@ export type Restaurant = {
   postalCode: string | null;
   countryCode: string;
   heroImageUrl: string | null;
+  cuisine: string | null;
+  priceLevel: number | null;
+  coverImageUrl: string | null;
   queueEnabled: boolean;
   averageWaitMinutes: number;
   currency: string;

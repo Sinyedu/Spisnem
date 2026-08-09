@@ -12,6 +12,9 @@ const restaurantColumns = `
   postal_code AS "postalCode",
   country_code AS "countryCode",
   hero_image_url AS "heroImageUrl",
+  cuisine,
+  price_level AS "priceLevel",
+  cover_image_url AS "coverImageUrl",
   queue_enabled AS "queueEnabled",
   average_wait_minutes AS "averageWaitMinutes",
   currency

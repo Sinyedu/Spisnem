@@ -59,6 +59,23 @@
       &::placeholder {
         color: $color-ghost-text;
       }
+
+      // The native clear button would sit next to our own.
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
+    }
+
+    button {
+      flex: none;
+      display: grid;
+      place-items: center;
+      color: $color-ghost-text;
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
     }
   }
 }

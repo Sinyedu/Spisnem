@@ -1,26 +1,32 @@
+import { useState } from "react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import BottomSheet from "../../components/map/BottomSheet/BottomSheet";
 import MapSearchBar from "../../components/map/MapSearchBar/MapSearchBar";
 import RestaurantList from "../../components/map/RestaurantList/RestaurantList";
+import SideMenu from "../../components/map/SideMenu/SideMenu";
 import { useRestaurantMap } from "./useRestaurantMap";
 import "./Map.scss";
 
 function Map() {
-  const { container, restaurants, selectedId, selectRestaurant } = useRestaurantMap();
+  const { container, restaurants, selectedId, searchTerm, search, failed } = useRestaurantMap();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <main className="map">
       <div className="map__canvas" ref={container} />
 
-      <MapSearchBar />
+      <MapSearchBar value={searchTerm} onChange={search} onOpenMenu={() => setMenuOpen(true)} />
 
       <BottomSheet>
         <RestaurantList
           restaurants={restaurants}
           selectedId={selectedId}
-          onSelect={selectRestaurant}
+          searchTerm={searchTerm}
+          failed={failed}
         />
       </BottomSheet>
+
+      <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </main>
   );
 }

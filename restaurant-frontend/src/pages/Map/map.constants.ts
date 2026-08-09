@@ -12,10 +12,13 @@ export const START_ZOOM = 13;
 export const RESTAURANTS_SOURCE = "restaurants";
 export const RESTAURANTS_LAYER = "restaurant-points";
 
+export const MARKER_RADIUS = 8;
+export const SELECTED_MARKER_RADIUS = 12;
+
 // The only brand red on the map — the basemap stays neutral so markers stand out.
 // Mirrors $color-primary in styles/abstracts/_colors.scss.
 export const RESTAURANT_MARKER_PAINT: CircleLayerSpecification["paint"] = {
-  "circle-radius": 8,
+  "circle-radius": MARKER_RADIUS,
   "circle-color": "#c1392b",
   "circle-stroke-width": 3,
   "circle-stroke-color": "#fff",
@@ -26,4 +29,9 @@ export function limitForZoom(zoom: number) {
   if (zoom >= 15) return 100;
   if (zoom >= 13) return 50;
   return 25;
+}
+
+// Picking a restaurant zooms in, but never back out if you are already close.
+export function selectedZoom(currentZoom: number) {
+  return Math.max(currentZoom, 15);
 }

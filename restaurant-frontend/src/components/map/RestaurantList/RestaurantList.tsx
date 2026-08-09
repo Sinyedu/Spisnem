@@ -1,27 +1,33 @@
+import { useNavigate } from "react-router-dom";
 import { RESTAURANT_PLACEHOLDER_IMAGE } from "../../../lib/restaurants";
-import type { MapRestaurant } from "../../../types/api";
 import "./RestaurantList.scss";
+import type { RestaurantListProps } from "../../../types/generic";
 
-type RestaurantListProps = {
-  restaurants: MapRestaurant[];
-  selectedId: string | null;
-  onSelect: (id: string) => void;
-};
+function emptyMessage(searchTerm: string, failed: boolean) {
+  if (failed) return "Could not reach the server. Is the backend running?";
+  if (searchTerm) return `No restaurants match “${searchTerm}”.`;
+  return "No restaurants in this area yet.";
+}
 
-function RestaurantList({ restaurants, selectedId, onSelect }: RestaurantListProps) {
+function RestaurantList({ restaurants, selectedId, searchTerm, failed }: RestaurantListProps) {
+  const navigate = useNavigate();
+
   return (
     <section className="restaurants">
-      <h2 className="restaurants__heading">Nearby</h2>
+      <h2 className="restaurants__heading">
+        Nearby
+        {restaurants.length > 0 && <span> · {restaurants.length}</span>}
+      </h2>
 
       {restaurants.length === 0 ?
-        <p className="restaurants__empty">No restaurants in this area yet.</p>
+        <p className="restaurants__empty">{emptyMessage(searchTerm, failed)}</p>
       : <ul className="restaurants__list">
           {restaurants.map((restaurant) => (
             <li key={restaurant.id}>
               <button
                 type="button"
                 className={`restaurants__item ${restaurant.id === selectedId ? "restaurants__item--selected" : ""}`}
-                onClick={() => onSelect(restaurant.id)}
+                onClick={() => navigate(`/restaurants/${restaurant.slug}`)}
               >
                 <img
                   className="restaurants__image"
