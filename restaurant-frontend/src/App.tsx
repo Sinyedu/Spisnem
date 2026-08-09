@@ -1,6 +1,7 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Welcome from "./pages/Welcome/Welcome";
 import Map from "./pages/Map/Map";
+import Restaurant from "./pages/Restaurant/Restaurant";
 import "./App.scss";
 
 // Temporary target for screens that arrive in later PRs (sign in, sign up).
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/restaurants/:slug" element={<Restaurant />} />
 
         {/* Any unfinished or unknown route */}
         <Route path="*" element={<ComingSoon />} />
