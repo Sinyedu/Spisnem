@@ -1,5 +1,5 @@
 import { pool } from "../../database/pool.js";
-import type { Db, Restaurant } from "../../types/index.js";
+import type { Db, MapBounds, MapRestaurant, Restaurant } from "../../types/index.js";
 
 const restaurantColumns = `
   id,
@@ -37,6 +37,21 @@ export async function findActiveRestaurantBySlug(slug: string, db: Db = pool) {
     [slug],
   );
   return result.rows[0] ?? null;
+}
+
+export async function listActiveRestaurantsInBounds(bounds: MapBounds) {
+  const result = await pool.query<MapRestaurant>(
+    `SELECT id, name, slug, cuisine, price_level AS "priceLevel",
+            cover_image_url AS "coverImageUrl", latitude, longitude
+     FROM restaurants
+     WHERE is_active = true
+       AND latitude BETWEEN $1 AND $2
+       AND longitude BETWEEN $3 AND $4
+     ORDER BY name
+     LIMIT $5`,
+    [bounds.south, bounds.north, bounds.west, bounds.east, bounds.limit],
+  );
+  return result.rows;
 }
 
 export async function findRestaurantById(id: string) {

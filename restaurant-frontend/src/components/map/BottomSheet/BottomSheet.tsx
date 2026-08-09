@@ -6,11 +6,7 @@ const SNAPS = [0.15, 0.5, 0.9];
 const CLOSED = SNAPS[0];
 const OPEN = SNAPS[SNAPS.length - 1];
 
-type BottomSheetProps = {
-  children: ReactNode;
-};
-
-function BottomSheet({ children }: BottomSheetProps) {
+function BottomSheet({ children }: { children: ReactNode }) {
   const [height, setHeight] = useState(CLOSED);
   const [dragging, setDragging] = useState(false);
   const start = useRef({ y: 0, height: CLOSED });
