@@ -12,7 +12,6 @@ function App() {
           <img src="/images/logo2.png" alt="SpisNem" />
         </div>
 
-        <p className="construction__brand">SPISNEM</p>
         <p className="construction__eyebrow">
           <span aria-hidden="true" />
           Something good is cooking
@@ -20,8 +19,8 @@ function App() {
 
         <h1 id="page-title">Under construction</h1>
         <p className="construction__description">
-          We&rsquo;re putting the finishing touches on a better way to find
-          your next meal. Check back soon.
+          We&rsquo;re putting the finishing touches on a better way to find your
+          next meal. Check back soon.
         </p>
       </section>
 
