@@ -3,15 +3,27 @@
 html,
 body,
 #root {
+  width: 100%;
   min-height: 100%;
   background-color: $color-background;
 }
 
-.construction {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
+html {
+  min-height: -webkit-fill-available;
+  overscroll-behavior: none;
+}
+
+body {
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  overflow: hidden;
+}
+
+.construction {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   display: grid;
   place-items: center;
