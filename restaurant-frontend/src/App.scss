@@ -1,9 +1,17 @@
 @use "./styles/abstracts/colors" as *;
 
+html,
+body,
+#root {
+  min-height: 100%;
+  background-color: $color-background;
+}
+
 .construction {
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
+  min-height: 100dvh;
   overflow: hidden;
   display: grid;
   place-items: center;
@@ -125,7 +133,7 @@
   &__footer {
     position: absolute;
     right: clamp(2rem, 5vw, 5rem);
-    bottom: 2.2rem;
+    bottom: calc(2.2rem + env(safe-area-inset-bottom, 0px));
     left: clamp(2rem, 5vw, 5rem);
     display: flex;
     justify-content: space-between;
@@ -178,7 +186,7 @@
     }
 
     &__footer {
-      bottom: 1.75rem;
+      bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
       flex-direction: column;
       align-items: center;
       gap: 0.6rem;
