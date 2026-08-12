@@ -10,6 +10,18 @@
   background: $color-background;
   color: $color-foreground;
 
+  &__topbar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__language {
+    .language-switcher__options {
+      background: #fff;
+      border-color: #e7e5e0;
+    }
+  }
+
   &__hero {
     flex: 1;
     display: flex;

@@ -89,8 +89,11 @@ $slide: 0.28s;
     text-align: left;
   }
 
-  &__signin {
+  &__language {
     margin-top: auto;
+  }
+
+  &__signin {
     padding: 0.75rem 1.5rem;
     border-radius: $border-radius-pill;
     background: $color-primary;

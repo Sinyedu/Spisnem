@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import LanguageSwitcher from "../../common/LanguageSwitcher/LanguageSwitcher";
 import "./SideMenu.scss";
 import type { SideMenuProps } from "../../../types/generic";
 
@@ -7,12 +9,13 @@ import type { SideMenuProps } from "../../../types/generic";
 // Discovery happens on the map itself; the rest arrive in later PRs and land on
 // the ComingSoon route until then.
 const LINKS = [
-  { label: "Explore map", to: "/map" },
-  { label: "Queue", to: "/queue" },
-  { label: "Favourites", to: "/favourites" },
-];
+  { labelKey: "sideMenu.exploreMap", to: "/map" },
+  { labelKey: "sideMenu.queue", to: "/queue" },
+  { labelKey: "sideMenu.favourites", to: "/favourites" },
+] as const;
 
 function SideMenu({ open, onClose }: SideMenuProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,12 +27,12 @@ function SideMenu({ open, onClose }: SideMenuProps) {
 
   return (
     <div className={`side-menu ${open ? "side-menu--open" : ""}`} aria-hidden={!open}>
-      <button className="side-menu__backdrop" onClick={onClose} tabIndex={-1} aria-label="Close menu" />
+      <button className="side-menu__backdrop" onClick={onClose} tabIndex={-1} aria-label={t("sideMenu.close")} />
 
-      <nav className="side-menu__panel" aria-label="Main menu">
+      <nav className="side-menu__panel" aria-label={t("sideMenu.label")}>
         <div className="side-menu__header">
           <p className="side-menu__brand">SPISNEM</p>
-          <button className="side-menu__close" onClick={onClose} aria-label="Close menu">
+          <button className="side-menu__close" onClick={onClose} aria-label={t("sideMenu.close")}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
@@ -46,11 +49,13 @@ function SideMenu({ open, onClose }: SideMenuProps) {
                   navigate(link.to);
                 }}
               >
-                {link.label}
+                {t(link.labelKey)}
               </button>
             </li>
           ))}
         </ul>
+
+        <LanguageSwitcher className="side-menu__language" />
 
         <button
           className="side-menu__signin"
@@ -59,7 +64,7 @@ function SideMenu({ open, onClose }: SideMenuProps) {
             navigate("/signin");
           }}
         >
-          Sign in
+          {t("sideMenu.signIn")}
         </button>
       </nav>
     </div>
