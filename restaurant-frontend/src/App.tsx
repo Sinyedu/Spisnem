@@ -1,29 +1,37 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Welcome from "./pages/Welcome/Welcome";
-import Map from "./pages/Map/Map";
 import "./App.scss";
-
-// Temporary target for screens that arrive in later PRs (sign in, sign up).
-function ComingSoon() {
-  return (
-    <main className="coming-soon">
-      <p>This screen is coming soon.</p>
-      <Link to="/">← Back</Link>
-    </main>
-  );
-}
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/map" element={<Map />} />
+    <main className="construction">
+      <div className="construction__glow construction__glow--top" />
+      <div className="construction__glow construction__glow--bottom" />
 
-        {/* Any unfinished or unknown route */}
-        <Route path="*" element={<ComingSoon />} />
-      </Routes>
-    </BrowserRouter>
+      <section className="construction__content" aria-labelledby="page-title">
+        <div className="construction__mark">
+          <span aria-hidden="true" />
+          <img src="/images/logo2.png" alt="SpisNem" />
+        </div>
+
+        <p className="construction__eyebrow">
+          <span aria-hidden="true" />
+          Something good is cooking
+        </p>
+
+        <h1 id="page-title">Under construction</h1>
+        <p className="construction__description">
+          We&rsquo;re putting the finishing touches on a better way to find your
+          next meal. Check back soon.
+        </p>
+      </section>
+
+      <footer className="construction__footer">
+        <span>&copy; {new Date().getFullYear()} SpisNem</span>
+        <span className="construction__status">
+          <span aria-hidden="true" />
+          Work in progress
+        </span>
+      </footer>
+    </main>
   );
 }
 

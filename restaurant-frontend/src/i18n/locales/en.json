@@ -1,0 +1,62 @@
+{
+  "welcome": {
+    "openNow_one": "{{count}} open",
+    "openNow_other": "{{count}} open",
+    "openNowUnknown": "• open",
+    "topRated": "Top rated",
+    "tagline": "Order at the table, skip the queue, enjoy the food.",
+    "createAccount": "Create an account",
+    "signIn": "Sign in",
+    "continueAsGuest": "Continue as guest"
+  },
+  "map": {
+    "openMenu": "Open menu",
+    "searchPlaceholder": "Search name or cuisine",
+    "searchLabel": "Search restaurants",
+    "clearSearch": "Clear search",
+    "nearby": "Nearby",
+    "empty": {
+      "failed": "Could not reach the server. Is the backend running?",
+      "noMatches": "No restaurants match “{{term}}”.",
+      "noneNearby": "No restaurants in this area yet."
+    }
+  },
+  "sideMenu": {
+    "label": "Main menu",
+    "close": "Close menu",
+    "exploreMap": "Explore map",
+    "queue": "Queue",
+    "favourites": "Favourites",
+    "signIn": "Sign in"
+  },
+  "restaurant": {
+    "back": "Go back",
+    "loading": "Loading…",
+    "loadFailed": "Could not load this restaurant.",
+    "waitMinutes": "~{{minutes}} min wait",
+    "joinQueue": "Join the queue",
+    "sections": {
+      "menu": {
+        "title": "Menu",
+        "body": "Dishes and prices appear here once the menu is connected."
+      },
+      "hours": {
+        "title": "Opening hours",
+        "body": "Opening hours are not part of the restaurant record yet."
+      },
+      "queue": {
+        "title": "Queue",
+        "body": "Join the queue and watch your place update live."
+      }
+    }
+  },
+  "comingSoon": {
+    "message": "This screen is coming soon.",
+    "back": "← Back"
+  },
+  "language": {
+    "label": "Language",
+    "da": "Dansk",
+    "en": "English"
+  }
+}

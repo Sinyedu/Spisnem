@@ -8,7 +8,6 @@ import { authRoutes } from "./modules/auth/auth.routes.js";
 import { dashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 import { healthRoutes } from "./modules/health/health.routes.js";
 import { staffMenuRoutes } from "./modules/menu/menu.routes.js";
-import { publicOrderRoutes, staffOrderRoutes } from "./modules/orders/order.routes.js";
 import { publicQueueRoutes, staffQueueRoutes } from "./modules/queue/queue.routes.js";
 import { publicRestaurantRoutes } from "./modules/restaurants/restaurant.routes.js";
 import { publicSummaryRoutes } from "./modules/summary/summary.routes.js";
@@ -29,10 +28,8 @@ export async function buildApp() {
   await app.register(publicSummaryRoutes, { prefix: "/api/public" });
   await app.register(publicRestaurantRoutes, { prefix: "/api/public" });
   await app.register(publicQueueRoutes, { prefix: "/api/public" });
-  await app.register(publicOrderRoutes, { prefix: "/api/public" });
 
   await app.register(staffQueueRoutes, { prefix: "/api/staff/queue" });
-  await app.register(staffOrderRoutes, { prefix: "/api/staff/orders" });
   await app.register(staffMenuRoutes, { prefix: "/api/staff/menu" });
   await app.register(dashboardRoutes, { prefix: "/api/staff/dashboard" });
 

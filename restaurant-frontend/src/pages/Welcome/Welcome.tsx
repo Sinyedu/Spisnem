@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import LanguageSwitcher from "../../components/common/LanguageSwitcher/LanguageSwitcher";
 import { getSummary } from "../../lib/summary";
 import "./Welcome.scss";
 
 export default function Welcome() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [openNow, setOpenNow] = useState<number | null>(null);
 
@@ -20,6 +23,10 @@ export default function Welcome() {
 
   return (
     <main className="welcome">
+      <header className="welcome__topbar">
+        <LanguageSwitcher className="welcome__language" showLabel={false} />
+      </header>
+
       <section className="welcome__hero">
         <div className="welcome__badge">
           <span className="welcome__ring welcome__ring--1" />
@@ -31,27 +38,28 @@ export default function Welcome() {
             </svg>
           </span>
           <span className="welcome__pill welcome__pill--open">
-            <span className="welcome__dot" /> {openNow ?? "•"} open
+            <span className="welcome__dot" />{" "}
+            {openNow === null ? t("welcome.openNowUnknown") : t("welcome.openNow", { count: openNow })}
           </span>
-          <span className="welcome__pill welcome__pill--rating">★ Top rated</span>
+          <span className="welcome__pill welcome__pill--rating">★ {t("welcome.topRated")}</span>
         </div>
 
         {/* Placeholder for the animated logo — swap this wordmark for the SVG later. */}
         <h1 className="welcome__wordmark">SPISNEM</h1>
-        <p className="welcome__tagline">Order at the table, skip the queue, enjoy the food.</p>
+        <p className="welcome__tagline">{t("welcome.tagline")}</p>
       </section>
 
       <section className="welcome__actions">
         <button className="btn btn--primary" onClick={() => navigate("/signup")}>
-          Create an account
+          {t("welcome.createAccount")}
         </button>
         <button className="btn btn--secondary" onClick={() => navigate("/signin")}>
-          Sign in
+          {t("welcome.signIn")}
         </button>
         {/* /map is the landing screen once you are in — sign in and sign up send you
             here too, as soon as those screens exist. */}
         <button className="btn btn--ghost" onClick={() => navigate("/map")}>
-          Continue as guest
+          {t("welcome.continueAsGuest")}
         </button>
 
         <div className="welcome__dots" aria-hidden>

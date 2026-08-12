@@ -1,0 +1,103 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$slide: 0.28s;
+
+.side-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  visibility: hidden;
+  // Stay visible for the length of the slide so closing animates too, instead of
+  // the panel vanishing the moment `open` flips to false.
+  transition: visibility 0s linear $slide;
+
+  &--open {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background: rgb(0 0 0 / 35%);
+    opacity: 0;
+    transition: opacity $slide ease;
+
+    .side-menu--open & {
+      opacity: 1;
+    }
+  }
+
+  &__panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 17rem;
+    max-width: 80%;
+    padding: 2rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
+    background: #fff;
+    transform: translateX(-100%);
+    // cubic-bezier gives the panel a slight ease-out settle rather than a linear slide.
+    transition: transform $slide cubic-bezier(0.32, 0.72, 0, 1);
+
+    .side-menu--open & {
+      transform: translateX(0);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__brand {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.16em;
+    color: $color-foreground;
+  }
+
+  &__close {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: -0.5rem;
+    border-radius: $border-radius-full;
+    color: $color-ghost-text;
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  &__link {
+    width: 100%;
+    padding: 0.75rem 0;
+    color: $color-foreground;
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  &__language {
+    margin-top: auto;
+  }
+
+  &__signin {
+    padding: 0.75rem 1.5rem;
+    border-radius: $border-radius-pill;
+    background: $color-primary;
+    color: #fff;
+    font-weight: 600;
+  }
+}
