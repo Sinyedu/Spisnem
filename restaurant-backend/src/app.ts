@@ -5,6 +5,8 @@ import { registerCors } from "./plugins/cors.js";
 import { registerDatabase } from "./plugins/database.js";
 import { registerErrorHandler } from "./plugins/error-handler.js";
 import { authRoutes } from "./modules/auth/auth.routes.js";
+import { CUSTOMER_AUTH_BASE_PATH } from "./modules/customer-auth/customer-auth.config.js";
+import { customerAuthRoutes } from "./modules/customer-auth/customer-auth.routes.js";
 import { dashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 import { healthRoutes } from "./modules/health/health.routes.js";
 import { staffMenuRoutes } from "./modules/menu/menu.routes.js";
@@ -24,6 +26,7 @@ export async function buildApp() {
 
   await app.register(healthRoutes, { prefix: "/api/health" });
   await app.register(authRoutes, { prefix: "/api/auth" });
+  await app.register(customerAuthRoutes, { prefix: CUSTOMER_AUTH_BASE_PATH });
 
   await app.register(publicSummaryRoutes, { prefix: "/api/public" });
   await app.register(publicRestaurantRoutes, { prefix: "/api/public" });

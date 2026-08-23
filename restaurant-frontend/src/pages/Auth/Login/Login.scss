@@ -1,0 +1,59 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+// Shared by Login and Register — the same phone-width column as the other screens.
+.auth {
+  min-height: 100dvh;
+  max-width: 30rem;
+  margin-inline: auto;
+  padding:
+    calc(3rem + env(safe-area-inset-top, 0px))
+    calc(1.5rem + env(safe-area-inset-right, 0px))
+    calc(2.5rem + env(safe-area-inset-bottom, 0px))
+    calc(1.5rem + env(safe-area-inset-left, 0px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  background: $color-background;
+  color: $color-foreground;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  // "or", with a rule running out to each side.
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: $color-ghost-text;
+    font-size: 1rem;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      border-top: $border-thin;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__switch {
+    text-align: center;
+    font-size: 1rem;
+    color: $color-ghost-text;
+
+    a {
+      color: $color-highlight;
+      font-weight: 600;
+    }
+  }
+}
