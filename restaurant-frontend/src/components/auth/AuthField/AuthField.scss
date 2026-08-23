@@ -1,0 +1,33 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &__input {
+    // 3rem is the smallest comfortable touch target on a phone.
+    min-height: 3rem;
+    padding: 0 1rem;
+    border: $border-thin;
+    border-radius: $border-radius-large;
+    background: #fff;
+    font-size: 1rem;
+    color: inherit;
+
+    &::placeholder {
+      color: $color-ghost-text;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-highlight;
+      outline-offset: 2px;
+    }
+  }
+}

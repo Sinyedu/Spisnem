@@ -14,7 +14,9 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  // dvh, not vh: on iOS Safari and Chrome Android 100vh is measured with the
+  // browser toolbars hidden, so a 100vh box is taller than what you can see.
+  min-height: 100dvh;
   line-height: 1.5;
   text-rendering: optimizeSpeed;
 }
@@ -77,7 +79,7 @@ h6 {
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -50,6 +50,23 @@
       }
     }
   },
+  "auth": {
+    "signInTitle": "Velkommen tilbage",
+    "createAccountTitle": "Opret konto",
+    "continueWithGoogle": "Fortsæt med Google",
+    "continueWithApple": "Fortsæt med Apple",
+    "or": "eller",
+    "name": "Navn",
+    "namePlaceholder": "Dit navn",
+    "email": "E-mail",
+    "emailPlaceholder": "dig@eksempel.dk",
+    "password": "Adgangskode",
+    "passwordPlaceholder": "Din adgangskode",
+    "signIn": "Log ind",
+    "createAccount": "Opret konto",
+    "noAccount": "Har du ikke en konto?",
+    "haveAccount": "Har du allerede en konto?"
+  },
   "comingSoon": {
     "message": "Denne side er på vej.",
     "back": "← Tilbage"

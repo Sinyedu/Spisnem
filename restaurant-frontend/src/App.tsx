@@ -1,6 +1,14 @@
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
+import Login from "./pages/Auth/Login/Login";
+import Register from "./pages/Auth/Register/Register";
+import MapPage from "./pages/Map/Map";
+import Restaurant from "./pages/Restaurant/Restaurant";
+import Welcome from "./pages/Welcome/Welcome";
+import { previewEnabled } from "./lib/preview";
 
-function App() {
+function ConstructionPage() {
   return (
     <main className="construction">
       <div className="construction__glow construction__glow--top" />
@@ -32,6 +40,24 @@ function App() {
         </span>
       </footer>
     </main>
+  );
+}
+function App() {
+  if (import.meta.env.PROD && !previewEnabled) {
+    return <ConstructionPage />;
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={<Welcome />} />
+      <Route path="/map" element={<MapPage />} />
+      <Route path="/restaurants/:slug" element={<Restaurant />} />
+      <Route path="/signin" element={<Login />} />
+      <Route path="/signup" element={<Register />} />
+      <Route path="/queue" element={<ComingSoon />} />
+      <Route path="/favourites" element={<ComingSoon />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 

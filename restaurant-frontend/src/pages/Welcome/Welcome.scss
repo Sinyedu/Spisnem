@@ -1,10 +1,17 @@
 @use "../../styles/abstracts/colors" as *;
 
 .welcome {
-  min-height: 100vh;
+  min-height: 100dvh;
   max-width: 30rem;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem;
+  // index.html sets viewport-fit=cover, so the page runs under the notch and the
+  // home indicator. The env() insets add that back where the hardware needs it
+  // and resolve to 0 on everything else.
+  padding:
+    calc(2.5rem + env(safe-area-inset-top, 0px))
+    calc(1.5rem + env(safe-area-inset-right, 0px))
+    calc(2.5rem + env(safe-area-inset-bottom, 0px))
+    calc(1.5rem + env(safe-area-inset-left, 0px));
   display: flex;
   flex-direction: column;
   background: $color-background;
@@ -176,6 +183,40 @@
     background: transparent;
     color: #6b6b6b;
     min-height: 2.75rem;
+  }
+}
+
+// Short phones (an iPhone SE in landscape, or any small screen once the on-screen
+// keyboard is up). Shrink the hero rather than let it push the buttons off-screen.
+@media (max-height: 43rem) {
+  .welcome {
+    &__hero {
+      gap: 1rem;
+    }
+
+    &__badge {
+      width: 7rem;
+      height: 7rem;
+    }
+
+    &__mark {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    &__ring--1 {
+      width: 5.5rem;
+      height: 5.5rem;
+    }
+
+    &__ring--2 {
+      width: 7rem;
+      height: 7rem;
+    }
+
+    &__wordmark {
+      font-size: 2.25rem;
+    }
   }
 }
 

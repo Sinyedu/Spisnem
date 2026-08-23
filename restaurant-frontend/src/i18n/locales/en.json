@@ -50,6 +50,23 @@
       }
     }
   },
+  "auth": {
+    "signInTitle": "Welcome back",
+    "createAccountTitle": "Create an account",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple",
+    "or": "or",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "signIn": "Sign in",
+    "createAccount": "Create account",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?"
+  },
   "comingSoon": {
     "message": "This screen is coming soon.",
     "back": "← Back"
