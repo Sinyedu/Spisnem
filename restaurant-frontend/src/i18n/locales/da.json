@@ -50,6 +50,22 @@
       }
     }
   },
+  "queue": {
+    "title": "Kø",
+    "backToMap": "Kort",
+    "name": "Navn",
+    "partySize": "Personer",
+    "phone": "Telefon",
+    "join": "Stil dig i kø",
+    "cancel": "Forlad køen",
+    "position": "din plads i køen",
+    "waitShort": "{{minutes}}m",
+    "waitLong": "Cirka {{minutes}} minutter til du får bord.",
+    "waitUnknown": "--",
+    "empty": "Åbn en restaurant og stil dig i kø derfra.",
+    "joinFailed": "Kunne ikke stille dig i kø. Prøv igen.",
+    "trackerLabel": "Åbn din køstatus"
+  },
   "auth": {
     "signInTitle": "Velkommen tilbage",
     "createAccountTitle": "Opret konto",

@@ -5,8 +5,10 @@ import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import MapPage from "./pages/Map/Map";
 import Restaurant from "./pages/Restaurant/Restaurant";
+import Queue from "./pages/Queue/Queue";
 import Welcome from "./pages/Welcome/Welcome";
 import { previewEnabled } from "./lib/preview";
+import QueueTracker from "./components/queue/QueueTracker/QueueTracker";
 
 function ConstructionPage() {
   return (
@@ -48,16 +50,20 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Welcome />} />
-      <Route path="/map" element={<MapPage />} />
-      <Route path="/restaurants/:slug" element={<Restaurant />} />
-      <Route path="/signin" element={<Login />} />
-      <Route path="/signup" element={<Register />} />
-      <Route path="/queue" element={<ComingSoon />} />
-      <Route path="/favourites" element={<ComingSoon />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/map" element={<MapPage />} />
+        <Route path="/restaurants/:slug" element={<Restaurant />} />
+        <Route path="/restaurants/:slug/queue" element={<Queue />} />
+        <Route path="/signin" element={<Login />} />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/queue" element={<Queue />} />
+        <Route path="/favourites" element={<ComingSoon />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <QueueTracker />
+    </>
   );
 }
 
