@@ -11,6 +11,8 @@ export type Restaurant = {
   heroImageUrl: string | null;
   cuisine: string | null;
   priceLevel: number | null;
+  latitude: number | null;
+  longitude: number | null;
   queueEnabled: boolean;
   averageWaitMinutes: number;
   currency: string;
@@ -39,6 +41,27 @@ export type MapBounds = {
   east: number;
   north: number;
   limit: number;
+};
+
+type RestaurantProfileFields = {
+  name: string;
+  description: string | null;
+  phone: string | null;
+  address: string | null;
+  city: string | null;
+  postalCode: string | null;
+  countryCode: string;
+  heroImageUrl: string | null;
+  cuisine: string | null;
+  priceLevel: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  queueEnabled: boolean;
+  averageWaitMinutes: number;
+};
+
+export type UpdateRestaurantProfileInput = {
+  [Key in keyof RestaurantProfileFields]?: RestaurantProfileFields[Key] | undefined;
 };
 
 export type RestaurantFeature = {

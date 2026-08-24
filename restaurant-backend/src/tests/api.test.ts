@@ -35,6 +35,33 @@ describe("api", { skip: databaseAvailable ? false : "no seeded database" }, () =
     assert.equal(body.data.user.role, "owner");
   });
 
+  test("owner can read and update their restaurant profile", async () => {
+    const login = await app.inject({
+      method: "POST",
+      url: "/api/auth/login",
+      payload: { email: env.SEED_ADMIN_EMAIL, password: env.SEED_ADMIN_PASSWORD },
+    });
+    const token = login.json().data.accessToken;
+
+    const current = await app.inject({
+      method: "GET",
+      url: "/api/staff/restaurants/me",
+      headers: { authorization: `Bearer ${token}` },
+    });
+    const restaurant = current.json().data;
+
+    const updated = await app.inject({
+      method: "PATCH",
+      url: "/api/staff/restaurants/me",
+      headers: { authorization: `Bearer ${token}` },
+      payload: { name: restaurant.name },
+    });
+
+    assert.equal(current.statusCode, 200);
+    assert.equal(updated.statusCode, 200);
+    assert.equal(updated.json().data.id, restaurant.id);
+  });
+
   test("customer can join the queue", async () => {
     const response = await app.inject({
       method: "POST",
