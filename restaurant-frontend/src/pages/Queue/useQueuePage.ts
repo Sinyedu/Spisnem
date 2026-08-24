@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type FormEvent, type SetStateAction } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   cancelQueueEntry,
   clearQueueToken,
@@ -7,11 +8,27 @@ import {
   readQueueToken,
   writeQueueToken,
 } from "../../lib/queue";
-import type { QueueEntry, QueueJoinInput } from "../../types/api";
+import type { QueueEntry } from "../../types/api";
 
-export function useQueuePage() {
+export type QueueFormState = {
+  guestName: string;
+  partySize: number;
+  phone: string;
+};
+
+export type QueueFormSubmit = (event: FormEvent<HTMLFormElement>) => Promise<void>;
+export type QueueFormUpdate = (next: Partial<QueueFormState>) => void;
+
+const initialForm: QueueFormState = {
+  guestName: "",
+  partySize: 2,
+  phone: "",
+};
+
+type QueueEntrySetter = Dispatch<SetStateAction<QueueEntry | null>>;
+
+function useStoredQueueEntry() {
   const [entry, setEntry] = useState<QueueEntry | null>(null);
-  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const token = readQueueToken();
@@ -22,23 +39,73 @@ export function useQueuePage() {
     return () => controller.abort();
   }, []);
 
-  async function join(slug: string, input: QueueJoinInput) {
+  return { entry, setEntry };
+}
+
+function useQueueForm(slug: string | undefined, setEntry: QueueEntrySetter) {
+  const [failed, setFailed] = useState(false);
+  const [form, setForm] = useState(initialForm);
+
+  const updateForm: QueueFormUpdate = (next) => {
+    setForm((current) => ({ ...current, ...next }));
+  };
+
+  const joinCurrentQueue: QueueFormSubmit = async (event) => {
+    event.preventDefault();
+    if (!slug) return;
+
     setFailed(false);
-    const joined = await joinRestaurantQueue(slug, input);
-    writeQueueToken(joined.token);
-    setEntry(joined);
-  }
+    try {
+      const joined = await joinRestaurantQueue(slug, {
+        guestName: form.guestName,
+        partySize: form.partySize,
+        phone: form.phone || undefined,
+      });
+      writeQueueToken(joined.token);
+      setEntry(joined);
+    } catch {
+      setFailed(true);
+    }
+  };
+
+  return { failed, form, joinCurrentQueue, updateForm };
+}
+
+async function leaveQueue(setEntry: QueueEntrySetter) {
+  const token = readQueueToken();
+  if (token) await cancelQueueEntry(token);
+  clearQueueToken();
+  setEntry(null);
+}
+
+export function useQueuePage() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const { entry, setEntry } = useStoredQueueEntry();
+  const queueForm = useQueueForm(slug, setEntry);
 
   async function leave() {
-    const token = readQueueToken();
-    if (token) await cancelQueueEntry(token);
-    clearQueueToken();
-    setEntry(null);
+    await leaveQueue(setEntry);
   }
 
-  function markFailed() {
-    setFailed(true);
+  function goBack() {
+    navigate(-1);
   }
 
-  return { entry, failed, join, leave, markFailed };
+  function goToMap() {
+    navigate("/map");
+  }
+
+  return {
+    canJoin: Boolean(slug && !entry),
+    entry,
+    failed: queueForm.failed,
+    form: queueForm.form,
+    goBack,
+    goToMap,
+    isEmpty: !entry && !slug,
+    joinCurrentQueue: queueForm.joinCurrentQueue,
+    leave,
+    updateForm: queueForm.updateForm,
+  };
 }

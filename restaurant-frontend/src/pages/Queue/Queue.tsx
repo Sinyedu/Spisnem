@@ -1,8 +1,11 @@
-import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
 import type { QueueEntry } from "../../types/api";
-import { useQueuePage } from "./useQueuePage";
+import {
+  useQueuePage,
+  type QueueFormState,
+  type QueueFormSubmit,
+  type QueueFormUpdate,
+} from "./useQueuePage";
 import "./Queue.scss";
 
 function QueueStatusCard({ entry }: { entry: QueueEntry }) {
@@ -20,26 +23,19 @@ function QueueStatusCard({ entry }: { entry: QueueEntry }) {
 
 type QueueFormProps = {
   failed: boolean;
-  onJoin: (input: { guestName: string; partySize: number; phone?: string }) => Promise<void>;
-  onFailed: () => void;
+  form: QueueFormState;
+  onSubmit: QueueFormSubmit;
+  onUpdate: QueueFormUpdate;
 };
 
-function QueueForm({ failed, onJoin, onFailed }: QueueFormProps) {
+function QueueForm({ failed, form, onSubmit, onUpdate }: QueueFormProps) {
   const { t } = useTranslation();
-  const [guestName, setGuestName] = useState("");
-  const [partySize, setPartySize] = useState(2);
-  const [phone, setPhone] = useState("");
-
-  async function submit(event: FormEvent) {
-    event.preventDefault();
-    await onJoin({ guestName, partySize, phone: phone || undefined });
-  }
 
   return (
-    <form className="queue-page__form" onSubmit={(event) => void submit(event).catch(onFailed)}>
-      <label>{t("queue.name")}<input value={guestName} onChange={(e) => setGuestName(e.target.value)} required /></label>
-      <label>{t("queue.partySize")}<input type="number" min="1" max="20" value={partySize} onChange={(e) => setPartySize(Number(e.target.value))} required /></label>
-      <label>{t("queue.phone")}<input value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" /></label>
+    <form className="queue-page__form" onSubmit={(event) => void onSubmit(event)}>
+      <label>{t("queue.name")}<input value={form.guestName} onChange={(e) => onUpdate({ guestName: e.target.value })} required /></label>
+      <label>{t("queue.partySize")}<input type="number" min="1" max="20" value={form.partySize} onChange={(e) => onUpdate({ partySize: Number(e.target.value) })} required /></label>
+      <label>{t("queue.phone")}<input value={form.phone} onChange={(e) => onUpdate({ phone: e.target.value })} inputMode="tel" /></label>
       {failed && <p className="queue-page__error">{t("queue.joinFailed")}</p>}
       <button className="queue-page__primary" type="submit">{t("queue.join")}</button>
     </form>
@@ -48,26 +44,25 @@ function QueueForm({ failed, onJoin, onFailed }: QueueFormProps) {
 
 function Queue() {
   const { t } = useTranslation();
-  const { slug } = useParams();
-  const navigate = useNavigate();
   const queue = useQueuePage();
 
   return (
     <main className="queue-page">
       <div className="queue-page__nav">
-        <button className="queue-page__back" onClick={() => navigate(-1)}>{t("restaurant.back")}</button>
-        <button className="queue-page__back" onClick={() => navigate("/map")}>{t("queue.backToMap")}</button>
+        <button className="queue-page__back" onClick={queue.goBack}>{t("restaurant.back")}</button>
+        <button className="queue-page__back" onClick={queue.goToMap}>{t("queue.backToMap")}</button>
       </div>
       <h1>{t("queue.title")}</h1>
       {queue.entry && <QueueStatusCard entry={queue.entry} />}
-      {!queue.entry && slug && (
+      {queue.canJoin && (
         <QueueForm
           failed={queue.failed}
-          onJoin={(input) => queue.join(slug, input)}
-          onFailed={queue.markFailed}
+          form={queue.form}
+          onSubmit={queue.joinCurrentQueue}
+          onUpdate={queue.updateForm}
         />
       )}
-      {!queue.entry && !slug && <p className="queue-page__empty">{t("queue.empty")}</p>}
+      {queue.isEmpty && <p className="queue-page__empty">{t("queue.empty")}</p>}
       {queue.entry && <button className="queue-page__secondary" onClick={() => void queue.leave()}>{t("queue.cancel")}</button>}
     </main>
   );
