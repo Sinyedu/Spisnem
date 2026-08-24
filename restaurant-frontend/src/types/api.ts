@@ -51,3 +51,39 @@ export type RestaurantFeatureCollection = {
     properties: RestaurantProperties;
   }[];
 };
+
+export type QueueStatus = "waiting" | "notified" | "seated" | "cancelled" | "no_show";
+
+export type QueueRestaurant = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export type QueueEntry = {
+  id: string;
+  restaurantId: string;
+  guestName: string;
+  phone: string | null;
+  partySize: number;
+  notes: string | null;
+  status: QueueStatus;
+  joinedAt: string;
+  notifiedAt: string | null;
+  seatedAt: string | null;
+  cancelledAt: string | null;
+  position: number | null;
+  estimatedWaitMinutes: number | null;
+  restaurant: QueueRestaurant;
+};
+
+export type QueueJoinInput = {
+  guestName: string;
+  phone?: string;
+  partySize: number;
+  notes?: string;
+};
+
+export type JoinedQueueEntry = QueueEntry & {
+  token: string;
+};

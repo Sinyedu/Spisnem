@@ -64,7 +64,7 @@ function Restaurant() {
 
           {restaurant?.description && <p className="restaurant__description">{restaurant.description}</p>}
 
-          <button className="restaurant__cta" onClick={() => navigate("/queue")}>
+          <button className="restaurant__cta" onClick={() => navigate(`/restaurants/${slug}/queue`)}>
             {t("restaurant.joinQueue")}
           </button>
 

@@ -50,6 +50,22 @@
       }
     }
   },
+  "queue": {
+    "title": "Queue",
+    "backToMap": "Map",
+    "name": "Name",
+    "partySize": "People",
+    "phone": "Phone",
+    "join": "Join queue",
+    "cancel": "Leave queue",
+    "position": "your place in line",
+    "waitShort": "{{minutes}}m",
+    "waitLong": "About {{minutes}} minutes until you are seated.",
+    "waitUnknown": "--",
+    "empty": "Open a restaurant and join its queue.",
+    "joinFailed": "Could not join the queue. Try again.",
+    "trackerLabel": "Open your queue status"
+  },
   "auth": {
     "signInTitle": "Welcome back",
     "createAccountTitle": "Create an account",
