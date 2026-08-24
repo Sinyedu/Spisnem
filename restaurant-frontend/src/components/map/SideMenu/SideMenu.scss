@@ -59,10 +59,8 @@ $slide: 0.28s;
   }
 
   &__brand {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.25rem;
-    letter-spacing: 0.16em;
-    color: $color-foreground;
+    width: 8.5rem;
+    height: auto;
   }
 
   &__close {
