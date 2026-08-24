@@ -1,5 +1,11 @@
 import { pool } from "../../database/pool.js";
-import type { Db, MapBounds, MapRestaurant, Restaurant } from "../../types/index.js";
+import type {
+  Db,
+  MapBounds,
+  MapRestaurant,
+  Restaurant,
+  UpdateRestaurantProfileInput,
+} from "../../types/index.js";
 
 const restaurantColumns = `
   id,
@@ -14,10 +20,29 @@ const restaurantColumns = `
   hero_image_url AS "heroImageUrl",
   cuisine,
   price_level AS "priceLevel",
+  latitude,
+  longitude,
   queue_enabled AS "queueEnabled",
   average_wait_minutes AS "averageWaitMinutes",
   currency
 `;
+
+const profileColumns: Record<keyof UpdateRestaurantProfileInput, string> = {
+  name: "name",
+  description: "description",
+  phone: "phone",
+  address: "address",
+  city: "city",
+  postalCode: "postal_code",
+  countryCode: "country_code",
+  heroImageUrl: "hero_image_url",
+  cuisine: "cuisine",
+  priceLevel: "price_level",
+  latitude: "latitude",
+  longitude: "longitude",
+  queueEnabled: "queue_enabled",
+  averageWaitMinutes: "average_wait_minutes",
+};
 
 export async function listActiveRestaurants(search: string | null) {
   const result = await pool.query<Restaurant>(
@@ -60,6 +85,38 @@ export async function findRestaurantById(id: string) {
   const result = await pool.query<Restaurant>(
     `SELECT ${restaurantColumns} FROM restaurants WHERE id = $1`,
     [id],
+  );
+  return result.rows[0] ?? null;
+}
+
+function buildProfileUpdate(input: UpdateRestaurantProfileInput) {
+  const values: unknown[] = [];
+  const assignments: string[] = [];
+
+  for (const key of Object.keys(input) as (keyof UpdateRestaurantProfileInput)[]) {
+    const value = input[key];
+    if (value === undefined) continue;
+
+    values.push(value);
+    assignments.push(`${profileColumns[key]} = $${values.length}`);
+  }
+
+  return { assignments, values };
+}
+
+export async function updateRestaurantProfile(
+  id: string,
+  input: UpdateRestaurantProfileInput,
+) {
+  const { assignments, values } = buildProfileUpdate(input);
+  if (assignments.length === 0) return findRestaurantById(id);
+
+  const result = await pool.query<Restaurant>(
+    `UPDATE restaurants
+     SET ${assignments.join(", ")}, updated_at = now()
+     WHERE id = $${values.length + 1}
+     RETURNING ${restaurantColumns}`,
+    [...values, id],
   );
   return result.rows[0] ?? null;
 }

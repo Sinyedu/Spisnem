@@ -11,7 +11,10 @@ import { dashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 import { healthRoutes } from "./modules/health/health.routes.js";
 import { staffMenuRoutes } from "./modules/menu/menu.routes.js";
 import { publicQueueRoutes, staffQueueRoutes } from "./modules/queue/queue.routes.js";
-import { publicRestaurantRoutes } from "./modules/restaurants/restaurant.routes.js";
+import {
+  publicRestaurantRoutes,
+  staffRestaurantRoutes,
+} from "./modules/restaurants/restaurant.routes.js";
 import { publicSummaryRoutes } from "./modules/summary/summary.routes.js";
 
 export async function buildApp() {
@@ -33,6 +36,7 @@ export async function buildApp() {
   await app.register(publicQueueRoutes, { prefix: "/api/public" });
 
   await app.register(staffQueueRoutes, { prefix: "/api/staff/queue" });
+  await app.register(staffRestaurantRoutes, { prefix: "/api/staff/restaurants" });
   await app.register(staffMenuRoutes, { prefix: "/api/staff/menu" });
   await app.register(dashboardRoutes, { prefix: "/api/staff/dashboard" });
 
