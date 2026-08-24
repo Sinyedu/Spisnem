@@ -17,13 +17,10 @@ import {
 } from "./map.constants";
 import { applyMapTheme } from "./mapTheme";
 
-// maplibre-gl v6 ships its tile worker as a separate chunk and finds it from
-// import.meta.url, which no bundler preserves — the worker then never starts and the
-// map renders empty with no error at all. Letting Vite bundle it and pointing
-// maplibre at the result is the only thing that works in dev and in the build.
 setWorkerUrl(maplibreWorkerUrl);
 
 const EMPTY: RestaurantFeatureCollection = { type: "FeatureCollection", features: [] };
+type Mutable<T> = { current: T };
 
 function matches(restaurant: MapRestaurant, term: string) {
   return `${restaurant.name} ${restaurant.cuisine ?? ""}`.toLowerCase().includes(term);
@@ -37,156 +34,155 @@ function flatten(collection: RestaurantFeatureCollection): MapRestaurant[] {
   }));
 }
 
-/**
- * Owns the MapLibre instance: creation, the restaurant layer, reloading restaurants
- * when the viewport settles, and keeping the map and the list showing the same
- * filtered set.
- */
-export function useRestaurantMap() {
-  const container = useRef<HTMLDivElement>(null);
-  const map = useRef<MapLibreMap>(null);
+function toFeatureCollection(restaurants: MapRestaurant[]): RestaurantFeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: restaurants.map(({ longitude, latitude, ...properties }) => ({
+      type: "Feature",
+      id: properties.id,
+      geometry: { type: "Point", coordinates: [longitude, latitude] },
+      properties,
+    })),
+  };
+}
 
-  // Everything the last request returned, before the search filter is applied.
-  const loaded = useRef<MapRestaurant[]>([]);
-  const query = useRef("");
-
+function useRestaurantData(
+  map: Mutable<MapLibreMap | null>,
+  loaded: Mutable<MapRestaurant[]>,
+  query: Mutable<string>,
+) {
   const [restaurants, setRestaurants] = useState<MapRestaurant[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [failed, setFailed] = useState(false);
-
-  // Only the newest viewport matters, so an in-flight request is dropped when the
-  // map moves again.
-  const pending = useRef<AbortController>(null);
-
-  // The map and the list always render the same filtered set.
+  const pending = useRef<AbortController | null>(null);
   const render = useCallback(() => {
     const term = query.current.trim().toLowerCase();
     const visible = term ? loaded.current.filter((r) => matches(r, term)) : loaded.current;
-
-    map.current?.getSource<GeoJSONSource>(RESTAURANTS_SOURCE)?.setData({
-      type: "FeatureCollection",
-      features: visible.map(({ longitude, latitude, ...properties }) => ({
-        type: "Feature",
-        id: properties.id,
-        geometry: { type: "Point", coordinates: [longitude, latitude] },
-        properties,
-      })),
-    });
-
+    map.current?.getSource<GeoJSONSource>(RESTAURANTS_SOURCE)?.setData(toFeatureCollection(visible));
     setRestaurants(visible);
-  }, []);
+  }, [loaded, map, query]);
+  const search = useCallback((term: string) => {
+    query.current = term;
+    setSearchTerm(term);
+    render();
+  }, [query, render]);
+  return { failed, loadRestaurants: useMapLoader(map, loaded, pending, render, setFailed), pending, restaurants, search, searchTerm };
+}
 
-  const loadRestaurants = useCallback(async () => {
+function useMapLoader(
+  map: Mutable<MapLibreMap | null>,
+  loaded: Mutable<MapRestaurant[]>,
+  pending: Mutable<AbortController | null>,
+  render: () => void,
+  setFailed: (failed: boolean) => void,
+) {
+  return useCallback(async () => {
     if (!map.current) return;
-
     pending.current?.abort();
     const controller = new AbortController();
     pending.current = controller;
-
     const bounds = map.current.getBounds();
-
     try {
-      const collection = await getRestaurantsInBounds(
-        {
-          west: bounds.getWest(),
-          south: bounds.getSouth(),
-          east: bounds.getEast(),
-          north: bounds.getNorth(),
-          limit: limitForZoom(map.current.getZoom()),
-        },
-        controller.signal,
-      );
-
+      const collection = await getRestaurantsInBounds({
+        west: bounds.getWest(), south: bounds.getSouth(),
+        east: bounds.getEast(), north: bounds.getNorth(),
+        limit: limitForZoom(map.current.getZoom()),
+      }, controller.signal);
       loaded.current = flatten(collection);
       setFailed(false);
-      render();
     } catch (error) {
       if (controller.signal.aborted) return;
       console.error("[map]", error);
       loaded.current = [];
       setFailed(true);
-      render();
     }
-  }, [render]);
+    render();
+  }, [loaded, map, pending, render, setFailed]);
+}
 
-  const search = useCallback(
-    (term: string) => {
-      query.current = term;
-      setSearchTerm(term);
-      render();
-    },
-    [render],
-  );
-
+function useRestaurantSelection(map: Mutable<MapLibreMap | null>, loaded: Mutable<MapRestaurant[]>) {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectRestaurant = useCallback((id: string) => {
     setSelectedId(id);
-
     map.current?.setPaintProperty(RESTAURANTS_LAYER, "circle-radius", [
-      "case",
-      ["==", ["get", "id"], id],
-      SELECTED_MARKER_RADIUS,
-      MARKER_RADIUS,
+      "case", ["==", ["get", "id"], id], SELECTED_MARKER_RADIUS, MARKER_RADIUS,
     ]);
-
     const target = loaded.current.find((restaurant) => restaurant.id === id);
     if (!target || !map.current) return;
+    map.current.flyTo({ center: [target.longitude, target.latitude], zoom: selectedZoom(map.current.getZoom()) });
+  }, [loaded, map]);
+  return { selectedId, selectRestaurant };
+}
 
-    map.current.flyTo({
-      center: [target.longitude, target.latitude],
-      zoom: selectedZoom(map.current.getZoom()),
-    });
-  }, []);
+function createMap(container: HTMLDivElement) {
+  return new MapLibreMap({
+    container,
+    style: MAP_STYLE,
+    center: START_CENTER,
+    zoom: START_ZOOM,
+    keyboard: false,
+    attributionControl: { compact: true },
+  });
+}
 
+function setupRestaurantLayer(map: MapLibreMap, selectRestaurant: (id: string) => void) {
+  map.addSource(RESTAURANTS_SOURCE, { type: "geojson", data: EMPTY });
+  map.addLayer({
+    id: RESTAURANTS_LAYER,
+    type: "circle",
+    source: RESTAURANTS_SOURCE,
+    paint: RESTAURANT_MARKER_PAINT,
+  });
+  map.on("click", RESTAURANTS_LAYER, (event) => {
+    const id = event.features?.[0]?.properties?.id;
+    if (typeof id === "string") selectRestaurant(id);
+  });
+}
+
+function useMapLifecycle(
+  container: Mutable<HTMLDivElement | null>,
+  map: Mutable<MapLibreMap | null>,
+  pending: Mutable<AbortController | null>,
+  onLoad: () => void,
+) {
+  const [mapReady, setMapReady] = useState(false);
   useEffect(() => {
     if (!container.current) return;
-
-    const instance = new MapLibreMap({
-      container: container.current,
-      style: MAP_STYLE,
-      center: START_CENTER,
-      zoom: START_ZOOM,
-      // Phone only: no keyboard panning, and the compass has nowhere to live.
-      keyboard: false,
-      attributionControl: { compact: true },
-    });
+    const instance = createMap(container.current);
+    const resize = new ResizeObserver(() => instance.resize());
     map.current = instance;
-
     instance.on("error", (event) => console.error("[map]", event.error));
-
     instance.on("load", () => {
       applyMapTheme(instance);
-
-      instance.addSource(RESTAURANTS_SOURCE, { type: "geojson", data: EMPTY });
-      instance.addLayer({
-        id: RESTAURANTS_LAYER,
-        type: "circle",
-        source: RESTAURANTS_SOURCE,
-        paint: RESTAURANT_MARKER_PAINT,
-      });
-
-      instance.on("click", RESTAURANTS_LAYER, (event) => {
-        const id = event.features?.[0]?.properties?.id;
-        if (typeof id === "string") selectRestaurant(id);
-      });
-
-      void loadRestaurants();
+      onLoad();
+      setMapReady(true);
+      instance.on("moveend", onLoad);
     });
-
-    // Fetching on "move" would fire on every animation frame.
-    instance.on("moveend", () => void loadRestaurants());
-
-    // The sheet animates over the map, so the canvas must re-measure after layout.
-    const resize = new ResizeObserver(() => instance.resize());
     resize.observe(container.current);
-
     return () => {
       resize.disconnect();
       pending.current?.abort();
       instance.remove();
       map.current = null;
+      setMapReady(false);
     };
-  }, [loadRestaurants, selectRestaurant]);
+  }, [container, map, onLoad, pending]);
+  return mapReady;
+}
 
-  return { container, restaurants, selectedId, searchTerm, search, failed };
+export function useRestaurantMap() {
+  const container = useRef<HTMLDivElement | null>(null);
+  const loaded = useRef<MapRestaurant[]>([]);
+  const map = useRef<MapLibreMap | null>(null);
+  const query = useRef("");
+  const data = useRestaurantData(map, loaded, query);
+  const selection = useRestaurantSelection(map, loaded);
+  const onLoad = useCallback(() => {
+    if (map.current && !map.current.getSource(RESTAURANTS_SOURCE)) {
+      setupRestaurantLayer(map.current, selection.selectRestaurant);
+    }
+    void data.loadRestaurants();
+  }, [data.loadRestaurants, selection.selectRestaurant]);
+  const mapReady = useMapLifecycle(container, map, data.pending, onLoad);
+  return { container, mapReady, selectedId: selection.selectedId, ...data };
 }
