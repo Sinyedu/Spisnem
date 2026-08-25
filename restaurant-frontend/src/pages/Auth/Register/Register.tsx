@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import AuthField from "../../../components/auth/AuthField/AuthField";
 import SocialAuthButtons from "../../../components/auth/SocialAuthButtons/SocialAuthButtons";
+import { useAuthSubmit } from "../../../hooks/useAuthSubmit";
 import type { SocialProvider } from "../../../types/auth";
+import { signInWithSocial, signUpWithEmail } from "../../../lib/auth";
 import "../Login/Login.scss";
 
 function Register() {
@@ -12,16 +14,19 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { error, runAuth, submitting } = useAuthSubmit(t("auth.signUpFailed"));
 
-  // Inert for now, exactly as on the sign-in screen — wiring is the next PR.
-  const signUpWith = (provider: SocialProvider) => console.info("[auth] todo", provider);
-  const handleSubmit = (event: FormEvent) => event.preventDefault();
+  const signUpWith = (provider: SocialProvider) => void runAuth(() => signInWithSocial(provider));
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    void runAuth(() => signUpWithEmail(name, email, password));
+  };
 
   return (
     <main className="auth">
       <h1 className="auth__title">{t("auth.createAccountTitle")}</h1>
 
-      <SocialAuthButtons onSelect={signUpWith} />
+      <SocialAuthButtons onSelect={signUpWith} disabled={submitting} />
       <p className="auth__divider">{t("auth.or")}</p>
 
       <form className="auth__form" onSubmit={handleSubmit}>
@@ -29,8 +34,14 @@ function Register() {
         <AuthField name="email" value={email} onChange={setEmail} />
         <AuthField name="newPassword" value={password} onChange={setPassword} />
 
-        <button className="btn btn--primary" type="submit">
-          {t("auth.createAccount")}
+        {error && (
+          <p className="auth__error" role="alert">
+            {error}
+          </p>
+        )}
+
+        <button className="btn btn--primary" type="submit" disabled={submitting}>
+          {t(submitting ? "auth.creatingAccount" : "auth.createAccount")}
         </button>
       </form>
 

@@ -3,9 +3,19 @@
 
 export type SocialProvider = "google" | "apple";
 
+export type AuthErrorBody = {
+  message?: string;
+  error?: { message?: string } | string;
+};
+
+export type SocialAuthResponse = {
+  url?: string;
+  redirect?: boolean;
+};
+
 export type SocialAuthButtonsProps = {
-  // The screens pass a placeholder for now; the real calls land in a later PR.
   onSelect: (provider: SocialProvider) => void;
+  disabled?: boolean;
 };
 
 // The four inputs the two auth screens are built from. AuthField knows what each

@@ -1,6 +1,5 @@
+import { API_URL } from "../config/env";
 import type { JoinedQueueEntry, QueueEntry, QueueJoinInput } from "../types/api";
-
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
 const QUEUE_TOKEN_KEY = "spisnem.queueToken";
 export const QUEUE_TOKEN_CHANGED = "spisnem:queue-token-changed";
 

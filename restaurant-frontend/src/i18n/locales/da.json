@@ -79,7 +79,11 @@
     "password": "Adgangskode",
     "passwordPlaceholder": "Din adgangskode",
     "signIn": "Log ind",
+    "signingIn": "Logger ind...",
     "createAccount": "Opret konto",
+    "creatingAccount": "Opretter konto...",
+    "signInFailed": "Kunne ikke logge ind. Kontrollér dine oplysninger, og prøv igen.",
+    "signUpFailed": "Kunne ikke oprette din konto. E-mailen er muligvis allerede i brug.",
     "noAccount": "Har du ikke en konto?",
     "haveAccount": "Har du allerede en konto?"
   },
