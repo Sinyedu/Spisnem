@@ -1,17 +1,7 @@
-import type { SocialProvider } from "../types/auth";
+import { API_URL } from "../config/env";
+import type { AuthErrorBody, SocialAuthResponse, SocialProvider } from "../types/auth";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
 const AUTH_URL = `${API_URL}/customer/auth`;
-
-type AuthErrorBody = {
-  message?: string;
-  error?: { message?: string } | string;
-};
-
-type SocialAuthResponse = {
-  url?: string;
-  redirect?: boolean;
-};
 
 export class AuthError extends Error {
   readonly status: number;

@@ -1,34 +1,20 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthField from "../../../components/auth/AuthField/AuthField";
 import SocialAuthButtons from "../../../components/auth/SocialAuthButtons/SocialAuthButtons";
+import { useAuthSubmit } from "../../../hooks/useAuthSubmit";
 import type { SocialProvider } from "../../../types/auth";
 import { signInWithSocial, signUpWithEmail } from "../../../lib/auth";
 import "../Login/Login.scss";
 
 function Register() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
-  const runAuth = async (request: () => Promise<unknown>) => {
-    setSubmitting(true);
-    setError("");
-    try {
-      await request();
-      navigate("/map", { replace: true });
-    } catch {
-      setError(t("auth.signUpFailed"));
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const { error, runAuth, submitting } = useAuthSubmit(t("auth.signUpFailed"));
 
   const signUpWith = (provider: SocialProvider) => void runAuth(() => signInWithSocial(provider));
   const handleSubmit = (event: FormEvent) => {

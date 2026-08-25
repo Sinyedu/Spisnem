@@ -3,6 +3,16 @@
 
 export type SocialProvider = "google" | "apple";
 
+export type AuthErrorBody = {
+  message?: string;
+  error?: { message?: string } | string;
+};
+
+export type SocialAuthResponse = {
+  url?: string;
+  redirect?: boolean;
+};
+
 export type SocialAuthButtonsProps = {
   onSelect: (provider: SocialProvider) => void;
   disabled?: boolean;

@@ -9,6 +9,7 @@ import Queue from "./pages/Queue/Queue";
 import Welcome from "./pages/Welcome/Welcome";
 import { previewEnabled } from "./lib/preview";
 import QueueTracker from "./components/queue/QueueTracker/QueueTracker";
+import { IS_PRODUCTION } from "./config/env";
 
 function ConstructionPage() {
   return (
@@ -45,7 +46,7 @@ function ConstructionPage() {
   );
 }
 function App() {
-  if (import.meta.env.PROD && !previewEnabled) {
+  if (IS_PRODUCTION && !previewEnabled) {
     return <ConstructionPage />;
   }
 
