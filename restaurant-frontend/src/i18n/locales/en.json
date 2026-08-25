@@ -79,7 +79,11 @@
     "password": "Password",
     "passwordPlaceholder": "Your password",
     "signIn": "Sign in",
+    "signingIn": "Signing in...",
     "createAccount": "Create account",
+    "creatingAccount": "Creating account...",
+    "signInFailed": "Could not sign in. Check your details and try again.",
+    "signUpFailed": "Could not create your account. The email may already be in use.",
     "noAccount": "No account yet?",
     "haveAccount": "Already have an account?"
   },

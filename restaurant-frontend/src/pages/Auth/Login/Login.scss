@@ -46,6 +46,17 @@
     gap: 1rem;
   }
 
+  &__error {
+    color: #b42318;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
   &__switch {
     text-align: center;
     font-size: 1rem;
