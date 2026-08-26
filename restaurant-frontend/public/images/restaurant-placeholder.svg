@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Restaurant photo coming soon">
+  <rect width="96" height="96" fill="#ece9e4" />
+  <g fill="none" stroke="#b9b3a8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M36 30v16M30 30v10a6 6 0 0 0 12 0V30M36 46v20" />
+    <path d="M64 30c-5 0-9 6-9 13s4 9 9 9v14" />
+  </g>
+</svg>

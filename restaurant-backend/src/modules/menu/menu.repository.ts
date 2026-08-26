@@ -158,13 +158,3 @@ export async function updateItem(
   );
   return result.rows[0] ?? null;
 }
-
-export async function findItemsForOrder(restaurantId: string, itemIds: string[], db: Db) {
-  const result = await db.query<MenuItem>(
-    `SELECT ${itemColumns}
-     FROM menu_items
-     WHERE restaurant_id = $1 AND id = ANY($2::uuid[])`,
-    [restaurantId, itemIds],
-  );
-  return result.rows;
-}

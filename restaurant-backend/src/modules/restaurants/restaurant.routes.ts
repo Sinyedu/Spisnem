@@ -1,12 +1,29 @@
 import type { FastifyInstance } from "fastify";
 import { getPublicMenu } from "../menu/menu.service.js";
-import { restaurantSearchSchema, slugParamSchema } from "./restaurant.schemas.js";
-import { getRestaurantBySlug, getRestaurants } from "./restaurant.service.js";
+import {
+  mapBoundsSchema,
+  restaurantSearchSchema,
+  slugParamSchema,
+  updateRestaurantProfileSchema,
+} from "./restaurant.schemas.js";
+import {
+  editStaffRestaurant,
+  getRestaurantBySlug,
+  getRestaurants,
+  getRestaurantsInBounds,
+  getStaffRestaurant,
+} from "./restaurant.service.js";
 
 export async function publicRestaurantRoutes(app: FastifyInstance) {
   app.get("/restaurants", async (request) => {
     const { search } = restaurantSearchSchema.parse(request.query);
     return { data: await getRestaurants(search) };
+  });
+
+  // Returns a bare FeatureCollection rather than the usual { data } envelope so the
+  // response can be handed straight to a MapLibre GeoJSON source.
+  app.get("/restaurants/map", async (request) => {
+    return getRestaurantsInBounds(mapBoundsSchema.parse(request.query));
   });
 
   app.get("/restaurants/:slug", async (request) => {
@@ -18,5 +35,18 @@ export async function publicRestaurantRoutes(app: FastifyInstance) {
     const { slug } = slugParamSchema.parse(request.params);
     const restaurant = await getRestaurantBySlug(slug);
     return { data: await getPublicMenu(restaurant.id) };
+  });
+}
+
+export async function staffRestaurantRoutes(app: FastifyInstance) {
+  app.addHook("onRequest", app.authenticate);
+
+  app.get("/me", async (request) => {
+    return { data: await getStaffRestaurant(request.user.restaurantId) };
+  });
+
+  app.patch("/me", { onRequest: [app.requireOwner] }, async (request) => {
+    const input = updateRestaurantProfileSchema.parse(request.body);
+    return { data: await editStaffRestaurant(request.user.restaurantId, input) };
   });
 }

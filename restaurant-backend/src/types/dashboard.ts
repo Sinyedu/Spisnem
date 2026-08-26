@@ -4,24 +4,7 @@ export type DashboardSummary = {
     notified: number;
     seatedToday: number;
   };
-  orders: {
-    submitted: number;
-    preparing: number;
-    ready: number;
-    completedToday: number;
-    salesTodayMinor: number;
-  };
 };
 
-// Postgres returns counts and sums as strings, so they are converted in the repository.
-export type DashboardSummaryRow = Record<
-  | "waiting"
-  | "notified"
-  | "seatedToday"
-  | "submitted"
-  | "preparing"
-  | "ready"
-  | "completedToday"
-  | "salesTodayMinor",
-  string
->;
+// Postgres returns counts as strings, so they are converted in the repository.
+export type DashboardSummaryRow = Record<"waiting" | "notified" | "seatedToday", string>;

@@ -1,5 +1,4 @@
 @use "../../styles/abstracts/colors" as *;
-@use "../../styles/abstracts/variables" as *;
 
 // Phone-only screen. On anything wider the app stays in a phone-width column,
 // matching the 30rem frame the Welcome screen already uses.
@@ -15,111 +14,33 @@
     position: absolute;
     inset: 0;
   }
+}
 
-  &__top {
-    position: absolute;
-    z-index: 2;
-    top: env(safe-area-inset-top);
-    right: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: $color-background;
+}
+
+.map-loading__icon {
+  width: 3.7rem;
+  height: 4rem;
+  filter: drop-shadow(0 0.7rem 1.1rem rgb(173 66 33 / 22%));
+  animation: map-loading-icon 1.6s ease-in-out infinite;
+}
+
+@keyframes map-loading-icon {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: scale(0.96);
   }
 
-  &__icon {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: $border-radius-full;
-    background: #fff;
-    color: $color-foreground;
-    box-shadow: $drop-shadow;
-
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-  }
-
-  &__search {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    height: 3rem;
-    padding: 0 1rem;
-    border-radius: $border-radius-pill;
-    background: #fff;
-    color: $color-ghost-text;
-    box-shadow: $drop-shadow;
-
-    svg {
-      flex: none;
-      width: 1.25rem;
-      height: 1.25rem;
-    }
-
-    input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: none;
-      color: $color-foreground;
-      // 1rem keeps iOS Safari from zooming in when the field is focused.
-      font-size: 1rem;
-
-      &::placeholder {
-        color: $color-ghost-text;
-      }
-    }
-  }
-
-  // Placeholder sheet content until real restaurants are wired up.
-  &__heading {
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-
-  &__list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-bottom: 1.5rem;
-  }
-
-  &__row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  &__thumb {
-    flex: none;
-    width: 3rem;
-    height: 3rem;
-    border-radius: $border-radius-large;
-    background: #ece9e4;
-  }
-
-  &__lines {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  &__line {
-    height: 0.75rem;
-    border-radius: $border-radius-pill;
-    background: #ece9e4;
-
-    &--short {
-      width: 50%;
-    }
+  50% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
