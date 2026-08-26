@@ -1,0 +1,19 @@
+@use "../../styles/abstracts/colors" as *;
+@use "../../styles/abstracts/variables" as *;
+
+.menu {
+  min-height: 100vh;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background: $color-background;
+  color: $color-foreground;
+
+  &__restaurant-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

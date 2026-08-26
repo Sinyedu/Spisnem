@@ -1,7 +1,8 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import Welcome from "./pages/Welcome/Welcome";
-import Map from "./pages/Map/Map";
 import "./App.scss";
+import Map from "./pages/Map/Map";
+import Menu from "./pages/Menu/Menu";
+import Welcome from "./pages/Welcome/Welcome";
 
 // Temporary target for screens that arrive in later PRs (sign in, sign up).
 function ComingSoon() {
@@ -22,6 +23,7 @@ function App() {
 
         {/* Any unfinished or unknown route */}
         <Route path="*" element={<ComingSoon />} />
+        <Route path="menu" element={<Menu />} />
       </Routes>
     </BrowserRouter>
   );
