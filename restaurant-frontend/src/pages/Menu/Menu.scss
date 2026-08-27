@@ -26,9 +26,42 @@
     padding: 2.5rem 1.5rem;
   }
 
+  &__restaurant-name {
+    margin: 0 0 16px;
+
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  &__restaurant-type {
+    margin: 0 0 16px;
+
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
   &__restaurant-info {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+  }
+
+  &__restaurant-dishes {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+
+    border-top: 1px solid #e5e4e7;
+  }
+
+  &__section-title {
+    margin: 0 0 16px;
+
+    color: $color-primary;
+
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
   }
 }
