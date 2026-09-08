@@ -1,8 +1,12 @@
 .dish-card {
   width: 100%;
   overflow: hidden;
+  margin-bottom: 2rem;
 
   background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
 
   border: 1px solid #e5e4e7;
   border-radius: 16px;
@@ -19,7 +23,7 @@
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
 
     padding: 16px;
   }
