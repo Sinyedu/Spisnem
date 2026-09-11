@@ -1,24 +1,22 @@
 import { Plus } from "lucide-react";
 import Button from "../../Button/Button";
+import type { Dish } from "./Dish.types";
 import "./DishCard.scss";
 
 type DishCardProps = {
-  image: string | null;
-  name: string;
-  description: string | null;
-  priceMinor: number;
-  currency?: string;
+  dish: Dish;
   onAdd?: () => void;
 };
 
-function DishCard({
-  image,
-  name,
-  description,
-  priceMinor,
-  currency = "DKK",
-  onAdd,
-}: DishCardProps) {
+function DishCard({ dish, onAdd }: DishCardProps) {
+  const {
+    image,
+    name,
+    description,
+    priceMinor,
+    currency = "DKK",
+  } = dish;
+
   const formattedPrice = new Intl.NumberFormat("da-DK", {
     style: "currency",
     currency,
