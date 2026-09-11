@@ -1,4 +1,3 @@
-// import { useMemo } from "react";
 import { Clock, Star, Users } from "lucide-react";
 import heroImage from "../../assets/images/restaurants/mad-og-kaffe.jpg";
 import DishCard from "../../components/common/Cards/DishCard/DishCard";
@@ -6,14 +5,6 @@ import InfoCard from "../../components/common/Cards/InfoCards/InfoCard";
 import NavBar from "../../components/common/Nav/NavBar";
 import dishes from "../../data/dishes.json";
 import "./Menu.scss";
-
-// function getRestaurantDishes<T>(items: T[], restaurantId: number, count = 20) {
-//   const startIndex = (restaurantId * 17) % items.length;
-
-//   return Array.from({ length: count }, (_, index) => {
-//     return items[(startIndex + index * 7) % items.length];
-//   });
-// }
 
 function getRestaurantDishes<T>(
   items: T[],
