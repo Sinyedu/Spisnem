@@ -1,11 +1,5 @@
-import type { ReactNode } from "react";
 import "./InfoCard.scss";
-
-interface InfoCardProps {
-  icon: ReactNode;
-  value: string;
-  label: string;
-}
+import type { InfoCardProps } from "./InfoCard.types";
 
 function InfoCard({ icon, value, label }: InfoCardProps) {
   return (
