@@ -1,15 +1,17 @@
+// import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import ComingSoon from "./pages/ComingSoon/ComingSoon";
-import Login from "./pages/Auth/Login/Login";
-import Register from "./pages/Auth/Register/Register";
-import MapPage from "./pages/Map/Map";
-import Restaurant from "./pages/Restaurant/Restaurant";
-import Queue from "./pages/Queue/Queue";
-import Welcome from "./pages/Welcome/Welcome";
-import { previewEnabled } from "./lib/preview";
 import QueueTracker from "./components/queue/QueueTracker/QueueTracker";
 import { IS_PRODUCTION } from "./config/env";
+import { previewEnabled } from "./lib/preview";
+import Login from "./pages/Auth/Login/Login";
+import Register from "./pages/Auth/Register/Register";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
+import { default as Map, default as MapPage } from "./pages/Map/Map";
+import Menu from "./pages/Menu/Menu";
+import Queue from "./pages/Queue/Queue";
+import Restaurant from "./pages/Restaurant/Restaurant";
+import Welcome from "./pages/Welcome/Welcome";
 
 function ConstructionPage() {
   return (
@@ -54,6 +56,11 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Welcome />} />
+        <Route path="/map" element={<Map />} />
+
+        {/* Any unfinished or unknown route */}
+        <Route path="*" element={<ComingSoon />} />
+        <Route path="menu" element={<Menu />} />
         <Route path="/map" element={<MapPage />} />
         <Route path="/restaurants/:slug" element={<Restaurant />} />
         <Route path="/restaurants/:slug/queue" element={<Queue />} />
