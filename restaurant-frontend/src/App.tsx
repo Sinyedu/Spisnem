@@ -6,7 +6,7 @@ import { previewEnabled } from "./lib/preview";
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import ComingSoon from "./pages/ComingSoon/ComingSoon";
-import { default as Map, default as MapPage } from "./pages/Map/Map";
+import { default as Map } from "./pages/Map/Map";
 import Menu from "./pages/Menu/Menu";
 import Queue from "./pages/Queue/Queue";
 import Restaurant from "./pages/Restaurant/Restaurant";
@@ -60,7 +60,6 @@ function App() {
 
         {/* Any unfinished or unknown route */}
         <Route path="*" element={<ComingSoon />} />
-        <Route path="/map" element={<MapPage />} />
         <Route path="/restaurants/:slug" element={<Restaurant />} />
         <Route path="/restaurants/:slug/queue" element={<Queue />} />
         <Route path="/signin" element={<Login />} />
