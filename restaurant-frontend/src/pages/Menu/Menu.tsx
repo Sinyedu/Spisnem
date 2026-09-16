@@ -1,4 +1,4 @@
-import { Clock, Star, Users } from "lucide-react";
+import { Clock, MapPin, Star, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DishCard from "../../components/common/Cards/DishCard/DishCard";
@@ -73,6 +73,18 @@ function Menu() {
           <div className="menu__restaurant-type">
             {restaurant?.cuisine}
           </div>
+
+          {restaurant?.address && (
+            <div className="menu__restaurant-address">
+              <MapPin size={15} />
+
+              <span>
+              {[restaurant.address, restaurant.postalCode, restaurant.city]
+                .filter(Boolean)
+                .join(", ")}
+              </span>
+            </div>
+          )}
 
           <div className="menu__restaurant-info">
             <InfoCard

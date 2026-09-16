@@ -42,6 +42,21 @@
     line-height: 1.1;
   }
 
+  &__restaurant-address {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+
+    margin: .5rem 0 1rem;
+
+    font-size: .875rem;
+    color: #6b6375;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
   &__restaurant-info {
     display: flex;
     flex-direction: row;
