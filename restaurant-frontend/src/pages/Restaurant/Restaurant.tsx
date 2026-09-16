@@ -1,3 +1,4 @@
+import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
@@ -72,6 +73,16 @@ function Restaurant() {
             <section key={section} className="restaurant__section">
               <h2>{t(`restaurant.sections.${section}.title`)}</h2>
               <p>{t(`restaurant.sections.${section}.body`)}</p>
+
+              {section === "menu" && (
+                <button
+                  className="restaurant__section-button"
+                  onClick={() => navigate(`/menu/${slug}`)}
+                >
+                  {t(`restaurant.sections.${section}.viewMenu`)}
+                  <ChevronRight size={18} />
+                </button>
+              )}
             </section>
           ))}
         </div>

@@ -1,4 +1,3 @@
-// import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import QueueTracker from "./components/queue/QueueTracker/QueueTracker";
@@ -57,10 +56,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/map" element={<Map />} />
+        <Route path="menu/:slug" element={<Menu />} />
 
         {/* Any unfinished or unknown route */}
         <Route path="*" element={<ComingSoon />} />
-        <Route path="menu" element={<Menu />} />
         <Route path="/map" element={<MapPage />} />
         <Route path="/restaurants/:slug" element={<Restaurant />} />
         <Route path="/restaurants/:slug/queue" element={<Queue />} />

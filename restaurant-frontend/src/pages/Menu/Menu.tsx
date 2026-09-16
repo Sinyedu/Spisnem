@@ -1,9 +1,17 @@
 import { Clock, Star, Users } from "lucide-react";
-import heroImage from "../../assets/images/restaurants/mad-og-kaffe.jpg";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import DishCard from "../../components/common/Cards/DishCard/DishCard";
 import InfoCard from "../../components/common/Cards/InfoCards/InfoCard";
 import NavBar from "../../components/common/Nav/NavBar";
 import dishes from "../../data/dishes.json";
+import {
+  RESTAURANT_PLACEHOLDER_IMAGE,
+  getRestaurant,
+} from "../../lib/restaurants";
+import type { Restaurant as RestaurantType } from "../../types/api";
+
 import "./Menu.scss";
 
 function getRestaurantDishes<T>(
@@ -23,19 +31,50 @@ function getRestaurantDishes<T>(
 }
 
 function Menu() {
-  const restaurantId = "550e8400-e29b-41d4-a716-446655440000";
+  const { slug = "" } = useParams();
 
-  const restaurantDishes = getRestaurantDishes(
-    dishes,
-    restaurantId,
-    20
-  );
+  const [restaurant, setRestaurant] =
+    useState<RestaurantType | null>(null);
 
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    getRestaurant(slug, controller.signal)
+      .then(setRestaurant)
+      .catch((error) => {
+        if (!controller.signal.aborted) {
+          setFailed(true);
+          console.error("[menu]", error);
+        }
+      });
+
+    return () => controller.abort();
+  }, [slug]);
+
+  const restaurantDishes = restaurant
+    ? getRestaurantDishes(dishes, restaurant.id, 20)
+    : [];
+
+  if (failed) {
+    return (
+      <main className="menu">
+        <p>Failed to load restaurant.</p>
+      </main>
+    );
+  }
 
   return (
     <main className="menu">
       <section className="menu-hero">
-        <img src={heroImage} alt="Mad & Kaffe restaurant" />
+        <img
+          src={
+            restaurant?.heroImageUrl ??
+            RESTAURANT_PLACEHOLDER_IMAGE
+          }
+          alt={restaurant ? `${restaurant.name} restaurant` : ""}
+        />
 
         <NavBar />
       </section>
@@ -43,16 +82,22 @@ function Menu() {
       <div className="menu__content">
         <section className="menu__restaurant">
           <div className="menu__restaurant-name">
-            Mad & Kaffe
+            {restaurant?.name ?? "Loading..."}
           </div>
 
           <div className="menu__restaurant-type">
-            Brunch & breakfast * Vesterbro, Copenhagen
+            {restaurant?.cuisine}
           </div>
 
           <div className="menu__restaurant-info">
             <InfoCard
-              icon={<Star size={14} fill="#c1392b" stroke="false" />}
+              icon={
+                <Star
+                  size={14}
+                  fill="#c1392b"
+                  stroke="false"
+                />
+              }
               value="4.3"
               label="Rating"
             />
@@ -64,14 +109,19 @@ function Menu() {
             />
 
             <InfoCard
-              icon={<Users size={14} fill="#c1392b" stroke="false" />}
+              icon={
+                <Users
+                  size={14}
+                  fill="#c1392b"
+                  stroke="false"
+                />
+              }
               value="3 ahead"
               label="In queue"
             />
           </div>
         </section>
 
-        {/* Should be made so the restaurants can add them to their menus themselves - CMS style */}
         <section className="menu__restaurant-dishes">
           <h2 className="menu__section-title">Menu</h2>
 

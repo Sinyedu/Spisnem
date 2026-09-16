@@ -38,7 +38,8 @@
     "sections": {
       "menu": {
         "title": "Menu",
-        "body": "Retter og priser vises her, når menuen er forbundet."
+        "body": "Retter og priser vises her, når menuen er forbundet.",
+        "viewMenu": "Se menu"
       },
       "hours": {
         "title": "Åbningstider",

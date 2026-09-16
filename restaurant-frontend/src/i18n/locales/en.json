@@ -38,7 +38,8 @@
     "sections": {
       "menu": {
         "title": "Menu",
-        "body": "Dishes and prices appear here once the menu is connected."
+        "body": "Dishes and prices appear here once the menu is connected.",
+        "viewMenu": "View menu"
       },
       "hours": {
         "title": "Opening hours",
