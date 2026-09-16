@@ -1,11 +1,11 @@
 import { Clock, Star, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import DishCard from "../../components/common/Cards/DishCard/DishCard";
 import InfoCard from "../../components/common/Cards/InfoCards/InfoCard";
 import NavBar from "../../components/common/Nav/NavBar";
 import dishes from "../../data/dishes.json";
+import { getRestaurantDishes } from "../../lib/menu";
 import {
   RESTAURANT_PLACEHOLDER_IMAGE,
   getRestaurant,
@@ -14,25 +14,10 @@ import type { Restaurant as RestaurantType } from "../../types/api";
 
 import "./Menu.scss";
 
-function getRestaurantDishes<T>(
-  items: T[],
-  restaurantId: string,
-  count = 20
-) {
-  const seed = restaurantId
-    .split("")
-    .reduce((total, char) => total + char.charCodeAt(0), 0);
-
-  const startIndex = seed % items.length;
-
-  return Array.from({ length: count }, (_, index) => {
-    return items[(startIndex + index * 7) % items.length];
-  });
-}
-
 function Menu() {
   const { slug = "" } = useParams();
 
+  // Make line 21 - 39 into a hook file instead later
   const [restaurant, setRestaurant] =
     useState<RestaurantType | null>(null);
 
