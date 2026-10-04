@@ -1,18 +1,63 @@
-$border-thin: 0.1rem solid #e1e0de;
+@use "./colors" as *;
+
+$border-thin: 0.0625rem solid $color-line;
 
 $border-radius-small: 0.125rem;
 $border-radius-large: 0.5rem;
+$border-radius-card: 1rem;
+$border-radius-sheet: 1.5rem;
 // Larger than any element we round, so pills stay pill-shaped at any height.
 $border-radius-pill: 100rem;
 $border-radius-full: 100%;
 
-$drop-shadow: 0 0.25rem 0.25rem rgb(0 0 0 / 25%);
+// Spacing scale (customer-app.md §2.3). Screen side padding is $space-5.
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-14: 3.5rem;
+
+// Type scale (customer-app.md §2.2).
+$font-caption: 0.75rem;
+$font-small: 0.875rem;
+$font-body: 1rem;
+$font-lead: 1.125rem;
+$font-title-s: 1.25rem;
+$font-title: 1.75rem;
+$font-display-l: 2.5rem;
+$font-display-xl: 4rem;
+
+// Every tappable thing is at least this big.
+$touch-target: 3rem;
+$button-height: 3.5rem;
+// The bottom tab bar, not counting the phone's home-indicator area.
+$tab-bar-height: 4rem;
+
+// The phone column every screen sits in.
+$phone-frame: 30rem;
+
+// Shadows only on things that float over content.
+$drop-shadow: 0 0.5rem 1.5rem -0.5rem rgb(27 20 17 / 25%);
+$shadow-sheet: 0 -0.75rem 2.5rem rgb(27 20 17 / 16%);
+$shadow-accent: 0 0.5rem 1.5rem -0.75rem rgb(168 50 14 / 50%);
+
+// Letter spacing for small uppercase labels ("WAIT RIGHT NOW").
+$tracking-overline: 0.12em;
+
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$duration-fast: 200ms;
+$duration-base: 300ms;
+$duration-slow: 900ms;
 
 $opacity-primary: 15%;
 $opacity-secondary: 10%;
 
 :root {
-  --sans: "Public Sans", system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: "Be Vietnam Pro", "Be Vietnam", "Public Sans", sans-serif;
+  --sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: "Fraunces", Georgia, serif;
   --mono: ui-monospace, Consolas, monospace;
 }

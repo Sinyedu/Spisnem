@@ -1,36 +1,41 @@
 import { API_URL } from "../config/env";
-import type { JoinedQueueEntry, QueueEntry, QueueJoinInput } from "../types/api";
+import type { JoinedQueueEntry, LateMinutes, QueueEntry, QueueJoinInput, WaitEstimate } from "../types/api";
+import { apiRequest } from "./http";
+
 const QUEUE_TOKEN_KEY = "spisnem.queueToken";
 export const QUEUE_TOKEN_CHANGED = "spisnem:queue-token-changed";
 
-async function readData<T>(response: Response): Promise<T> {
-  if (!response.ok) throw new Error(`queue request failed (${response.status})`);
-  const body = (await response.json()) as { data: T };
-  return body.data;
+// Signed-in guests send their session so the visit lands in their history.
+export function joinRestaurantQueue(slug: string, input: QueueJoinInput) {
+  return apiRequest<JoinedQueueEntry>(`/public/restaurants/${slug}/queue`, { method: "POST", body: input, withSession: true });
 }
 
-export async function joinRestaurantQueue(
-  slug: string,
-  input: QueueJoinInput,
-): Promise<JoinedQueueEntry> {
-  const response = await fetch(`${API_URL}/public/restaurants/${slug}/queue`, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(input),
-  });
-  return readData<JoinedQueueEntry>(response);
+export function getWaitEstimate(slug: string, partySize: number, signal?: AbortSignal) {
+  return apiRequest<WaitEstimate>(`/public/restaurants/${slug}/queue/estimate?partySize=${partySize}`, { signal });
 }
 
-export async function getQueueEntry(token: string, signal?: AbortSignal) {
-  const response = await fetch(`${API_URL}/public/queue/${token}`, { signal });
-  return readData<QueueEntry>(response);
+export function getQueueEntry(token: string, signal?: AbortSignal) {
+  return apiRequest<QueueEntry>(`/public/queue/${token}`, { signal });
 }
 
-export async function cancelQueueEntry(token: string) {
-  const response = await fetch(`${API_URL}/public/queue/${token}/cancel`, {
-    method: "POST",
-  });
-  return readData<QueueEntry>(response);
+export function cancelQueueEntry(token: string) {
+  return apiRequest<QueueEntry>(`/public/queue/${token}/cancel`, { method: "POST" });
+}
+
+export function reportRunningLate(token: string, minutes: LateMinutes) {
+  return apiRequest<QueueEntry>(`/public/queue/${token}/late`, { method: "POST", body: { minutes } });
+}
+
+export function reportOnMyWay(token: string) {
+  return apiRequest<QueueEntry>(`/public/queue/${token}/on-my-way`, { method: "POST" });
+}
+
+/** Live ticket updates (server-sent events). Returns a function that closes the stream. */
+export function subscribeToQueueEntry(token: string, onEntry: (entry: QueueEntry) => void, onError: () => void) {
+  const source = new EventSource(`${API_URL}/public/queue/${token}/stream`);
+  source.addEventListener("entry", (event) => onEntry(JSON.parse((event as MessageEvent<string>).data) as QueueEntry));
+  source.onerror = onError;
+  return () => source.close();
 }
 
 export function readQueueToken() {
