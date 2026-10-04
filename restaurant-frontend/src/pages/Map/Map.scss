@@ -15,3 +15,32 @@
     inset: 0;
   }
 }
+
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: $color-background;
+}
+
+.map-loading__icon {
+  width: 3.7rem;
+  height: 4rem;
+  filter: drop-shadow(0 0.7rem 1.1rem rgb(173 66 33 / 22%));
+  animation: map-loading-icon 1.6s ease-in-out infinite;
+}
+
+@keyframes map-loading-icon {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

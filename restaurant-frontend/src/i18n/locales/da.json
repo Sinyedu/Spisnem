@@ -1,0 +1,99 @@
+{
+  "welcome": {
+    "openNow_one": "{{count}} åben",
+    "openNow_other": "{{count}} åbne",
+    "openNowUnknown": "• åbne",
+    "topRated": "Topbedømt",
+    "tagline": "Find restauranter nær dig, stil dig i kø, og følg din ventetid live.",
+    "createAccount": "Opret konto",
+    "signIn": "Log ind",
+    "continueAsGuest": "Fortsæt som gæst"
+  },
+  "map": {
+    "openMenu": "Åbn menu",
+    "searchPlaceholder": "Søg efter navn eller køkken",
+    "searchLabel": "Søg efter restauranter",
+    "clearSearch": "Ryd søgning",
+    "nearby": "I nærheden",
+    "empty": {
+      "failed": "Kunne ikke få forbindelse til serveren. Kører backenden?",
+      "noMatches": "Ingen restauranter matcher »{{term}}«.",
+      "noneNearby": "Der er endnu ingen restauranter i dette område."
+    }
+  },
+  "sideMenu": {
+    "label": "Hovedmenu",
+    "close": "Luk menu",
+    "exploreMap": "Udforsk kortet",
+    "queue": "Kø",
+    "favourites": "Favoritter",
+    "signIn": "Log ind"
+  },
+  "restaurant": {
+    "back": "Gå tilbage",
+    "loading": "Indlæser…",
+    "loadFailed": "Denne restaurant kunne ikke indlæses.",
+    "waitMinutes": "~{{minutes}} min ventetid",
+    "joinQueue": "Stil dig i kø",
+    "sections": {
+      "menu": {
+        "title": "Menu",
+        "body": "Retter og priser vises her, når menuen er forbundet."
+      },
+      "hours": {
+        "title": "Åbningstider",
+        "body": "Åbningstider er endnu ikke en del af restaurantens data."
+      },
+      "queue": {
+        "title": "Kø",
+        "body": "Stil dig i kø, og følg din plads live."
+      }
+    }
+  },
+  "queue": {
+    "title": "Kø",
+    "backToMap": "Kort",
+    "name": "Navn",
+    "partySize": "Personer",
+    "phone": "Telefon",
+    "join": "Stil dig i kø",
+    "cancel": "Forlad køen",
+    "position": "din plads i køen",
+    "waitShort": "{{minutes}}m",
+    "waitLong": "Cirka {{minutes}} minutter til du får bord.",
+    "waitUnknown": "--",
+    "empty": "Åbn en restaurant og stil dig i kø derfra.",
+    "joinFailed": "Kunne ikke stille dig i kø. Prøv igen.",
+    "trackerLabel": "Åbn din køstatus"
+  },
+  "auth": {
+    "signInTitle": "Velkommen tilbage",
+    "createAccountTitle": "Opret konto",
+    "continueWithGoogle": "Fortsæt med Google",
+    "continueWithApple": "Fortsæt med Apple",
+    "or": "eller",
+    "name": "Navn",
+    "namePlaceholder": "Dit navn",
+    "email": "E-mail",
+    "emailPlaceholder": "dig@eksempel.dk",
+    "password": "Adgangskode",
+    "passwordPlaceholder": "Din adgangskode",
+    "signIn": "Log ind",
+    "signingIn": "Logger ind...",
+    "createAccount": "Opret konto",
+    "creatingAccount": "Opretter konto...",
+    "signInFailed": "Kunne ikke logge ind. Kontrollér dine oplysninger, og prøv igen.",
+    "signUpFailed": "Kunne ikke oprette din konto. E-mailen er muligvis allerede i brug.",
+    "noAccount": "Har du ikke en konto?",
+    "haveAccount": "Har du allerede en konto?"
+  },
+  "comingSoon": {
+    "message": "Denne side er på vej.",
+    "back": "← Tilbage"
+  },
+  "language": {
+    "label": "Sprog",
+    "da": "Dansk",
+    "en": "English"
+  }
+}

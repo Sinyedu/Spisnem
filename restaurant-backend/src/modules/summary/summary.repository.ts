@@ -1,13 +1,8 @@
-import { pool } from "../../database/pool.js";
 import type { PublicSummary } from "../../types/index.js";
+import { countRestaurants } from "../restaurants/restaurant.repository.js";
 
-// "openNow" uses queue_enabled as a proxy for "open" until real opening hours exist.
+// "openNow" counts open queues as a stand-in for "open" until real opening hours exist.
 export async function getSummaryCounts(): Promise<PublicSummary> {
-  const result = await pool.query<PublicSummary>(
-    `SELECT
-       count(*) FILTER (WHERE is_active)::int AS restaurants,
-       count(*) FILTER (WHERE is_active AND queue_enabled)::int AS "openNow"
-     FROM restaurants`,
-  );
-  return result.rows[0]!;
+  const { total, open } = await countRestaurants();
+  return { restaurants: total, openNow: open };
 }

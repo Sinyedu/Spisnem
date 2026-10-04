@@ -1,0 +1,40 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.language-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $color-ghost-text;
+  }
+
+  &__options {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border: $border-thin;
+    border-radius: $border-radius-pill;
+  }
+
+  &__option {
+    flex: 1;
+    padding: 0.4rem 0.75rem;
+    border-radius: $border-radius-pill;
+    color: $color-ghost-text;
+    font-size: 0.875rem;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+
+    &--active {
+      background: $color-primary;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}
