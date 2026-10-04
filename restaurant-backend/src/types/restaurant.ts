@@ -1,3 +1,5 @@
+import type { QueueState } from "./queue.js";
+
 export type Restaurant = {
   id: string;
   name: string;
@@ -13,8 +15,12 @@ export type Restaurant = {
   priceLevel: number | null;
   latitude: number | null;
   longitude: number | null;
+  // Kept for existing clients: true exactly when queueState is "open".
   queueEnabled: boolean;
+  queueState: QueueState;
   averageWaitMinutes: number;
+  graceMinutes: number;
+  maxPartySize: number;
   currency: string;
 };
 
@@ -24,7 +30,14 @@ export type RestaurantSummary = {
   slug: string;
 };
 
-export type MapRestaurant = {
+// Live queue figures attached to a restaurant on the map and the public page.
+export type RestaurantQueueInfo = {
+  partiesWaiting: number;
+  // The wait a party of two would be quoted if they joined right now.
+  estimatedWaitMinutes: number;
+};
+
+export type MapRestaurant = RestaurantQueueInfo & {
   id: string;
   name: string;
   slug: string;
@@ -33,7 +46,12 @@ export type MapRestaurant = {
   heroImageUrl: string | null;
   latitude: number;
   longitude: number;
+  queueEnabled: boolean;
+  queueState: QueueState;
+  averageWaitMinutes: number;
 };
+
+export type PublicRestaurant = Restaurant & RestaurantQueueInfo;
 
 export type MapBounds = {
   west: number;
@@ -57,7 +75,10 @@ type RestaurantProfileFields = {
   latitude: number | null;
   longitude: number | null;
   queueEnabled: boolean;
+  queueState: QueueState;
   averageWaitMinutes: number;
+  graceMinutes: number;
+  maxPartySize: number;
 };
 
 export type UpdateRestaurantProfileInput = {
