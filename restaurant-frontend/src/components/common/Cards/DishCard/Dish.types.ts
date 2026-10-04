@@ -6,3 +6,7 @@ export type DishCardProps = {
   currency?: string;
   onAdd?: () => void;
 };
+
+export type DishCardFooterProps = Pick<DishCardProps, "priceMinor" | "onAdd"> & {
+  currency: string;
+};
