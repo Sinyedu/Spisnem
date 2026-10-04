@@ -1,11 +1,12 @@
 @use "../../styles/abstracts/colors" as *;
+@use "../../styles/abstracts/variables" as *;
 
 // Phone-only screen. On anything wider the app stays in a phone-width column,
-// matching the 30rem frame the Welcome screen already uses.
+// matching the frame the Welcome screen already uses.
 .map {
   position: fixed;
   inset: 0;
-  max-width: 30rem;
+  max-width: $phone-frame;
   margin-inline: auto;
   overflow: hidden;
   background: $color-background;
@@ -13,5 +14,42 @@
   &__canvas {
     position: absolute;
     inset: 0;
+  }
+
+  &__top {
+    position: absolute;
+    z-index: 2;
+    top: env(safe-area-inset-top);
+    right: 0;
+    left: 0;
+  }
+}
+
+.map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: $color-background;
+}
+
+.map-loading__icon {
+  width: $space-14;
+  height: $space-14;
+  object-fit: contain;
+  animation: map-loading-icon 1.6s ease-in-out infinite;
+}
+
+@keyframes map-loading-icon {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
   }
 }

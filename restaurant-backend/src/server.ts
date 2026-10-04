@@ -5,7 +5,7 @@ const app = await buildApp();
 
 for (const signal of ["SIGINT", "SIGTERM"] as const) {
   process.on(signal, () => {
-    // app.close() runs the onClose hook, which ends the database pool.
+    // app.close() runs the onClose hook, which closes the MongoDB connection.
     app.close().then(() => process.exit(0));
   });
 }

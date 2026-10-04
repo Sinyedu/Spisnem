@@ -1,16 +1,16 @@
 import type { MapLibreMap } from "maplibre-gl";
 
-// Brand red is deliberately absent: it belongs to the restaurant markers alone, so
-// keeping it out of the basemap is what makes them readable.
+// Terracotta is deliberately absent: it belongs to the selected marker alone, so
+// keeping it out of the basemap is what makes the pins readable.
 const COLOURS = {
-  background: "#f7f6f4",
-  water: "#dde5ea",
-  green: "#e6e8e0",
-  building: "#ece9e4",
-  buildingOutline: "#e3e0da",
+  background: "#f4efe8",
+  water: "#cfe0ea",
+  green: "#dbe6cf",
+  building: "#ebe4da",
+  buildingOutline: "#e2d9cc",
   road: "#ffffff",
-  roadCasing: "#e8e5df",
-  label: "#8c8a84",
+  roadCasing: "#e2d9cc",
+  label: "#9a8e84",
   labelHalo: "#ffffff",
 };
 

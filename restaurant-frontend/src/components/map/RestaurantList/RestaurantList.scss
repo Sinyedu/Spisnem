@@ -2,61 +2,36 @@
 @use "../../../styles/abstracts/variables" as *;
 
 .restaurants {
-  padding-bottom: 1.5rem;
+  padding-bottom: $space-6;
 
-  &__heading {
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-    font-weight: 600;
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: $space-4;
+    margin-bottom: $space-4;
   }
 
+  &__heading {
+    font-family: var(--heading);
+    font-size: $font-title-s;
+    font-weight: 500;
+  }
+
+  &__count,
+  &__sort,
   &__empty {
-    color: $color-ghost-text;
+    color: $color-muted;
+  }
+
+  &__sort {
+    font-size: $font-small;
   }
 
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: $border-radius-large;
-    text-align: left;
-
-    &--selected {
-      background: rgb(193 57 43 / 8%);
-    }
-  }
-
-  &__image {
-    flex: none;
-    width: 3rem;
-    height: 3rem;
-    border-radius: $border-radius-large;
-    background: #ece9e4;
-    object-fit: cover;
-  }
-
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    min-width: 0;
-  }
-
-  &__name {
-    color: $color-foreground;
-    font-weight: 600;
-  }
-
-  &__meta {
-    color: $color-ghost-text;
-    font-size: 0.75rem;
+    gap: $space-2;
+    list-style: none;
   }
 }

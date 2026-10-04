@@ -1,0 +1,119 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$bell-size: 7rem;
+$body-width: 17rem;
+
+.called {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: $space-14;
+  color: $color-paper;
+  text-align: center;
+
+  &__bell {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: $bell-size;
+    height: $bell-size;
+    border-radius: $border-radius-full;
+    background: rgb(255 255 255 / 15%);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgb(255 255 255 / 20%);
+      animation: called-ping 1.6s $ease-out infinite;
+    }
+  }
+
+  &__venue {
+    margin-top: $space-10;
+    font-size: $font-caption;
+    font-weight: 600;
+    letter-spacing: $tracking-overline;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  &__title {
+    margin-top: $space-2;
+    font-family: var(--heading);
+    font-size: $font-display-l;
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  &__body {
+    max-width: $body-width;
+    margin-top: $space-3;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  &__timer {
+    margin-top: $space-5;
+    font-family: var(--heading);
+    font-size: $font-title;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  &__primary {
+    width: 100%;
+    min-height: $button-height;
+    border-radius: $border-radius-pill;
+    background: $color-paper;
+    color: $color-terracotta;
+    font-weight: 600;
+  }
+}
+
+@keyframes called-ping {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+.called__primary:disabled {
+  opacity: 0.6;
+}
+
+.called__secondary {
+  width: 100%;
+  min-height: $button-height;
+  border: 0.0625rem solid rgb(255 255 255 / 50%);
+  border-radius: $border-radius-pill;
+  color: $color-paper;
+  font-weight: 600;
+}
+
+.called__confirmed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  width: 100%;
+  min-height: $button-height;
+  border-radius: $border-radius-pill;
+  background: rgb(255 255 255 / 15%);
+  font-weight: 600;
+}

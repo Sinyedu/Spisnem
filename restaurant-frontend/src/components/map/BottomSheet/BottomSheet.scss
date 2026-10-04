@@ -9,23 +9,28 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  border-radius: 1rem 1rem 0 0;
-  background: #fff;
-  box-shadow: 0 -0.5rem 1.5rem rgb(0 0 0 / 12%);
+  border-radius: $border-radius-sheet $border-radius-sheet 0 0;
+  background: $color-cream;
+  box-shadow: $shadow-sheet;
+  transition: height $duration-base $ease-out;
+
+  &--dragging {
+    transition: none;
+  }
 
   &__grip {
     display: grid;
     place-items: center;
-    padding: 0.75rem 0;
+    padding: $space-3 0;
     // Stops the browser claiming the drag as a page scroll.
     touch-action: none;
   }
 
   &__handle {
-    width: 2.5rem;
-    height: 0.25rem;
+    width: $space-10;
+    height: $space-1;
     border-radius: $border-radius-pill;
-    background: #d8d5ce;
+    background: $color-line;
   }
 
   &__body {
@@ -33,7 +38,22 @@
     overflow-y: auto;
     // Momentum scrolling without the drag leaking to the sheet itself.
     overscroll-behavior: contain;
-    padding: 0 1rem env(safe-area-inset-bottom);
+    padding: 0 $space-5;
     color: $color-foreground;
   }
+
+  &__footer {
+    padding: $space-3 $space-5 calc(#{$space-4} + env(safe-area-inset-bottom));
+    border-top: $border-thin;
+    background: $color-cream;
+  }
+}
+
+// The map's sheet rests on top of the bottom tab bar.
+.map .sheet {
+  bottom: calc(#{$tab-bar-height} + env(safe-area-inset-bottom));
+}
+
+.map .sheet__footer {
+  padding-bottom: $space-3;
 }

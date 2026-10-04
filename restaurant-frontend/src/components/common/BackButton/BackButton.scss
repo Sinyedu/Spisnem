@@ -1,0 +1,18 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.back-button {
+  display: grid;
+  place-items: center;
+  width: $touch-target;
+  height: $touch-target;
+  border-radius: $border-radius-full;
+  background: $color-paper;
+  color: $color-ink;
+  box-shadow: $drop-shadow;
+  transition: transform $duration-fast $ease-out;
+
+  &:active {
+    transform: scale(0.94);
+  }
+}

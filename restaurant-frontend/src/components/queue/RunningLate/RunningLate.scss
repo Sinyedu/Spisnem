@@ -1,0 +1,38 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.running-late {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  width: 100%;
+  padding: $space-4;
+  border-radius: $border-radius-card;
+  background: $color-sand;
+
+  &__toggle {
+    min-height: $touch-target;
+    color: $color-terracotta;
+    font-weight: 600;
+  }
+
+  &__hint {
+    color: $color-muted;
+    font-size: $font-small;
+    text-align: center;
+  }
+
+  &__options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $space-2;
+
+    button {
+      min-height: $touch-target;
+      border: $border-thin;
+      border-radius: $border-radius-pill;
+      background: $color-paper;
+      font-weight: 600;
+    }
+  }
+}

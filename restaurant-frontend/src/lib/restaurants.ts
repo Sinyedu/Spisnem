@@ -1,6 +1,5 @@
+import { API_URL } from "../config/env";
 import type { MapBounds, Restaurant, RestaurantFeatureCollection } from "../types/api";
-
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
 
 // Used until a restaurant uploads its own cover image.
 export const RESTAURANT_PLACEHOLDER_IMAGE = "/images/restaurant-placeholder.svg";
