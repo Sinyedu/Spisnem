@@ -1,44 +1,43 @@
-import type { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { useQueueCountdown } from "./useQueueCountdown";
-import { useQueueTracker } from "./useQueueTracker";
-import type { QueueEntry } from "../../../types/api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useQueueCountdown } from "../../../hooks/useQueueCountdown";
+import { useCurrentQueueEntry } from "../../../session/queueEntryContext";
+import type { QueueEntryProps } from "../../../types/queue";
 import "./QueueTracker.scss";
 
-type TrackerStyle = CSSProperties & {
-  "--queue-progress": string;
-};
+// Queue screens show the full ticket and tab screens show a badge on My queue,
+// so the floating tracker only appears on the other screens (restaurant, menu).
+const HIDDEN_ON = /\/queue$|^\/(map|favourites|history|profile)$/;
 
-function QueueTrackerButton({ entry }: { entry: QueueEntry }) {
+function TrackerPill({ entry }: QueueEntryProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const countdown = useQueueCountdown(entry);
-  const style: TrackerStyle = { "--queue-progress": `${countdown.progress}%` };
+  const called = entry.status === "notified";
+  const time = countdown.remainingMinutes === null ? t("queue.waitUnknown") : t("queue.waitShort", { minutes: countdown.remainingMinutes });
 
   return (
     <button
-      className="queue-tracker"
-      style={style}
       type="button"
+      className={`queue-tracker ${called ? "queue-tracker--called" : ""}`}
       onClick={() => navigate("/queue")}
       aria-label={t("queue.trackerLabel")}
     >
-      <span className="queue-tracker__inner">
-        <span className="queue-tracker__position">{entry.position ?? "-"}</span>
-        <span className="queue-tracker__time">
-          {countdown.remainingMinutes === null ? t("queue.waitUnknown") : t("queue.waitShort", {
-            minutes: countdown.remainingMinutes,
-          })}
-        </span>
-      </span>
+      <span className="queue-tracker__dot" aria-hidden />
+      {called ?
+        <span>{t("queue.trackerCalled")}</span>
+      : <span className="tabular">#{entry.position ?? "–"} · {time}</span>}
     </button>
   );
 }
 
+/** A small pill on every screen that says where you are in line. Tap it for the ticket. */
 function QueueTracker() {
-  const entry = useQueueTracker();
-  return entry ? <QueueTrackerButton entry={entry} /> : null;
+  const { pathname } = useLocation();
+  const { entry } = useCurrentQueueEntry();
+  const active = entry?.status === "waiting" || entry?.status === "notified";
+  if (!entry || !active || HIDDEN_ON.test(pathname)) return null;
+  return <TrackerPill entry={entry} />;
 }
 
 export default QueueTracker;
