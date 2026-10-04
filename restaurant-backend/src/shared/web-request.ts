@@ -14,7 +14,7 @@ export function toWebRequest(request: FastifyRequest): Request {
   });
 }
 
-function toWebHeaders(request: FastifyRequest): Headers {
+export function toWebHeaders(request: FastifyRequest): Headers {
   const headers = new Headers();
 
   for (const [key, value] of Object.entries(request.headers)) {

@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { getDashboardSummary } from "./dashboard.repository.js";
+import { getDashboardSummary } from "./dashboard.service.js";
 
 export async function dashboardRoutes(app: FastifyInstance) {
   app.get("/", { onRequest: [app.authenticate] }, async (request) => {

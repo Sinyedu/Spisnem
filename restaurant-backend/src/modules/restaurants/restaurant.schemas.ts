@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const queueStateSchema = z.enum(["open", "paused", "closed"]);
+
 export const slugParamSchema = z.object({
   slug: z.string().min(1).max(100),
 });
@@ -44,5 +46,8 @@ export const updateRestaurantProfileSchema = z.object({
   latitude: latitude.nullable().optional(),
   longitude: longitude.nullable().optional(),
   queueEnabled: z.boolean().optional(),
+  queueState: queueStateSchema.optional(),
   averageWaitMinutes: z.number().int().min(1).max(240).optional(),
+  graceMinutes: z.number().int().min(1).max(60).optional(),
+  maxPartySize: z.number().int().min(1).max(20).optional(),
 });

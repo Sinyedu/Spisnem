@@ -1,6 +1,7 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { env } from "../../config/env.js";
-import { pool } from "../../database/pool.js";
+import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { db } from "../../database/mongo.js";
 
 /**
  * Customer accounts. Staff keep their own bcrypt and JWT login under /api/auth:
@@ -38,7 +39,7 @@ function configuredProviders(): NonNullable<BetterAuthOptions["socialProviders"]
 // Exported on its own so the migration generator and the running app read the
 // exact same configuration. See scripts note in the backend README.
 export const customerAuthOptions = {
-  database: pool,
+  database: mongodbAdapter(db),
   basePath: CUSTOMER_AUTH_BASE_PATH,
   baseURL: env.PUBLIC_API_URL,
   secret: env.BETTER_AUTH_SECRET ?? env.JWT_SECRET,

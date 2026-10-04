@@ -1,122 +1,58 @@
-import { pool } from "../../database/pool.js";
-import type {
-  Db,
-  MapBounds,
-  MapRestaurant,
-  Restaurant,
-  UpdateRestaurantProfileInput,
-} from "../../types/index.js";
-
-const restaurantColumns = `
-  id,
-  name,
-  slug,
-  description,
-  phone,
-  address,
-  city,
-  postal_code AS "postalCode",
-  country_code AS "countryCode",
-  hero_image_url AS "heroImageUrl",
-  cuisine,
-  price_level AS "priceLevel",
-  latitude,
-  longitude,
-  queue_enabled AS "queueEnabled",
-  average_wait_minutes AS "averageWaitMinutes",
-  currency
-`;
-
-const profileColumns: Record<keyof UpdateRestaurantProfileInput, string> = {
-  name: "name",
-  description: "description",
-  phone: "phone",
-  address: "address",
-  city: "city",
-  postalCode: "postal_code",
-  countryCode: "country_code",
-  heroImageUrl: "hero_image_url",
-  cuisine: "cuisine",
-  priceLevel: "price_level",
-  latitude: "latitude",
-  longitude: "longitude",
-  queueEnabled: "queue_enabled",
-  averageWaitMinutes: "average_wait_minutes",
-};
+import type { Filter } from "mongodb";
+import { restaurants } from "../../database/collections.js";
+import { escapeRegex } from "../../shared/text.js";
+import type { MapBounds, RestaurantDoc } from "../../types/index.js";
 
 export async function listActiveRestaurants(search: string | null) {
-  const result = await pool.query<Restaurant>(
-    `SELECT ${restaurantColumns}
-     FROM restaurants
-     WHERE is_active = true
-       AND ($1::text IS NULL OR name ILIKE '%' || $1 || '%' OR city ILIKE '%' || $1 || '%')
-     ORDER BY name`,
-    [search],
-  );
-  return result.rows;
-}
-
-export async function findActiveRestaurantBySlug(slug: string, db: Db = pool) {
-  const result = await db.query<Restaurant>(
-    `SELECT ${restaurantColumns}
-     FROM restaurants
-     WHERE slug = $1 AND is_active = true`,
-    [slug],
-  );
-  return result.rows[0] ?? null;
-}
-
-export async function listActiveRestaurantsInBounds(bounds: MapBounds) {
-  const result = await pool.query<MapRestaurant>(
-    `SELECT id, name, slug, cuisine, price_level AS "priceLevel",
-            hero_image_url AS "heroImageUrl", latitude, longitude
-     FROM restaurants
-     WHERE is_active = true
-       AND latitude BETWEEN $1 AND $2
-       AND longitude BETWEEN $3 AND $4
-     ORDER BY name
-     LIMIT $5`,
-    [bounds.south, bounds.north, bounds.west, bounds.east, bounds.limit],
-  );
-  return result.rows;
-}
-
-export async function findRestaurantById(id: string) {
-  const result = await pool.query<Restaurant>(
-    `SELECT ${restaurantColumns} FROM restaurants WHERE id = $1`,
-    [id],
-  );
-  return result.rows[0] ?? null;
-}
-
-function buildProfileUpdate(input: UpdateRestaurantProfileInput) {
-  const values: unknown[] = [];
-  const assignments: string[] = [];
-
-  for (const key of Object.keys(input) as (keyof UpdateRestaurantProfileInput)[]) {
-    const value = input[key];
-    if (value === undefined) continue;
-
-    values.push(value);
-    assignments.push(`${profileColumns[key]} = $${values.length}`);
+  const filter: Filter<RestaurantDoc> = { isActive: true };
+  if (search) {
+    const pattern = new RegExp(escapeRegex(search), "i");
+    filter.$or = [{ name: pattern }, { city: pattern }];
   }
-
-  return { assignments, values };
+  return restaurants.find(filter).sort({ name: 1 }).toArray();
 }
 
-export async function updateRestaurantProfile(
-  id: string,
-  input: UpdateRestaurantProfileInput,
-) {
-  const { assignments, values } = buildProfileUpdate(input);
-  if (assignments.length === 0) return findRestaurantById(id);
+export function findActiveRestaurantBySlug(slug: string) {
+  return restaurants.findOne({ slug, isActive: true });
+}
 
-  const result = await pool.query<Restaurant>(
-    `UPDATE restaurants
-     SET ${assignments.join(", ")}, updated_at = now()
-     WHERE id = $${values.length + 1}
-     RETURNING ${restaurantColumns}`,
-    [...values, id],
+export function findRestaurantById(id: string) {
+  return restaurants.findOne({ _id: id });
+}
+
+export function findRestaurantsByIds(ids: string[]) {
+  return restaurants.find({ _id: { $in: ids } }).toArray();
+}
+
+// The visible map area as a polygon, so the 2dsphere index on location is used.
+function boundsPolygon(bounds: MapBounds) {
+  const { west, south, east, north } = bounds;
+  return {
+    type: "Polygon" as const,
+    coordinates: [[[west, south], [east, south], [east, north], [west, north], [west, south]]],
+  };
+}
+
+export function listActiveRestaurantsInBounds(bounds: MapBounds) {
+  return restaurants
+    .find({ isActive: true, location: { $geoWithin: { $geometry: boundsPolygon(bounds) } } })
+    .sort({ name: 1 })
+    .limit(bounds.limit)
+    .toArray();
+}
+
+export function updateRestaurant(id: string, changes: Partial<RestaurantDoc>) {
+  return restaurants.findOneAndUpdate(
+    { _id: id },
+    { $set: { ...changes, updatedAt: new Date() } },
+    { returnDocument: "after" },
   );
-  return result.rows[0] ?? null;
+}
+
+export async function countRestaurants() {
+  const [total, open] = await Promise.all([
+    restaurants.countDocuments({ isActive: true }),
+    restaurants.countDocuments({ isActive: true, queueState: "open" }),
+  ]);
+  return { total, open };
 }
