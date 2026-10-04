@@ -1,0 +1,67 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$open-dot: 0.5rem;
+
+.queue-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  padding: $space-5;
+  border-radius: $border-radius-sheet;
+  background: $color-ink;
+  color: $color-paper;
+
+  &--closed {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-1;
+    background: $color-sand;
+    color: $color-ink;
+  }
+
+  &__label {
+    font-size: $font-caption;
+    font-weight: 600;
+    letter-spacing: $tracking-overline;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  &__time {
+    margin-top: $space-1;
+    font-family: var(--heading);
+    font-size: $font-display-l;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
+  &__hint {
+    color: $color-muted;
+    font-size: $font-small;
+  }
+
+  &__side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-1;
+    font-size: $font-small;
+    text-align: right;
+    opacity: 0.8;
+  }
+
+  &__open {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    span {
+      width: $open-dot;
+      height: $open-dot;
+      border-radius: $border-radius-full;
+      background: $color-success-soft;
+    }
+  }
+}
