@@ -1,9 +1,7 @@
-$font-family-base: "Inter", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap");
 
-$font-size-body: 0.75rem; // 12px
-$font-size-headline-1: 1.25rem; // 20px
-$font-size-headline-2: 0.875rem; // 14px
-
-$line-height-body: 0.9375rem;
-$line-height-headline-1: 1.25rem;
-$line-height-headline-2: 1.0625rem;
+// Fraunces carries titles and big numbers; Inter carries everything else.
+// Live numbers (queue position, minutes) use tabular figures so they don't jiggle.
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,55 @@
+@use "../../styles/abstracts/colors" as *;
+
+.coming-soon {
+  // Same phone-width column the Welcome and Map screens use.
+  min-height: 100dvh;
+  max-width: 30rem;
+  margin-inline: auto;
+  padding:
+    calc(2.5rem + env(safe-area-inset-top, 0px))
+    calc(1.5rem + env(safe-area-inset-right, 0px))
+    calc(2.5rem + env(safe-area-inset-bottom, 0px))
+    calc(1.5rem + env(safe-area-inset-left, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  background: $color-background;
+  color: $color-foreground;
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: $color-highlight;
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(193, 57, 43, 0.35);
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &__title {
+    max-width: 18rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  &__back {
+    // 44px is the smallest comfortable touch target on a phone.
+    min-height: 2.75rem;
+    margin-top: 0.5rem;
+    padding: 0 1.4rem;
+    border-radius: 999px;
+    border: 1px solid #e7e5e0;
+    background: #fff;
+    font-weight: 600;
+  }
+}

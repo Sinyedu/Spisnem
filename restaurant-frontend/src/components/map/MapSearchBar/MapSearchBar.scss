@@ -2,30 +2,25 @@
 @use "../../../styles/abstracts/variables" as *;
 
 .map-search {
-  position: absolute;
-  z-index: 2;
-  top: env(safe-area-inset-top);
-  right: 0;
-  left: 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: $space-2;
+  padding: $space-4 $space-4 $space-2;
 
   &__menu {
     flex: none;
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: $touch-target;
+    height: $touch-target;
     border-radius: $border-radius-full;
-    background: #fff;
-    color: $color-foreground;
+    background: $color-paper;
+    color: $color-ink;
     box-shadow: $drop-shadow;
 
     svg {
-      width: 1.25rem;
-      height: 1.25rem;
+      width: $space-5;
+      height: $space-5;
     }
   }
 
@@ -33,18 +28,18 @@
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    height: 3rem;
-    padding: 0 1rem;
+    gap: $space-2;
+    height: $touch-target;
+    padding: 0 $space-4;
     border-radius: $border-radius-pill;
-    background: #fff;
-    color: $color-ghost-text;
+    background: $color-paper;
+    color: $color-muted;
     box-shadow: $drop-shadow;
 
     svg {
       flex: none;
-      width: 1.25rem;
-      height: 1.25rem;
+      width: $space-5;
+      height: $space-5;
     }
 
     input {
@@ -52,12 +47,12 @@
       border: none;
       outline: none;
       background: none;
-      color: $color-foreground;
+      color: $color-ink;
       // 1rem keeps iOS Safari from zooming in when the field is focused.
-      font-size: 1rem;
+      font-size: $font-body;
 
       &::placeholder {
-        color: $color-ghost-text;
+        color: $color-muted;
       }
 
       // The native clear button would sit next to our own.
@@ -70,11 +65,13 @@
       flex: none;
       display: grid;
       place-items: center;
-      color: $color-ghost-text;
+      width: $space-8;
+      height: $space-8;
+      color: $color-muted;
 
       svg {
-        width: 1rem;
-        height: 1rem;
+        width: $space-4;
+        height: $space-4;
       }
     }
   }

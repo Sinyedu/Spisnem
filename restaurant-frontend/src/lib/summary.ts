@@ -1,6 +1,5 @@
+import { API_URL } from "../config/env";
 import type { Summary } from "../types/api";
-
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api";
 
 // Landing-screen counts. See backend GET /api/public/summary.
 export async function getSummary(): Promise<Summary> {

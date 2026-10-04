@@ -1,9 +1,12 @@
 import type { FastifyInstance } from "fastify";
-import { pool } from "../database/pool.js";
+import { ensureIndexes } from "../database/indexes.js";
+import { mongoClient } from "../database/mongo.js";
 
-// Repositories import the pool directly; this only ties the pool to the app lifecycle.
+// Repositories import the collections directly; this sets up indexes once at startup
+// and closes the connection with the app.
 export async function registerDatabase(app: FastifyInstance) {
+  await ensureIndexes();
   app.addHook("onClose", async () => {
-    await pool.end();
+    await mongoClient.close();
   });
 }

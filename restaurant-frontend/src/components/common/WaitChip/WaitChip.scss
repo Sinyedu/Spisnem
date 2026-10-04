@@ -1,0 +1,21 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.wait-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  border-radius: $border-radius-pill;
+  background: $color-blush;
+  color: $color-terracotta;
+  font-size: $font-caption;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+
+  &--closed {
+    background: $color-sand;
+    color: $color-muted;
+  }
+}

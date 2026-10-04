@@ -1,0 +1,44 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.queue-tracker {
+  --queue-progress: 0%;
+
+  position: fixed;
+  right: calc(1rem + env(safe-area-inset-right));
+  top: calc(4.75rem + env(safe-area-inset-top));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 4.75rem;
+  height: 4.75rem;
+  padding: 0.28rem;
+  border-radius: $border-radius-full;
+  background:
+    conic-gradient(#fff var(--queue-progress), rgb(255 255 255 / 28%) 0),
+    $color-primary;
+  color: #fff;
+  box-shadow: 0 0.65rem 1.5rem rgb(17 17 17 / 24%);
+  line-height: 1;
+}
+
+.queue-tracker__inner {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: $border-radius-full;
+  background: $color-primary;
+}
+
+.queue-tracker__position {
+  font-family: var(--heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.queue-tracker__time {
+  margin-top: -0.45rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+}

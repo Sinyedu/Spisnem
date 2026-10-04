@@ -9,7 +9,6 @@
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test src/tests/*.test.ts",
-    "db:migrate": "tsx src/database/migrate.ts",
     "db:seed": "tsx src/database/seed.ts",
     "db:seed:restaurants": "tsx src/database/seed-restaurants.ts"
   },
@@ -28,15 +27,16 @@
     "@fastify/cors": "^11.2.0",
     "@fastify/jwt": "^10.1.0",
     "bcrypt": "^6.0.0",
+    "better-auth": "^1.7.1",
     "dotenv": "^17.4.2",
     "fastify": "^5.9.0",
-    "pg": "^8.22.0",
+    "mongodb": "^6.21.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/node": "^26.0.1",
-    "@types/pg": "^8.20.0",
+    "mongodb-memory-server": "^11.3.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }

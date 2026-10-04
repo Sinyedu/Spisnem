@@ -1,0 +1,36 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.social-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    // Same pill shape and touch height as the buttons on the Welcome screen.
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border: $border-thin;
+    border-radius: $border-radius-pill;
+    background: #fff;
+    color: $color-foreground;
+    font-size: 1rem;
+    font-weight: 600;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    // Apple asks for its button to be plain black or plain white.
+    &--apple {
+      border-color: #000;
+      background: #000;
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.map-filters {
+  display: flex;
+  gap: $space-2;
+  overflow-x: auto;
+  // Room for the chip shadows, which overflow would otherwise clip.
+  padding: $space-1 $space-4 $space-2;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__chip {
+    flex: none;
+    min-height: $space-10;
+    padding: 0 $space-4;
+    border-radius: $border-radius-pill;
+    background: $color-paper;
+    color: $color-ink;
+    font-size: $font-small;
+    font-weight: 500;
+    box-shadow: $drop-shadow;
+    transition:
+      background $duration-fast $ease-out,
+      color $duration-fast $ease-out;
+
+    &--active {
+      background: $color-ink;
+      color: $color-paper;
+    }
+  }
+}
