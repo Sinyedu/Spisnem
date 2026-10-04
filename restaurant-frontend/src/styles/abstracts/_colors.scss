@@ -1,7 +1,23 @@
-$color-primary: #c1392b;
-$color-highlight: #c1392b;
-$color-foreground: #111111;
-$color-background: #f7f6f4;
-$color-blip: #22c55e;
+// Spisnem palette. Shared with the welcome site so the brand feels the same everywhere.
+// See customer-app.md §2.1 for what each colour is for.
 
-$color-ghost-text: #8c8a84;
+$color-cream: #fbf7f1; // app background
+$color-sand: #f1e9de; // secondary surfaces, image placeholders
+$color-paper: #ffffff; // cards, sheets, inputs
+$color-ink: #1b1411; // primary text, dark buttons
+$color-muted: #6f625a; // secondary text, inactive icons
+$color-line: #e9e0d6; // borders, dividers, progress track
+$color-terracotta: #a8320e; // brand accent, one per screen
+$color-terracotta-dark: #8c2707; // pressed primary
+$color-blush: #f6e3da; // soft accent background (wait chips)
+$color-success: #2f7d55;
+$color-success-soft: #e6f3eb;
+$color-scrim: rgb(27 20 17 / 40%);
+
+// Names the existing screens already use, pointed at the new palette.
+$color-primary: $color-terracotta;
+$color-highlight: $color-terracotta;
+$color-foreground: $color-ink;
+$color-background: $color-cream;
+$color-blip: $color-success;
+$color-ghost-text: $color-muted;

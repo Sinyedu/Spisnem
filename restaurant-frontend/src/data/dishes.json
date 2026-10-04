@@ -1,0 +1,702 @@
+[
+  {
+    "id": 1,
+    "name": "Classic Cheeseburger",
+    "priceMinor": 12900,
+    "description": "Beef patty, cheddar, lettuce, tomato and burger sauce.",
+    "image": "/images/dishes/classic-cheeseburger.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Bacon Burger",
+    "priceMinor": 13900,
+    "description": "Beef patty, crispy bacon, cheddar and BBQ sauce.",
+    "image": "/images/dishes/bacon-burger.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Chicken Burger",
+    "priceMinor": 12500,
+    "description": "Crispy chicken, lettuce, pickles and spicy mayo.",
+    "image": "/images/dishes/chicken-burger.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Veggie Burger",
+    "priceMinor": 11900,
+    "description": "Plant-based patty, avocado, lettuce and tomato.",
+    "image": "/images/dishes/veggie-burger.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Truffle Burger",
+    "priceMinor": 14900,
+    "description": "Beef patty, cheddar, caramelized onions and truffle mayo.",
+    "image": "/images/dishes/truffle-burger.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Margherita Pizza",
+    "priceMinor": 10500,
+    "description": "Tomato sauce, mozzarella and fresh basil.",
+    "image": "/images/dishes/margherita-pizza.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Pepperoni Pizza",
+    "priceMinor": 11900,
+    "description": "Tomato sauce, mozzarella and spicy pepperoni.",
+    "image": "/images/dishes/pepperoni-pizza.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Prosciutto Pizza",
+    "priceMinor": 13500,
+    "description": "Mozzarella, prosciutto, rocket and parmesan.",
+    "image": "/images/dishes/prosciutto-pizza.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Quattro Formaggi",
+    "priceMinor": 12900,
+    "description": "Mozzarella, gorgonzola, parmesan and fontina.",
+    "image": "/images/dishes/quattro-formaggi.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Mushroom Pizza",
+    "priceMinor": 11500,
+    "description": "Mushrooms, mozzarella, garlic and fresh herbs.",
+    "image": "/images/dishes/mushroom-pizza.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Spaghetti Carbonara",
+    "priceMinor": 13900,
+    "description": "Spaghetti, pancetta, egg, parmesan and black pepper.",
+    "image": "/images/dishes/spaghetti-carbonara.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Pasta Bolognese",
+    "priceMinor": 13500,
+    "description": "Pasta with slow-cooked beef and tomato sauce.",
+    "image": "/images/dishes/pasta-bolognese.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Penne Arrabbiata",
+    "priceMinor": 11900,
+    "description": "Penne with spicy tomato, garlic and chili.",
+    "image": "/images/dishes/penne-arrabbiata.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Pesto Pasta",
+    "priceMinor": 12500,
+    "description": "Pasta with basil pesto, parmesan and pine nuts.",
+    "image": "/images/dishes/pesto-pasta.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Truffle Pasta",
+    "priceMinor": 15900,
+    "description": "Creamy pasta with mushrooms, parmesan and truffle.",
+    "image": "/images/dishes/truffle-pasta.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Chicken Caesar Salad",
+    "priceMinor": 12500,
+    "description": "Chicken, romaine, parmesan, croutons and Caesar dressing.",
+    "image": "/images/dishes/chicken-caesar-salad.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Greek Salad",
+    "priceMinor": 10900,
+    "description": "Tomato, cucumber, olives, red onion and feta.",
+    "image": "/images/dishes/greek-salad.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Avocado Salad",
+    "priceMinor": 11500,
+    "description": "Avocado, mixed greens, tomato and lemon dressing.",
+    "image": "/images/dishes/avocado-salad.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Goat Cheese Salad",
+    "priceMinor": 12500,
+    "description": "Goat cheese, beetroot, walnuts and mixed greens.",
+    "image": "/images/dishes/goat-cheese-salad.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Salmon Salad",
+    "priceMinor": 13900,
+    "description": "Smoked salmon, avocado, greens and mustard dressing.",
+    "image": "/images/dishes/salmon-salad.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Club Sandwich",
+    "priceMinor": 11900,
+    "description": "Chicken, bacon, lettuce, tomato and mayo.",
+    "image": "/images/dishes/club-sandwich.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Chicken Sandwich",
+    "priceMinor": 10900,
+    "description": "Grilled chicken, avocado, lettuce and herb mayo.",
+    "image": "/images/dishes/chicken-sandwich.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Tuna Sandwich",
+    "priceMinor": 10500,
+    "description": "Tuna, lettuce, cucumber and lemon mayo.",
+    "image": "/images/dishes/tuna-sandwich.jpg"
+  },
+  {
+    "id": 24,
+    "name": "BLT Sandwich",
+    "priceMinor": 10500,
+    "description": "Bacon, lettuce, tomato and mayonnaise.",
+    "image": "/images/dishes/blt-sandwich.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Grilled Cheese",
+    "priceMinor": 8900,
+    "description": "Toasted sourdough with melted cheddar and mozzarella.",
+    "image": "/images/dishes/grilled-cheese.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Fish & Chips",
+    "priceMinor": 14900,
+    "description": "Crispy cod, fries, tartar sauce and lemon.",
+    "image": "/images/dishes/fish-and-chips.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Grilled Salmon",
+    "priceMinor": 18900,
+    "description": "Salmon with roasted potatoes and seasonal vegetables.",
+    "image": "/images/dishes/grilled-salmon.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Fish Tacos",
+    "priceMinor": 12900,
+    "description": "Crispy fish, cabbage, lime and chili mayo.",
+    "image": "/images/dishes/fish-tacos.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Garlic Prawns",
+    "priceMinor": 14500,
+    "description": "Pan-fried prawns with garlic, chili and parsley.",
+    "image": "/images/dishes/garlic-prawns.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Seafood Pasta",
+    "priceMinor": 16900,
+    "description": "Pasta with prawns, mussels and tomato sauce.",
+    "image": "/images/dishes/seafood-pasta.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Ribeye Steak",
+    "priceMinor": 24900,
+    "description": "Grilled ribeye with fries and pepper sauce.",
+    "image": "/images/dishes/ribeye-steak.jpg"
+  },
+  {
+    "id": 32,
+    "name": "Sirloin Steak",
+    "priceMinor": 21900,
+    "description": "Sirloin with roasted potatoes and red wine sauce.",
+    "image": "/images/dishes/sirloin-steak.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Steak Frites",
+    "priceMinor": 19900,
+    "description": "Grilled steak, crispy fries and herb butter.",
+    "image": "/images/dishes/steak-frites.jpg"
+  },
+  {
+    "id": 34,
+    "name": "BBQ Ribs",
+    "priceMinor": 18900,
+    "description": "Slow-cooked pork ribs with BBQ glaze and fries.",
+    "image": "/images/dishes/bbq-ribs.jpg"
+  },
+  {
+    "id": 35,
+    "name": "Pork Tenderloin",
+    "priceMinor": 17900,
+    "description": "Pork tenderloin with potatoes and mushroom sauce.",
+    "image": "/images/dishes/pork-tenderloin.jpg"
+  },
+  {
+    "id": 36,
+    "name": "Roast Chicken",
+    "priceMinor": 16900,
+    "description": "Herb-roasted chicken with potatoes and vegetables.",
+    "image": "/images/dishes/roast-chicken.jpg"
+  },
+  {
+    "id": 37,
+    "name": "Chicken Schnitzel",
+    "priceMinor": 15900,
+    "description": "Breaded chicken with fries, lemon and herb butter.",
+    "image": "/images/dishes/chicken-schnitzel.jpg"
+  },
+  {
+    "id": 38,
+    "name": "Chicken Curry",
+    "priceMinor": 13900,
+    "description": "Creamy chicken curry served with basmati rice.",
+    "image": "/images/dishes/chicken-curry.jpg"
+  },
+  {
+    "id": 39,
+    "name": "Butter Chicken",
+    "priceMinor": 14900,
+    "description": "Chicken in creamy tomato curry with basmati rice.",
+    "image": "/images/dishes/butter-chicken.jpg"
+  },
+  {
+    "id": 40,
+    "name": "Chicken Tikka Masala",
+    "priceMinor": 14900,
+    "description": "Spiced chicken in rich tomato and cream sauce.",
+    "image": "/images/dishes/chicken-tikka-masala.jpg"
+  },
+  {
+    "id": 41,
+    "name": "Beef Tacos",
+    "priceMinor": 12500,
+    "description": "Three tacos with beef, salsa, onion and coriander.",
+    "image": "/images/dishes/beef-tacos.jpg"
+  },
+  {
+    "id": 42,
+    "name": "Chicken Tacos",
+    "priceMinor": 11900,
+    "description": "Three tacos with chicken, avocado and salsa.",
+    "image": "/images/dishes/chicken-tacos.jpg"
+  },
+  {
+    "id": 43,
+    "name": "Vegetable Tacos",
+    "priceMinor": 10900,
+    "description": "Three tacos with roasted vegetables and avocado.",
+    "image": "/images/dishes/vegetable-tacos.jpg"
+  },
+  {
+    "id": 44,
+    "name": "Beef Burrito",
+    "priceMinor": 12900,
+    "description": "Beef, rice, beans, cheese, salsa and sour cream.",
+    "image": "/images/dishes/beef-burrito.jpg"
+  },
+  {
+    "id": 45,
+    "name": "Chicken Quesadilla",
+    "priceMinor": 11900,
+    "description": "Grilled tortilla with chicken, cheese and salsa.",
+    "image": "/images/dishes/chicken-quesadilla.jpg"
+  },
+  {
+    "id": 46,
+    "name": "Pad Thai",
+    "priceMinor": 13900,
+    "description": "Rice noodles, chicken, egg, peanuts and lime.",
+    "image": "/images/dishes/pad-thai.jpg"
+  },
+  {
+    "id": 47,
+    "name": "Thai Green Curry",
+    "priceMinor": 14500,
+    "description": "Chicken, vegetables and coconut green curry.",
+    "image": "/images/dishes/thai-green-curry.jpg"
+  },
+  {
+    "id": 48,
+    "name": "Thai Red Curry",
+    "priceMinor": 14500,
+    "description": "Beef, vegetables and coconut red curry.",
+    "image": "/images/dishes/thai-red-curry.jpg"
+  },
+  {
+    "id": 49,
+    "name": "Chicken Satay",
+    "priceMinor": 11900,
+    "description": "Grilled chicken skewers with peanut sauce.",
+    "image": "/images/dishes/chicken-satay.jpg"
+  },
+  {
+    "id": 50,
+    "name": "Tom Yum Soup",
+    "priceMinor": 10900,
+    "description": "Spicy Thai soup with prawns, lime and lemongrass.",
+    "image": "/images/dishes/tom-yum-soup.jpg"
+  },
+  {
+    "id": 51,
+    "name": "Chicken Ramen",
+    "priceMinor": 13900,
+    "description": "Noodles, chicken, egg and vegetables in rich broth.",
+    "image": "/images/dishes/chicken-ramen.jpg"
+  },
+  {
+    "id": 52,
+    "name": "Pork Ramen",
+    "priceMinor": 14900,
+    "description": "Noodles, pork belly, egg and spring onion.",
+    "image": "/images/dishes/pork-ramen.jpg"
+  },
+  {
+    "id": 53,
+    "name": "Vegetable Ramen",
+    "priceMinor": 12500,
+    "description": "Noodles, tofu and vegetables in miso broth.",
+    "image": "/images/dishes/vegetable-ramen.jpg"
+  },
+  {
+    "id": 54,
+    "name": "Chicken Teriyaki",
+    "priceMinor": 13900,
+    "description": "Teriyaki chicken with steamed rice and vegetables.",
+    "image": "/images/dishes/chicken-teriyaki.jpg"
+  },
+  {
+    "id": 55,
+    "name": "Beef Teriyaki",
+    "priceMinor": 14900,
+    "description": "Teriyaki beef with rice, sesame and spring onion.",
+    "image": "/images/dishes/beef-teriyaki.jpg"
+  },
+  {
+    "id": 56,
+    "name": "Salmon Poke Bowl",
+    "priceMinor": 13900,
+    "description": "Salmon, rice, avocado, edamame and sesame.",
+    "image": "/images/dishes/salmon-poke-bowl.jpg"
+  },
+  {
+    "id": 57,
+    "name": "Chicken Poke Bowl",
+    "priceMinor": 12900,
+    "description": "Chicken, rice, avocado, cucumber and edamame.",
+    "image": "/images/dishes/chicken-poke-bowl.jpg"
+  },
+  {
+    "id": 58,
+    "name": "Tofu Poke Bowl",
+    "priceMinor": 11900,
+    "description": "Tofu, rice, avocado, edamame and sesame dressing.",
+    "image": "/images/dishes/tofu-poke-bowl.jpg"
+  },
+  {
+    "id": 59,
+    "name": "Salmon Sushi Set",
+    "priceMinor": 15900,
+    "description": "Selection of salmon nigiri and maki rolls.",
+    "image": "/images/dishes/salmon-sushi-set.jpg"
+  },
+  {
+    "id": 60,
+    "name": "California Roll",
+    "priceMinor": 10900,
+    "description": "Crab, avocado, cucumber and sesame.",
+    "image": "/images/dishes/california-roll.jpg"
+  },
+  {
+    "id": 61,
+    "name": "Falafel Bowl",
+    "priceMinor": 11500,
+    "description": "Falafel, hummus, couscous and fresh vegetables.",
+    "image": "/images/dishes/falafel-bowl.jpg"
+  },
+  {
+    "id": 62,
+    "name": "Chicken Shawarma",
+    "priceMinor": 11900,
+    "description": "Spiced chicken, flatbread, salad and garlic dressing.",
+    "image": "/images/dishes/chicken-shawarma.jpg"
+  },
+  {
+    "id": 63,
+    "name": "Falafel Wrap",
+    "priceMinor": 9900,
+    "description": "Falafel, hummus, salad and tahini in flatbread.",
+    "image": "/images/dishes/falafel-wrap.jpg"
+  },
+  {
+    "id": 64,
+    "name": "Hummus Plate",
+    "priceMinor": 8900,
+    "description": "Creamy hummus with olive oil and warm flatbread.",
+    "image": "/images/dishes/hummus-plate.jpg"
+  },
+  {
+    "id": 65,
+    "name": "Halloumi Wrap",
+    "priceMinor": 10900,
+    "description": "Grilled halloumi, vegetables and chili dressing.",
+    "image": "/images/dishes/halloumi-wrap.jpg"
+  },
+  {
+    "id": 66,
+    "name": "Avocado Toast",
+    "priceMinor": 10500,
+    "description": "Sourdough, smashed avocado, chili and poached egg.",
+    "image": "/images/dishes/avocado-toast.jpg"
+  },
+  {
+    "id": 67,
+    "name": "Eggs Benedict",
+    "priceMinor": 11900,
+    "description": "Poached eggs, ham, muffin and hollandaise.",
+    "image": "/images/dishes/eggs-benedict.jpg"
+  },
+  {
+    "id": 68,
+    "name": "Eggs Royale",
+    "priceMinor": 12900,
+    "description": "Poached eggs, smoked salmon and hollandaise.",
+    "image": "/images/dishes/eggs-royale.jpg"
+  },
+  {
+    "id": 69,
+    "name": "Full Breakfast",
+    "priceMinor": 13900,
+    "description": "Eggs, bacon, sausage, beans, mushrooms and toast.",
+    "image": "/images/dishes/full-breakfast.jpg"
+  },
+  {
+    "id": 70,
+    "name": "Scrambled Eggs",
+    "priceMinor": 8900,
+    "description": "Creamy scrambled eggs served on toasted sourdough.",
+    "image": "/images/dishes/scrambled-eggs.jpg"
+  },
+  {
+    "id": 71,
+    "name": "Pancakes",
+    "priceMinor": 9900,
+    "description": "Fluffy pancakes with berries and maple syrup.",
+    "image": "/images/dishes/pancakes.jpg"
+  },
+  {
+    "id": 72,
+    "name": "French Toast",
+    "priceMinor": 10500,
+    "description": "Brioche, berries, cinnamon and maple syrup.",
+    "image": "/images/dishes/french-toast.jpg"
+  },
+  {
+    "id": 73,
+    "name": "Granola Bowl",
+    "priceMinor": 8500,
+    "description": "Greek yogurt, granola, berries and honey.",
+    "image": "/images/dishes/granola-bowl.jpg"
+  },
+  {
+    "id": 74,
+    "name": "Acai Bowl",
+    "priceMinor": 9900,
+    "description": "Acai, banana, berries, granola and coconut.",
+    "image": "/images/dishes/acai-bowl.jpg"
+  },
+  {
+    "id": 75,
+    "name": "Breakfast Burrito",
+    "priceMinor": 10900,
+    "description": "Egg, bacon, avocado, cheese and salsa.",
+    "image": "/images/dishes/breakfast-burrito.jpg"
+  },
+  {
+    "id": 76,
+    "name": "Tomato Soup",
+    "priceMinor": 8500,
+    "description": "Creamy tomato soup with basil and bread.",
+    "image": "/images/dishes/tomato-soup.jpg"
+  },
+  {
+    "id": 77,
+    "name": "Mushroom Soup",
+    "priceMinor": 8900,
+    "description": "Creamy mushroom soup with herbs and sourdough.",
+    "image": "/images/dishes/mushroom-soup.jpg"
+  },
+  {
+    "id": 78,
+    "name": "French Onion Soup",
+    "priceMinor": 9500,
+    "description": "Caramelized onion soup with cheese toast.",
+    "image": "/images/dishes/french-onion-soup.jpg"
+  },
+  {
+    "id": 79,
+    "name": "Chicken Noodle Soup",
+    "priceMinor": 8900,
+    "description": "Chicken broth with noodles and fresh vegetables.",
+    "image": "/images/dishes/chicken-noodle-soup.jpg"
+  },
+  {
+    "id": 80,
+    "name": "Minestrone",
+    "priceMinor": 8500,
+    "description": "Italian vegetable soup with beans and pasta.",
+    "image": "/images/dishes/minestrone.jpg"
+  },
+  {
+    "id": 81,
+    "name": "Nachos",
+    "priceMinor": 10900,
+    "description": "Tortilla chips, cheese, salsa, jalapeños and guacamole.",
+    "image": "/images/dishes/nachos.jpg"
+  },
+  {
+    "id": 82,
+    "name": "Mozzarella Sticks",
+    "priceMinor": 7900,
+    "description": "Crispy mozzarella sticks with tomato dip.",
+    "image": "/images/dishes/mozzarella-sticks.jpg"
+  },
+  {
+    "id": 83,
+    "name": "Chicken Wings",
+    "priceMinor": 9900,
+    "description": "Crispy wings with spicy buffalo sauce.",
+    "image": "/images/dishes/chicken-wings.jpg"
+  },
+  {
+    "id": 84,
+    "name": "Calamari",
+    "priceMinor": 10900,
+    "description": "Crispy calamari with lemon and garlic mayo.",
+    "image": "/images/dishes/calamari.jpg"
+  },
+  {
+    "id": 85,
+    "name": "Bruschetta",
+    "priceMinor": 7900,
+    "description": "Toasted bread with tomato, garlic and basil.",
+    "image": "/images/dishes/bruschetta.jpg"
+  },
+  {
+    "id": 86,
+    "name": "French Fries",
+    "priceMinor": 4900,
+    "description": "Crispy fries served with mayonnaise.",
+    "image": "/images/dishes/french-fries.jpg"
+  },
+  {
+    "id": 87,
+    "name": "Sweet Potato Fries",
+    "priceMinor": 5900,
+    "description": "Crispy sweet potato fries with chili mayo.",
+    "image": "/images/dishes/sweet-potato-fries.jpg"
+  },
+  {
+    "id": 88,
+    "name": "Onion Rings",
+    "priceMinor": 5500,
+    "description": "Crispy battered onion rings with BBQ dip.",
+    "image": "/images/dishes/onion-rings.jpg"
+  },
+  {
+    "id": 89,
+    "name": "Garlic Bread",
+    "priceMinor": 5500,
+    "description": "Toasted bread with garlic butter and herbs.",
+    "image": "/images/dishes/garlic-bread.jpg"
+  },
+  {
+    "id": 90,
+    "name": "Side Salad",
+    "priceMinor": 4900,
+    "description": "Mixed greens, tomato, cucumber and vinaigrette.",
+    "image": "/images/dishes/side-salad.jpg"
+  },
+  {
+    "id": 91,
+    "name": "Chocolate Brownie",
+    "priceMinor": 7500,
+    "description": "Warm chocolate brownie with vanilla ice cream.",
+    "image": "/images/dishes/chocolate-brownie.jpg"
+  },
+  {
+    "id": 92,
+    "name": "Cheesecake",
+    "priceMinor": 7900,
+    "description": "Creamy cheesecake with berry compote.",
+    "image": "/images/dishes/cheesecake.jpg"
+  },
+  {
+    "id": 93,
+    "name": "Tiramisu",
+    "priceMinor": 7900,
+    "description": "Classic Italian coffee and mascarpone dessert.",
+    "image": "/images/dishes/tiramisu.jpg"
+  },
+  {
+    "id": 94,
+    "name": "Crème Brûlée",
+    "priceMinor": 8500,
+    "description": "Vanilla custard with caramelized sugar crust.",
+    "image": "/images/dishes/creme-brulee.jpg"
+  },
+  {
+    "id": 95,
+    "name": "Chocolate Cake",
+    "priceMinor": 7500,
+    "description": "Rich chocolate cake with chocolate ganache.",
+    "image": "/images/dishes/chocolate-cake.jpg"
+  },
+  {
+    "id": 96,
+    "name": "Apple Pie",
+    "priceMinor": 7500,
+    "description": "Warm apple pie with cinnamon and vanilla ice cream.",
+    "image": "/images/dishes/apple-pie.jpg"
+  },
+  {
+    "id": 97,
+    "name": "Carrot Cake",
+    "priceMinor": 6900,
+    "description": "Spiced carrot cake with cream cheese frosting.",
+    "image": "/images/dishes/carrot-cake.jpg"
+  },
+  {
+    "id": 98,
+    "name": "Ice Cream Sundae",
+    "priceMinor": 6900,
+    "description": "Vanilla ice cream, chocolate sauce and whipped cream.",
+    "image": "/images/dishes/ice-cream-sundae.jpg"
+  },
+  {
+    "id": 99,
+    "name": "Chocolate Mousse",
+    "priceMinor": 7500,
+    "description": "Dark chocolate mousse with fresh berries.",
+    "image": "/images/dishes/chocolate-mousse.jpg"
+  },
+  {
+    "id": 100,
+    "name": "Lemon Tart",
+    "priceMinor": 7900,
+    "description": "Tangy lemon tart with whipped cream.",
+    "image": "/images/dishes/lemon-tart.jpg"
+  }
+]

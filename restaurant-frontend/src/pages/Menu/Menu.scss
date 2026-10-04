@@ -1,0 +1,67 @@
+@use "../../styles/abstracts/colors" as *;
+@use "../../styles/abstracts/variables" as *;
+@use "../../styles/main.scss" as *;
+
+.menu {
+  min-height: 100vh;
+  background: $color-background;
+  color: $color-foreground;
+
+  &-hero {
+    width: 100%;
+    height: 18rem;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+  }
+
+  &__restaurant-name {
+    margin: 0 0 16px;
+
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  &__restaurant-type {
+    margin: 0 0 16px;
+
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  &__restaurant-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  &__restaurant-dishes {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+
+    border-top: 1px solid #e5e4e7;
+  }
+
+  &__section-title {
+    margin: 0 0 16px;
+
+    color: $color-primary;
+
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+}
