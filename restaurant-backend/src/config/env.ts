@@ -5,7 +5,9 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   HOST: z.string().default("0.0.0.0"),
   PORT: z.coerce.number().int().positive().default(3000),
-  DATABASE_URL: z.string().min(1),
+  // Same defaults as the dashboard backend, so both talk to one local database.
+  MONGODB_URI: z.string().min(1).default("mongodb://127.0.0.1:27017"),
+  MONGODB_DB_NAME: z.string().min(1).default("spisnem"),
   JWT_SECRET: z.string().min(16),
   CORS_ORIGIN: z.string().default("http://localhost:5173"),
   PUBLIC_APP_URL: z.string().default("http://localhost:5173"),
