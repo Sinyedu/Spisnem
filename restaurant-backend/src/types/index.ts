@@ -1,7 +1,12 @@
 export type * from "./auth.js";
+export type * from "./customer.js";
 export type * from "./dashboard.js";
 export type * from "./database.js";
+export type * from "./documents.js";
+export type * from "./estimate.js";
+export type * from "./insights.js";
 export type * from "./menu.js";
 export type * from "./queue.js";
 export type * from "./restaurant.js";
 export type * from "./summary.js";
+export type * from "./tables.js";

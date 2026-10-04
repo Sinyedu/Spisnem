@@ -1,12 +1,18 @@
-import { useRef, useState, type PointerEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import type { BottomSheetProps } from "../../../types/generic";
 import "./BottomSheet.scss";
 
 // Resting heights as a fraction of the screen: peek, half, full.
-const SNAPS = [0.15, 0.5, 0.9];
+const SNAPS = [0.18, 0.5, 0.9];
 const CLOSED = SNAPS[0];
+const HALF = SNAPS[1];
 const OPEN = SNAPS[SNAPS.length - 1];
 
-function BottomSheet({ children }: { children: ReactNode }) {
+function nearestSnap(height: number) {
+  return SNAPS.reduce((best, snap) => (Math.abs(snap - height) < Math.abs(best - height) ? snap : best));
+}
+
+function useSheetDrag() {
   const [height, setHeight] = useState(CLOSED);
   const [dragging, setDragging] = useState(false);
   const start = useRef({ y: 0, height: CLOSED });
@@ -27,33 +33,31 @@ function BottomSheet({ children }: { children: ReactNode }) {
   function onPointerUp() {
     if (!dragging) return;
     setDragging(false);
-    // Settle on whichever snap point the finger stopped nearest to.
-    setHeight((current) =>
-      SNAPS.reduce((best, snap) =>
-        Math.abs(snap - current) < Math.abs(best - current) ? snap : best,
-      ),
-    );
+    setHeight(nearestSnap);
   }
+
+  const handlers = { onPointerDown, onPointerMove, onPointerUp, onPointerCancel: onPointerUp };
+  return { dragging, handlers, height, setHeight };
+}
+
+function BottomSheet({ children, footer, expandKey }: BottomSheetProps) {
+  const { dragging, handlers, height, setHeight } = useSheetDrag();
+
+  useEffect(() => {
+    if (expandKey) setHeight((current) => Math.max(current, HALF));
+  }, [expandKey, setHeight]);
 
   return (
     <section
-      className="sheet"
-      style={{
-        height: `${height * 100}%`,
-        transition: dragging ? "none" : "height 0.25s ease",
-      }}
+      className={`sheet ${dragging ? "sheet--dragging" : ""}`}
+      style={{ height: `${height * 100}%` }}
     >
-      <div
-        className="sheet__grip"
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
-      >
+      <div className="sheet__grip" {...handlers}>
         <span className="sheet__handle" />
       </div>
 
       <div className="sheet__body">{children}</div>
+      {footer && <div className="sheet__footer">{footer}</div>}
     </section>
   );
 }

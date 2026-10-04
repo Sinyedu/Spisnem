@@ -1,0 +1,63 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.leave-queue {
+  min-height: $touch-target;
+  padding: 0 $space-4;
+  font-size: $font-body;
+
+  &--light {
+    color: $color-muted;
+  }
+
+  &--onAccent {
+    color: rgb(255 255 255 / 80%);
+  }
+
+  &__confirm {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    width: 100%;
+    padding: $space-4;
+    border-radius: $border-radius-card;
+    text-align: center;
+
+    &.leave-queue--light {
+      background: $color-sand;
+      color: $color-ink;
+    }
+
+    &.leave-queue--onAccent {
+      background: rgb(255 255 255 / 12%);
+      color: $color-paper;
+    }
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-2;
+
+    button {
+      min-height: $touch-target;
+      border: 0.0625rem solid currentcolor;
+      border-radius: $border-radius-pill;
+      font-weight: 600;
+    }
+  }
+
+  &__yes {
+    background: currentcolor;
+
+    .leave-queue--light & {
+      background: $color-ink;
+      color: $color-paper;
+    }
+
+    .leave-queue--onAccent & {
+      background: $color-paper;
+      color: $color-terracotta;
+    }
+  }
+}

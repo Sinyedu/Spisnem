@@ -1,0 +1,62 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$image-size: 4rem;
+
+.restaurant-card {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  padding: $space-2;
+  border: $border-thin;
+  border-radius: $border-radius-card;
+  background: $color-paper;
+  text-align: left;
+  transition:
+    border-color $duration-fast $ease-out,
+    box-shadow $duration-fast $ease-out;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--selected {
+    border-color: $color-terracotta;
+    box-shadow: $shadow-accent;
+  }
+
+  &__image {
+    flex: none;
+    width: $image-size;
+    height: $image-size;
+    border-radius: $border-radius-card * 0.75;
+    background: $color-sand;
+    object-fit: cover;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-1;
+    min-width: 0;
+  }
+
+  &__name {
+    max-width: 100%;
+    overflow: hidden;
+    color: $color-ink;
+    font-family: var(--heading);
+    font-size: $font-lead;
+    font-weight: 500;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__meta {
+    color: $color-muted;
+    font-size: $font-caption;
+  }
+}

@@ -1,21 +1,20 @@
-import { pool } from "../../database/pool.js";
+import { staffUsers } from "../../database/collections.js";
 import type { StaffUser } from "../../types/index.js";
+import { findRestaurantById } from "../restaurants/restaurant.repository.js";
 
-export async function findStaffUserByEmail(email: string) {
-  const result = await pool.query<StaffUser>(
-    `SELECT u.id,
-            u.email,
-            u.password_hash AS "passwordHash",
-            u.display_name AS "displayName",
-            ru.restaurant_id AS "restaurantId",
-            ru.role,
-            r.name AS "restaurantName"
-     FROM users u
-     LEFT JOIN restaurant_users ru ON ru.user_id = u.id
-     LEFT JOIN restaurants r ON r.id = ru.restaurant_id
-     WHERE lower(u.email) = lower($1)
-     LIMIT 1`,
-    [email],
-  );
-  return result.rows[0] ?? null;
+/** A staff login and the restaurant they belong to (the first one, as before). */
+export async function findStaffUserByEmail(email: string): Promise<StaffUser | null> {
+  const user = await staffUsers.findOne({ emailLower: email.toLowerCase() });
+  if (!user) return null;
+  const membership = user.memberships[0] ?? null;
+  const restaurant = membership ? await findRestaurantById(membership.restaurantId) : null;
+  return {
+    id: user._id,
+    email: user.email,
+    passwordHash: user.passwordHash,
+    displayName: user.displayName,
+    restaurantId: membership?.restaurantId ?? null,
+    role: membership?.role ?? null,
+    restaurantName: restaurant?.name ?? null,
+  };
 }

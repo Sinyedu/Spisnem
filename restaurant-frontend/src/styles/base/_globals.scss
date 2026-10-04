@@ -1,14 +1,27 @@
+@use "../abstracts/colors" as *;
+
+// Phone-only app: one root size, no breakpoints.
 :root {
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color: var(--text);
-  background: var(--bg);
+  font: 16px/150% var(--sans);
+  color: $color-ink;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+:focus-visible {
+  outline: 0.125rem solid $color-terracotta;
+  outline-offset: 0.125rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
   }
 }

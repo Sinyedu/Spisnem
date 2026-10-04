@@ -1,18 +1,20 @@
 @use "../../styles/abstracts/colors" as *;
 @use "../../styles/abstracts/variables" as *;
 
-// Phone-only, matching the 30rem frame the rest of the app uses.
+$cover-height: 16rem;
+
+// Phone-only, matching the frame the rest of the app uses.
 .restaurant {
   min-height: 100dvh;
-  max-width: 30rem;
+  max-width: $phone-frame;
   margin-inline: auto;
   background: $color-background;
   color: $color-foreground;
 
   &__cover {
     position: relative;
-    height: 12rem;
-    background: #ece9e4;
+    height: $cover-height;
+    background: $color-sand;
 
     img {
       width: 100%;
@@ -21,74 +23,73 @@
     }
   }
 
-  &__back {
+  &__back,
+  &__favourite {
     position: absolute;
-    top: calc(1rem + env(safe-area-inset-top));
-    left: 1rem;
-    display: grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: $border-radius-full;
-    background: #fff;
-    color: $color-foreground;
-    box-shadow: $drop-shadow;
+    top: calc(#{$space-4} + env(safe-area-inset-top));
+  }
 
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-    }
+  &__back {
+    left: $space-4;
+  }
+
+  &__favourite {
+    right: $space-4;
   }
 
   &__body {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.5rem 1rem calc(2rem + env(safe-area-inset-bottom));
+    gap: $space-5;
+    margin-top: -$space-6;
+    padding: $space-6 $space-5 $space-8;
+    border-radius: $border-radius-sheet $border-radius-sheet 0 0;
+    background: $color-background;
   }
 
-  &__empty {
-    padding: 2rem 1rem;
-    color: $color-ghost-text;
+  &__status {
+    padding: $space-8 $space-5;
+    color: $color-muted;
   }
 
   &__name {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-family: var(--heading);
+    font-size: $font-title;
+    font-weight: 500;
+    line-height: 1.15;
   }
 
-  &__meta,
-  &__address {
-    color: $color-ghost-text;
-    font-size: 0.875rem;
+  &__meta {
+    margin-top: $space-1;
+    color: $color-muted;
+    font-size: $font-small;
   }
 
-  &__description {
-    line-height: 1.5;
+  // Sticky so the main action stays in reach of the thumb while scrolling.
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    padding: $space-4 $space-5 calc(#{$space-4} + env(safe-area-inset-bottom));
+    background: linear-gradient(to bottom, rgb(251 247 241 / 0%), $color-background 35%);
   }
 
   &__cta {
-    margin: 0.5rem 0 1rem;
-    padding: 0.875rem 1.5rem;
+    width: 100%;
+    min-height: $button-height;
     border-radius: $border-radius-pill;
-    background: $color-primary;
-    color: #fff;
+    background: $color-terracotta;
+    color: $color-paper;
     font-weight: 600;
-  }
+    transition: background $duration-fast $ease-out;
 
-  &__section {
-    padding-top: 1rem;
-    border-top: $border-thin;
-
-    h2 {
-      margin-bottom: 0.25rem;
-      font-size: 1rem;
-      font-weight: 600;
+    &:active {
+      background: $color-terracotta-dark;
     }
 
-    p {
-      color: $color-ghost-text;
-      font-size: 0.875rem;
+    &:disabled {
+      background: $color-line;
+      color: $color-muted;
     }
   }
 }
