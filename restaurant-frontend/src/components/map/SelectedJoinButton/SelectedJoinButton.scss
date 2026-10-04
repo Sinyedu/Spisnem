@@ -1,0 +1,25 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.selected-join {
+  width: 100%;
+  min-height: $button-height;
+  padding: 0 $space-6;
+  overflow: hidden;
+  border-radius: $border-radius-pill;
+  background: $color-terracotta;
+  color: $color-paper;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background $duration-fast $ease-out;
+
+  &:active {
+    background: $color-terracotta-dark;
+  }
+
+  &:disabled {
+    background: $color-line;
+    color: $color-muted;
+  }
+}
