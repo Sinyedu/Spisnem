@@ -1,0 +1,45 @@
+@use "../../styles/abstracts/colors" as *;
+@use "../../styles/abstracts/variables" as *;
+
+$image-size: 4rem;
+
+.favourites {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    list-style: none;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-2;
+    border: $border-thin;
+    border-radius: $border-radius-card;
+    background: $color-paper;
+    color: $color-ink;
+    text-decoration: none;
+  }
+
+  &__image {
+    width: $image-size;
+    height: $image-size;
+    border-radius: $border-radius-card * 0.75;
+    background: $color-sand;
+    object-fit: cover;
+  }
+
+  &__name {
+    display: block;
+    font-family: var(--heading);
+    font-size: $font-lead;
+  }
+
+  &__meta,
+  &__status {
+    color: $color-muted;
+    font-size: $font-small;
+  }
+}

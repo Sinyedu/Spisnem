@@ -1,0 +1,78 @@
+@use "../../styles/abstracts/colors" as *;
+@use "../../styles/abstracts/variables" as *;
+
+$avatar-size: 3.5rem;
+
+.profile {
+  &__card {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    padding: $space-4;
+    border: $border-thin;
+    border-radius: $border-radius-card;
+    background: $color-paper;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: $avatar-size;
+    height: $avatar-size;
+    border-radius: $border-radius-full;
+    background: $color-blush;
+    color: $color-terracotta;
+    font-family: var(--heading);
+    font-size: $font-title-s;
+  }
+
+  &__name {
+    display: block;
+    font-weight: 600;
+  }
+
+  &__email {
+    display: block;
+    color: $color-muted;
+    font-size: $font-small;
+  }
+
+  &__links {
+    list-style: none;
+    border: $border-thin;
+    border-radius: $border-radius-card;
+    background: $color-paper;
+
+    li + li {
+      border-top: $border-thin;
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    min-height: $button-height;
+    padding: 0 $space-4;
+    color: $color-ink;
+    text-decoration: none;
+
+    span {
+      flex: 1;
+    }
+
+    svg:last-child {
+      color: $color-muted;
+    }
+  }
+
+  &__sign-out {
+    min-height: $touch-target;
+    color: $color-terracotta;
+    font-weight: 600;
+  }
+
+  &__language {
+    margin-top: auto;
+  }
+}

@@ -1,0 +1,65 @@
+@use "../../styles/abstracts/colors" as *;
+@use "../../styles/abstracts/variables" as *;
+
+.history {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    list-style: none;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    padding: $space-3 $space-4;
+    border: $border-thin;
+    border-radius: $border-radius-card;
+    background: $color-paper;
+    color: $color-ink;
+    text-decoration: none;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+  }
+
+  &__name {
+    font-family: var(--heading);
+    font-size: $font-lead;
+  }
+
+  &__status {
+    padding: $space-1 $space-2;
+    border-radius: $border-radius-pill;
+    background: $color-sand;
+    color: $color-muted;
+    font-size: $font-caption;
+    font-weight: 600;
+
+    &--seated {
+      background: $color-success-soft;
+      color: $color-success;
+    }
+
+    &--waiting,
+    &--notified {
+      background: $color-blush;
+      color: $color-terracotta;
+    }
+  }
+
+  &__meta {
+    color: $color-muted;
+    font-size: $font-small;
+  }
+
+  &__wait {
+    font-size: $font-small;
+    font-weight: 500;
+  }
+}
