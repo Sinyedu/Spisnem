@@ -1,0 +1,56 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.bottom-nav {
+  position: fixed;
+  z-index: 20;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: $phone-frame;
+  height: calc(#{$tab-bar-height} + env(safe-area-inset-bottom));
+  margin-inline: auto;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: $border-thin;
+  background: $color-paper;
+
+  &__tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $space-1;
+    color: $color-muted;
+    text-decoration: none;
+
+    &--active {
+      color: $color-terracotta;
+    }
+  }
+
+  &__icon {
+    position: relative;
+  }
+
+  &__badge {
+    position: absolute;
+    top: -$space-2;
+    left: 60%;
+    min-width: $space-5;
+    padding: 0 $space-1;
+    border-radius: $border-radius-pill;
+    background: $color-terracotta;
+    color: $color-paper;
+    font-size: $font-caption;
+    font-weight: 700;
+    line-height: $space-5;
+    text-align: center;
+  }
+
+  &__label {
+    font-size: $font-caption;
+    font-weight: 500;
+  }
+}
