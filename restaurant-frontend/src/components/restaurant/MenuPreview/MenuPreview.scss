@@ -1,0 +1,30 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.menu-preview {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-family: var(--heading);
+    font-size: $font-title-s;
+    font-weight: 500;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    color: $color-terracotta;
+    font-size: $font-small;
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
