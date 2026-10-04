@@ -1,111 +1,93 @@
-import { useEffect, useState, type Dispatch, type FormEvent, type SetStateAction } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useResource } from "../../hooks/useResource";
 import {
   cancelQueueEntry,
   clearQueueToken,
-  getQueueEntry,
+  getWaitEstimate,
   joinRestaurantQueue,
   readQueueToken,
+  reportOnMyWay,
+  reportRunningLate,
   writeQueueToken,
 } from "../../lib/queue";
-import type { QueueEntry } from "../../types/api";
+import { useCurrentQueueEntry } from "../../session/queueEntryContext";
+import type { LateMinutes, QueueEntry } from "../../types/api";
+import type { QueueFormState, QueueFormSubmit, QueueFormUpdate, QueueView } from "../../types/queue";
+import { useRestaurant } from "../Restaurant/useRestaurant";
 
-export type QueueFormState = {
-  guestName: string;
-  partySize: number;
-  phone: string;
-};
+const initialForm: QueueFormState = { guestName: "", partySize: 2, phone: "" };
 
-export type QueueFormSubmit = (event: FormEvent<HTMLFormElement>) => Promise<void>;
-export type QueueFormUpdate = (next: Partial<QueueFormState>) => void;
+type EntrySetter = (entry: QueueEntry | null) => void;
 
-const initialForm: QueueFormState = {
-  guestName: "",
-  partySize: 2,
-  phone: "",
-};
-
-type QueueEntrySetter = Dispatch<SetStateAction<QueueEntry | null>>;
-
-function useStoredQueueEntry() {
-  const [entry, setEntry] = useState<QueueEntry | null>(null);
-
-  useEffect(() => {
-    const token = readQueueToken();
-    if (!token) return;
-
-    const controller = new AbortController();
-    getQueueEntry(token, controller.signal).then(setEntry).catch(clearQueueToken);
-    return () => controller.abort();
-  }, []);
-
-  return { entry, setEntry };
-}
-
-function useQueueForm(slug: string | undefined, setEntry: QueueEntrySetter) {
+function useQueueForm(slug: string | undefined, setEntry: EntrySetter) {
   const [failed, setFailed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState(initialForm);
 
-  const updateForm: QueueFormUpdate = (next) => {
-    setForm((current) => ({ ...current, ...next }));
-  };
+  const updateForm: QueueFormUpdate = (next) => setForm((current) => ({ ...current, ...next }));
 
   const joinCurrentQueue: QueueFormSubmit = async (event) => {
     event.preventDefault();
-    if (!slug) return;
-
+    if (!slug || submitting) return;
     setFailed(false);
+    setSubmitting(true);
     try {
-      const joined = await joinRestaurantQueue(slug, {
-        guestName: form.guestName,
-        partySize: form.partySize,
-        phone: form.phone || undefined,
-      });
+      const { phone, guestName, partySize } = form;
+      const joined = await joinRestaurantQueue(slug, { guestName: guestName.trim(), partySize, phone: phone.trim() || undefined });
       writeQueueToken(joined.token);
       setEntry(joined);
     } catch {
       setFailed(true);
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  return { failed, form, joinCurrentQueue, updateForm };
+  return { failed, form, joinCurrentQueue, submitting, updateForm };
 }
 
-async function leaveQueue(setEntry: QueueEntrySetter) {
-  const token = readQueueToken();
-  if (token) await cancelQueueEntry(token);
-  clearQueueToken();
-  setEntry(null);
+function queueView(entry: QueueEntry | null, loading: boolean, slug: string | undefined): QueueView {
+  if (loading) return "loading";
+  if (entry?.status === "waiting") return "ticket";
+  if (entry?.status === "notified") return "called";
+  if (entry) return "outcome";
+  return slug ? "join" : "empty";
+}
+
+// Actions on the ticket that is already stored: leave, running late, on my way, done.
+function useTicketActions(setEntry: EntrySetter) {
+  const navigate = useNavigate();
+  const withToken = async (action: (token: string) => Promise<QueueEntry>) => {
+    const token = readQueueToken();
+    if (token) setEntry(await action(token));
+  };
+  return {
+    leave: async () => {
+      const token = readQueueToken();
+      if (token) await cancelQueueEntry(token);
+      clearQueueToken();
+      setEntry(null);
+    },
+    late: (minutes: LateMinutes) => withToken((token) => reportRunningLate(token, minutes)),
+    onMyWay: () => withToken(reportOnMyWay),
+    finish: () => {
+      clearQueueToken();
+      navigate("/map");
+    },
+  };
 }
 
 export function useQueuePage() {
   const { slug } = useParams();
-  const navigate = useNavigate();
-  const { entry, setEntry } = useStoredQueueEntry();
+  const { entry, loading, setEntry } = useCurrentQueueEntry();
+  const view = queueView(entry, loading, slug);
   const queueForm = useQueueForm(slug, setEntry);
+  // Only the join screen needs the restaurant and a live quote for the size picked.
+  const joining = view === "join" && slug ? slug : "";
+  const { restaurant } = useRestaurant(joining);
+  const size = queueForm.form.partySize;
+  const { data: estimate } = useResource(joining && `estimate:${joining}:${size}`, (signal) => getWaitEstimate(joining, size, signal));
 
-  async function leave() {
-    await leaveQueue(setEntry);
-  }
-
-  function goBack() {
-    navigate(-1);
-  }
-
-  function goToMap() {
-    navigate("/map");
-  }
-
-  return {
-    canJoin: Boolean(slug && !entry),
-    entry,
-    failed: queueForm.failed,
-    form: queueForm.form,
-    goBack,
-    goToMap,
-    isEmpty: !entry && !slug,
-    joinCurrentQueue: queueForm.joinCurrentQueue,
-    leave,
-    updateForm: queueForm.updateForm,
-  };
+  return { ...queueForm, ...useTicketActions(setEntry), entry, estimate, isTab: !slug, restaurant, view };
 }
