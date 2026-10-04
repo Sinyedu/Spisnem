@@ -1,0 +1,36 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$label-width: 5rem;
+
+.restaurant-details {
+  border: $border-thin;
+  border-radius: $border-radius-card;
+  background: $color-paper;
+
+  &__row {
+    display: flex;
+    gap: $space-3;
+    padding: $space-3 $space-4;
+    font-size: $font-small;
+
+    & + & {
+      border-top: $border-thin;
+    }
+
+    dt {
+      flex: none;
+      width: $label-width;
+      color: $color-muted;
+    }
+
+    a {
+      color: $color-ink;
+    }
+  }
+
+  &__description {
+    color: $color-ink;
+    line-height: 1.6;
+  }
+}

@@ -1,67 +1,94 @@
 @use "../../styles/abstracts/colors" as *;
 @use "../../styles/abstracts/variables" as *;
-@use "../../styles/main.scss" as *;
 
+$hero-height: 18rem;
+
+// Phone-only, matching the frame the rest of the app uses.
 .menu {
-  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: $phone-frame;
+  margin-inline: auto;
   background: $color-background;
   color: $color-foreground;
 
   &-hero {
-    width: 100%;
-    height: 18rem;
-    overflow: hidden;
     position: relative;
+    width: 100%;
+    height: $hero-height;
+    overflow: hidden;
+    background: $color-sand;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
+    .hero-nav {
+      top: calc(#{$space-4} + env(safe-area-inset-top));
+    }
   }
 
   &__content {
-    max-width: 30rem;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem;
+    padding: $space-6 $space-5 $space-8;
+  }
+
+  &__restaurant {
+    margin-bottom: $space-6;
   }
 
   &__restaurant-name {
-    margin: 0 0 16px;
-
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.1;
+    font-family: var(--heading);
+    font-size: $font-title;
+    font-weight: 500;
+    line-height: 1.15;
   }
 
   &__restaurant-type {
-    margin: 0 0 16px;
-
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.1;
+    margin: $space-1 0 $space-4;
+    color: $color-muted;
   }
 
   &__restaurant-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: $space-2;
+
+    .info-card {
+      width: auto;
+      background: $color-paper;
+    }
   }
 
-  &__restaurant-dishes {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-
-    border-top: 1px solid #e5e4e7;
+  &__section {
+    padding-top: $space-6;
+    border-top: $border-thin;
   }
 
   &__section-title {
-    margin: 0 0 16px;
+    margin-bottom: $space-4;
+    font-family: var(--heading);
+    font-size: $font-title-s;
+    font-weight: 500;
+  }
 
-    color: $color-primary;
+  &__status {
+    color: $color-muted;
+  }
 
-    font-size: 28px;
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    padding: $space-4 $space-5 calc(#{$space-4} + env(safe-area-inset-bottom));
+    background: linear-gradient(to bottom, rgb(251 247 241 / 0%), $color-background 35%);
+  }
+
+  &__cta {
+    width: 100%;
+    min-height: $button-height;
+    border-radius: $border-radius-pill;
+    background: $color-terracotta;
+    color: $color-paper;
     font-weight: 600;
-    line-height: 1.2;
   }
 }

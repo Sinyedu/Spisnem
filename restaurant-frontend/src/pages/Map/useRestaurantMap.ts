@@ -2,115 +2,102 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { MapLibreMap, setWorkerUrl, type GeoJSONSource } from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { getRestaurantsInBounds } from "../../lib/restaurants";
-import type { MapRestaurant, RestaurantFeatureCollection } from "../../types/api";
+import type { MapRestaurant } from "../../types/api";
+import type { MapFilterId } from "../../types/map";
 import {
   MAP_STYLE,
-  MARKER_RADIUS,
   RESTAURANTS_LAYER,
   RESTAURANTS_SOURCE,
-  RESTAURANT_MARKER_PAINT,
-  SELECTED_MARKER_RADIUS,
+  SELECTED_PIN_OFFSET,
   START_CENTER,
   START_ZOOM,
   limitForZoom,
   selectedZoom,
 } from "./map.constants";
+import { EMPTY_MARKERS, flatten, toMarkers, visibleRestaurants } from "./mapData";
+import { addPillImages, highlightMarker, markerLayer } from "./mapMarkers";
 import { applyMapTheme } from "./mapTheme";
 
 setWorkerUrl(maplibreWorkerUrl);
 
-const EMPTY: RestaurantFeatureCollection = { type: "FeatureCollection", features: [] };
 type Mutable<T> = { current: T };
+type MapQuery = { term: string; filter: MapFilterId };
 
-function matches(restaurant: MapRestaurant, term: string) {
-  return `${restaurant.name} ${restaurant.cuisine ?? ""}`.toLowerCase().includes(term);
-}
-
-function flatten(collection: RestaurantFeatureCollection): MapRestaurant[] {
-  return collection.features.map((feature) => ({
-    ...feature.properties,
-    longitude: feature.geometry.coordinates[0],
-    latitude: feature.geometry.coordinates[1],
-  }));
-}
-
-function toFeatureCollection(restaurants: MapRestaurant[]): RestaurantFeatureCollection {
+function useRestaurantData(mapRef: Mutable<MapLibreMap | null>, loadedRef: Mutable<MapRestaurant[]>) {
+  const [restaurants, setRestaurants] = useState<MapRestaurant[]>([]);
+  const [query, setQuery] = useState<MapQuery>({ term: "", filter: "all" });
+  const [failed, setFailed] = useState(false);
+  const queryRef = useRef(query);
+  const pendingRef = useRef<AbortController | null>(null);
+  const render = useCallback(() => {
+    const visible = visibleRestaurants(loadedRef.current, queryRef.current.term, queryRef.current.filter);
+    mapRef.current?.getSource<GeoJSONSource>(RESTAURANTS_SOURCE)?.setData(toMarkers(visible));
+    setRestaurants(visible);
+  }, [loadedRef, mapRef]);
+  const update = useCallback((next: Partial<MapQuery>) => {
+    queryRef.current = { ...queryRef.current, ...next };
+    setQuery(queryRef.current);
+    render();
+  }, [render]);
   return {
-    type: "FeatureCollection",
-    features: restaurants.map(({ longitude, latitude, ...properties }) => ({
-      type: "Feature",
-      id: properties.id,
-      geometry: { type: "Point", coordinates: [longitude, latitude] },
-      properties,
-    })),
+    failed,
+    filter: useCallback((filter: MapFilterId) => update({ filter }), [update]),
+    filterId: query.filter,
+    loadRestaurants: useMapLoader(mapRef, loadedRef, pendingRef, render, setFailed),
+    pendingRef,
+    restaurants,
+    search: useCallback((term: string) => update({ term }), [update]),
+    searchTerm: query.term,
   };
 }
 
-function useRestaurantData(
-  map: Mutable<MapLibreMap | null>,
-  loaded: Mutable<MapRestaurant[]>,
-  query: Mutable<string>,
-) {
-  const [restaurants, setRestaurants] = useState<MapRestaurant[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [failed, setFailed] = useState(false);
-  const pending = useRef<AbortController | null>(null);
-  const render = useCallback(() => {
-    const term = query.current.trim().toLowerCase();
-    const visible = term ? loaded.current.filter((r) => matches(r, term)) : loaded.current;
-    map.current?.getSource<GeoJSONSource>(RESTAURANTS_SOURCE)?.setData(toFeatureCollection(visible));
-    setRestaurants(visible);
-  }, [loaded, map, query]);
-  const search = useCallback((term: string) => {
-    query.current = term;
-    setSearchTerm(term);
-    render();
-  }, [query, render]);
-  return { failed, loadRestaurants: useMapLoader(map, loaded, pending, render, setFailed), pending, restaurants, search, searchTerm };
-}
-
 function useMapLoader(
-  map: Mutable<MapLibreMap | null>,
-  loaded: Mutable<MapRestaurant[]>,
-  pending: Mutable<AbortController | null>,
+  mapRef: Mutable<MapLibreMap | null>,
+  loadedRef: Mutable<MapRestaurant[]>,
+  pendingRef: Mutable<AbortController | null>,
   render: () => void,
   setFailed: (failed: boolean) => void,
 ) {
   return useCallback(async () => {
-    if (!map.current) return;
-    pending.current?.abort();
+    const map = mapRef.current;
+    if (!map) return;
+    pendingRef.current?.abort();
     const controller = new AbortController();
-    pending.current = controller;
-    const bounds = map.current.getBounds();
+    pendingRef.current = controller;
+    const bounds = map.getBounds();
     try {
       const collection = await getRestaurantsInBounds({
         west: bounds.getWest(), south: bounds.getSouth(),
         east: bounds.getEast(), north: bounds.getNorth(),
-        limit: limitForZoom(map.current.getZoom()),
+        limit: limitForZoom(map.getZoom()),
       }, controller.signal);
-      loaded.current = flatten(collection);
+      loadedRef.current = flatten(collection);
       setFailed(false);
     } catch (error) {
       if (controller.signal.aborted) return;
       console.error("[map]", error);
-      loaded.current = [];
+      loadedRef.current = [];
       setFailed(true);
     }
     render();
-  }, [loaded, map, pending, render, setFailed]);
+  }, [loadedRef, mapRef, pendingRef, render, setFailed]);
 }
 
-function useRestaurantSelection(map: Mutable<MapLibreMap | null>, loaded: Mutable<MapRestaurant[]>) {
+function useRestaurantSelection(mapRef: Mutable<MapLibreMap | null>, loadedRef: Mutable<MapRestaurant[]>) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectRestaurant = useCallback((id: string) => {
     setSelectedId(id);
-    map.current?.setPaintProperty(RESTAURANTS_LAYER, "circle-radius", [
-      "case", ["==", ["get", "id"], id], SELECTED_MARKER_RADIUS, MARKER_RADIUS,
-    ]);
-    const target = loaded.current.find((restaurant) => restaurant.id === id);
-    if (!target || !map.current) return;
-    map.current.flyTo({ center: [target.longitude, target.latitude], zoom: selectedZoom(map.current.getZoom()) });
-  }, [loaded, map]);
+    const map = mapRef.current;
+    if (!map) return;
+    highlightMarker(map, id);
+    const target = loadedRef.current.find((restaurant) => restaurant.id === id);
+    if (!target) return;
+    map.flyTo({
+      center: [target.longitude, target.latitude],
+      zoom: selectedZoom(map.getZoom()),
+      offset: SELECTED_PIN_OFFSET,
+    });
+  }, [loadedRef, mapRef]);
   return { selectedId, selectRestaurant };
 }
 
@@ -126,13 +113,9 @@ function createMap(container: HTMLDivElement) {
 }
 
 function setupRestaurantLayer(map: MapLibreMap, selectRestaurant: (id: string) => void) {
-  map.addSource(RESTAURANTS_SOURCE, { type: "geojson", data: EMPTY });
-  map.addLayer({
-    id: RESTAURANTS_LAYER,
-    type: "circle",
-    source: RESTAURANTS_SOURCE,
-    paint: RESTAURANT_MARKER_PAINT,
-  });
+  addPillImages(map);
+  map.addSource(RESTAURANTS_SOURCE, { type: "geojson", data: EMPTY_MARKERS });
+  map.addLayer(markerLayer());
   map.on("click", RESTAURANTS_LAYER, (event) => {
     const id = event.features?.[0]?.properties?.id;
     if (typeof id === "string") selectRestaurant(id);
@@ -140,17 +123,17 @@ function setupRestaurantLayer(map: MapLibreMap, selectRestaurant: (id: string) =
 }
 
 function useMapLifecycle(
-  container: Mutable<HTMLDivElement | null>,
-  map: Mutable<MapLibreMap | null>,
-  pending: Mutable<AbortController | null>,
+  containerRef: Mutable<HTMLDivElement | null>,
+  mapRef: Mutable<MapLibreMap | null>,
+  pendingRef: Mutable<AbortController | null>,
   onLoad: () => void,
 ) {
   const [mapReady, setMapReady] = useState(false);
   useEffect(() => {
-    if (!container.current) return;
-    const instance = createMap(container.current);
+    if (!containerRef.current) return;
+    const instance = createMap(containerRef.current);
     const resize = new ResizeObserver(() => instance.resize());
-    map.current = instance;
+    mapRef.current = instance;
     instance.on("error", (event) => console.error("[map]", event.error));
     instance.on("load", () => {
       applyMapTheme(instance);
@@ -158,31 +141,30 @@ function useMapLifecycle(
       setMapReady(true);
       instance.on("moveend", onLoad);
     });
-    resize.observe(container.current);
+    resize.observe(containerRef.current);
     return () => {
       resize.disconnect();
-      pending.current?.abort();
+      pendingRef.current?.abort();
       instance.remove();
-      map.current = null;
+      mapRef.current = null;
       setMapReady(false);
     };
-  }, [container, map, onLoad, pending]);
+  }, [containerRef, mapRef, onLoad, pendingRef]);
   return mapReady;
 }
 
 export function useRestaurantMap() {
-  const container = useRef<HTMLDivElement | null>(null);
-  const loaded = useRef<MapRestaurant[]>([]);
-  const map = useRef<MapLibreMap | null>(null);
-  const query = useRef("");
-  const data = useRestaurantData(map, loaded, query);
-  const selection = useRestaurantSelection(map, loaded);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const loadedRef = useRef<MapRestaurant[]>([]);
+  const mapRef = useRef<MapLibreMap | null>(null);
+  const { pendingRef, loadRestaurants, ...data } = useRestaurantData(mapRef, loadedRef);
+  const { selectedId, selectRestaurant } = useRestaurantSelection(mapRef, loadedRef);
   const onLoad = useCallback(() => {
-    if (map.current && !map.current.getSource(RESTAURANTS_SOURCE)) {
-      setupRestaurantLayer(map.current, selection.selectRestaurant);
+    if (mapRef.current && !mapRef.current.getSource(RESTAURANTS_SOURCE)) {
+      setupRestaurantLayer(mapRef.current, selectRestaurant);
     }
-    void data.loadRestaurants();
-  }, [data.loadRestaurants, selection.selectRestaurant]);
-  const mapReady = useMapLifecycle(container, map, data.pending, onLoad);
-  return { container, mapReady, selectedId: selection.selectedId, ...data };
+    void loadRestaurants();
+  }, [loadRestaurants, selectRestaurant]);
+  const mapReady = useMapLifecycle(containerRef, mapRef, pendingRef, onLoad);
+  return { containerRef, mapReady, selectedId, ...data };
 }

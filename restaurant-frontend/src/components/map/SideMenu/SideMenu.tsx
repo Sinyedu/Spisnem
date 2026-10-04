@@ -7,12 +7,12 @@ import type { SideMenuProps } from "../../../types/generic";
 
 const SECONDARY_LOGO = "/logo/secondary.svg";
 
-// Discovery happens on the map itself; the rest arrive in later PRs and land on
-// the ComingSoon route until then.
 const LINKS = [
   { labelKey: "sideMenu.exploreMap", to: "/map" },
   { labelKey: "sideMenu.queue", to: "/queue" },
   { labelKey: "sideMenu.favourites", to: "/favourites" },
+  { labelKey: "sideMenu.history", to: "/history" },
+  { labelKey: "sideMenu.profile", to: "/profile" },
 ] as const;
 
 function useEscapeClose(open: boolean, onClose: () => void) {
