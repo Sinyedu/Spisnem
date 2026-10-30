@@ -220,6 +220,7 @@
   },
   "history": {
     "title": "Dine besøg",
+    "loadFailed": "Dine besøg kunne ikke indlæses.",
     "waitComparison": "Lovet {{promised}} min · ventede {{waited}} min",
     "status": {
       "waiting": "I kø",

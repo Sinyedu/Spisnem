@@ -44,13 +44,14 @@ function VisitRow({ visit }: VisitRowProps) {
 function History() {
   const { t } = useTranslation();
   const { user } = useCustomerSession();
-  const { data: visits, loading } = useResource(user ? `visits:${user.id}` : "", getVisits);
+  const { data: visits, loading, failed } = useResource(user ? `visits:${user.id}` : "", getVisits);
 
   return (
     <TabPage title={t("history.title")}>
       {!user && <EmptyState icon={Clock3} title={t("history.signedOutTitle")} body={t("history.signedOutBody")}
         actionLabel={t("profile.signIn")} actionTo="/signin" />}
       {user && loading && <p className="history__meta">{t("restaurant.loading")}</p>}
+      {user && failed && <p className="history__meta">{t("history.loadFailed")}</p>}
       {visits?.length === 0 && <EmptyState icon={Clock3} title={t("history.emptyTitle")} body={t("history.emptyBody")}
         actionLabel={t("queue.exploreMap")} actionTo="/map" />}
       {visits && visits.length > 0 && <ul className="history__list">{visits.map((visit) => <VisitRow key={visit.id} visit={visit} />)}</ul>}
