@@ -1,0 +1,75 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.party-size {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  border: none;
+
+  &__legend {
+    margin-bottom: $space-3;
+    color: $color-muted;
+    font-size: $font-small;
+    font-weight: 500;
+  }
+
+  &__quick {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: $space-2;
+  }
+
+  &__option {
+    height: $touch-target;
+    border: $border-thin;
+    border-radius: $border-radius-card;
+    background: $color-paper;
+    color: $color-ink;
+    font-size: $font-body;
+    font-weight: 500;
+    transition:
+      background $duration-fast $ease-out,
+      color $duration-fast $ease-out;
+
+    &--active {
+      border-color: $color-ink;
+      background: $color-ink;
+      color: $color-paper;
+    }
+  }
+
+  &__stepper {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    color: $color-muted;
+    font-size: $font-small;
+
+    span {
+      flex: 1;
+    }
+
+    button {
+      display: grid;
+      place-items: center;
+      width: $space-10;
+      height: $space-10;
+      border: $border-thin;
+      border-radius: $border-radius-full;
+      background: $color-paper;
+      color: $color-ink;
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+
+    output {
+      min-width: $space-8;
+      color: $color-ink;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+}

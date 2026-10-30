@@ -1,0 +1,91 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$hint-width: 17rem;
+
+.queue-ticket {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  text-align: center;
+
+  &__venue {
+    padding: $space-2 $space-4;
+    border-radius: $border-radius-pill;
+    background: $color-paper;
+    font-size: $font-small;
+    font-weight: 500;
+    box-shadow: $drop-shadow;
+  }
+
+  &__time {
+    margin-top: $space-2;
+    font-family: var(--heading);
+    font-size: $font-title;
+    font-weight: 500;
+  }
+
+  &__hint {
+    max-width: $hint-width;
+    color: $color-muted;
+    line-height: 1.5;
+  }
+
+  &__ping {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    color: $color-success;
+    font-size: $font-small;
+    font-weight: 500;
+  }
+
+  &__rows {
+    width: 100%;
+    margin-top: $space-2;
+    border: $border-thin;
+    border-radius: $border-radius-card;
+    background: $color-paper;
+    text-align: left;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      padding: $space-3 $space-4;
+      font-size: $font-small;
+    }
+
+    div + div {
+      border-top: $border-thin;
+    }
+
+    dt {
+      color: $color-muted;
+    }
+
+    dd {
+      font-weight: 600;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    width: 100%;
+    margin-top: auto;
+    padding-top: $space-4;
+  }
+
+  &__primary {
+    width: 100%;
+    min-height: $button-height;
+    border-radius: $border-radius-pill;
+    background: $color-ink;
+    color: $color-paper;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "welcome": {
+    "openNow_one": "{{count}} åben",
+    "openNow_other": "{{count}} åbne",
+    "openNowUnknown": "• åbne",
+    "topRated": "Topbedømt",
+    "tagline": "Find restauranter nær dig, stil dig i kø, og følg din ventetid live.",
+    "createAccount": "Opret konto",
+    "signIn": "Log ind",
+    "continueAsGuest": "Fortsæt som gæst"
+  },
+  "map": {
+    "openMenu": "Åbn menu",
+    "searchPlaceholder": "Søg efter navn eller køkken",
+    "searchLabel": "Søg efter restauranter",
+    "clearSearch": "Ryd søgning",
+    "nearby": "I nærheden",
+    "empty": {
+      "failed": "Kunne ikke få forbindelse til serveren. Kører backenden?",
+      "noMatches": "Ingen restauranter matcher »{{term}}«.",
+      "noneNearby": "Der er endnu ingen restauranter i dette område."
+    },
+    "filters": {
+      "label": "Filtrer restauranter",
+      "all": "Alle",
+      "queueOpen": "Åben kø",
+      "shortWait": "Under {{minutes}} min",
+      "budget": "Billigt"
+    },
+    "sortedByWait": "Kortest ventetid først",
+    "joinSelected": "Stil dig i kø · {{minutes}} min",
+    "selectedClosed": "{{name}} tager ikke imod kø lige nu"
+  },
+  "sideMenu": {
+    "label": "Hovedmenu",
+    "close": "Luk menu",
+    "exploreMap": "Udforsk kortet",
+    "queue": "Kø",
+    "favourites": "Favoritter",
+    "signIn": "Log ind",
+    "history": "Dine besøg",
+    "profile": "Profil"
+  },
+  "restaurant": {
+    "back": "Gå tilbage",
+    "loading": "Indlæser…",
+    "loadFailed": "Denne restaurant kunne ikke indlæses.",
+    "waitMinutes": "~{{minutes}} min ventetid",
+    "joinQueue": "Stil dig i kø",
+    "sections": {
+      "menu": {
+        "title": "Menu",
+        "body": "Retter og priser vises her, når menuen er forbundet."
+      },
+      "hours": {
+        "title": "Åbningstider",
+        "body": "Åbningstider er endnu ikke en del af restaurantens data."
+      },
+      "queue": {
+        "title": "Kø",
+        "body": "Stil dig i kø, og følg din plads live."
+      }
+    },
+    "waitNow": "Ventetid lige nu",
+    "partiesAhead_one": "{{count}} selskab foran",
+    "partiesAhead_other": "{{count}} selskaber foran",
+    "queueOpen": "Køen er åben",
+    "queueClosedHint": "Restauranten tager ikke imod kø lige nu.",
+    "address": "Adresse",
+    "phone": "Telefon",
+    "pausedHint": "Køen er sat på pause et øjeblik. Prøv igen om lidt.",
+    "closedHint": "Restauranten tager ikke imod kø lige nu.",
+    "menuTitle": "Menu",
+    "seeMenu_one": "Se {{count}} ret",
+    "seeMenu_other": "Se alle {{count}} retter",
+    "addFavourite": "Gem som favorit",
+    "removeFavourite": "Fjern fra favoritter"
+  },
+  "queue": {
+    "title": "Kø",
+    "backToMap": "Kort",
+    "name": "Navn",
+    "partySize": "Personer",
+    "phone": "Telefon",
+    "join": "Stil dig i kø",
+    "cancel": "Forlad køen",
+    "position": "din plads i køen",
+    "waitShort": "{{minutes}}m",
+    "waitLong": "Cirka {{minutes}} minutter til du får bord.",
+    "waitUnknown": "--",
+    "empty": "Åbn en restaurant og stil dig i kø derfra.",
+    "joinFailed": "Kunne ikke stille dig i kø. Prøv igen.",
+    "trackerLabel": "Åbn din køstatus",
+    "joinTitle": "Stil dig i kø",
+    "partySizeLabel": "Hvor mange er I?",
+    "biggerParty": "Flere end 6?",
+    "fewer": "Færre personer",
+    "more": "Flere personer",
+    "namePlaceholder": "Dit navn",
+    "phoneLabel": "Telefon (valgfri)",
+    "joining": "Stiller dig i kø…",
+    "joinSubmit_one": "Stil dig i kø · {{count}} person",
+    "joinSubmit_other": "Stil dig i kø · {{count}} personer",
+    "positionAria": "Du er nummer {{position}} i køen",
+    "youAre": "Du er",
+    "almost": "Når som helst nu",
+    "nextHint": "Du er den næste. Begynd at gå tilbage.",
+    "walkHint": "Gå en tur. Det står her, så snart dit bord er klar.",
+    "pingHint": "Opdateres live",
+    "partiesAheadLabel": "Selskaber foran",
+    "partyLabel": "Selskab",
+    "joinedLabel": "Stillet i kø",
+    "people_one": "{{count}} person",
+    "people_other": "{{count}} personer",
+    "partyAt_one": "{{name}} · {{count}} person",
+    "partyAt_other": "{{name}} · {{count}} personer",
+    "seeRestaurant": "Se restauranten",
+    "leaveConfirm": "Forlad køen hos {{name}}? Du mister din plads.",
+    "stay": "Bliv i køen",
+    "leaveYes": "Ja, forlad",
+    "calledTitle": "Det er din tur",
+    "calledBody": "Dit bord er klar. Kom ind inden for {{minutes}} minutter.",
+    "timeLeft": "Tid tilbage",
+    "graceOver": "Tiden er gået – tal med personalet",
+    "whereToGo": "Hvor skal jeg hen?",
+    "emptyTitle": "Du står ikke i kø",
+    "exploreMap": "Udforsk kortet",
+    "trackerCalled": "Din tur!",
+    "outcome": {
+      "seatedTitle": "Velbekomme",
+      "seatedBody": "Du har fået bord hos {{name}}.",
+      "cancelledTitle": "Du har forladt køen",
+      "cancelledBody": "Intet problem. Find et andet sted i nærheden.",
+      "noShowTitle": "Vi kunne ikke holde dit bord",
+      "noShowBody": "{{name}} gav bordet videre til næste gæst. Du er velkommen til at stille dig i kø igen.",
+      "findAnother": "Find en anden restaurant"
+    },
+    "runningLate": "Bliver du forsinket?",
+    "lateHint": "Ryk én gang tilbage i køen i stedet for at miste din tur.",
+    "lateOption": "+{{minutes}} min",
+    "promisedLabel": "Lovet da du stillede dig i kø",
+    "seeMenu": "Se menuen",
+    "onMyWay": "Jeg er på vej",
+    "onMyWayDone": "Restauranten ved, at du er på vej",
+    "calledBodyShort": "Dit bord er klar. Kom ind nu."
+  },
+  "auth": {
+    "signInTitle": "Velkommen tilbage",
+    "createAccountTitle": "Opret konto",
+    "continueWithGoogle": "Fortsæt med Google",
+    "continueWithApple": "Fortsæt med Apple",
+    "or": "eller",
+    "name": "Navn",
+    "namePlaceholder": "Dit navn",
+    "email": "E-mail",
+    "emailPlaceholder": "dig@eksempel.dk",
+    "password": "Adgangskode",
+    "passwordPlaceholder": "Din adgangskode",
+    "signIn": "Log ind",
+    "signingIn": "Logger ind...",
+    "createAccount": "Opret konto",
+    "creatingAccount": "Opretter konto...",
+    "signInFailed": "Kunne ikke logge ind. Kontrollér dine oplysninger, og prøv igen.",
+    "signUpFailed": "Kunne ikke oprette din konto. E-mailen er muligvis allerede i brug.",
+    "noAccount": "Har du ikke en konto?",
+    "haveAccount": "Har du allerede en konto?"
+  },
+  "comingSoon": {
+    "message": "Denne side er på vej.",
+    "back": "← Tilbage"
+  },
+  "language": {
+    "label": "Sprog",
+    "da": "Dansk",
+    "en": "English"
+  },
+  "wait": {
+    "minutes": "{{minutes}} min",
+    "about": "Ca. {{minutes}} min",
+    "none": "Ingen ventetid",
+    "closed": "Køen er lukket",
+    "paused": "Køen er sat på pause"
+  },
+  "nav": {
+    "label": "Hovedfaner",
+    "discover": "Opdag",
+    "myQueue": "Min kø",
+    "favourites": "Favoritter",
+    "profile": "Profil"
+  },
+  "menu": {
+    "navLabel": "Menunavigation",
+    "share": "Del restauranten",
+    "waitLabel": "Ventetid nu",
+    "queueLabel": "I kø",
+    "priceLabel": "Pris",
+    "ahead_one": "{{count}} selskab",
+    "ahead_other": "{{count}} selskaber",
+    "empty": "Restauranten har ikke lagt sin menu op endnu.",
+    "featured": "Populært",
+    "other": "Mere",
+    "loadFailed": "Menuen kunne ikke indlæses."
+  },
+  "profile": {
+    "title": "Profil",
+    "history": "Dine besøg",
+    "favourites": "Favoritter",
+    "signOut": "Log ud",
+    "signedOutTitle": "Du er ikke logget ind",
+    "signedOutBody": "Log ind for at gemme favoritter og se dine tidligere besøg. Du kan altid stille dig i kø uden en konto.",
+    "signIn": "Log ind"
+  },
+  "favourites": {
+    "title": "Favoritter",
+    "loadFailed": "Dine favoritter kunne ikke indlæses.",
+    "emptyTitle": "Ingen favoritter endnu",
+    "emptyBody": "Tryk på hjertet ved en restaurant for at gemme den her.",
+    "signedOutTitle": "Gem dine yndlingssteder",
+    "signedOutBody": "Log ind for at gemme restauranter og finde dem igen med ét tryk."
+  },
+  "history": {
+    "title": "Dine besøg",
+    "waitComparison": "Lovet {{promised}} min · ventede {{waited}} min",
+    "status": {
+      "waiting": "I kø",
+      "notified": "Kaldt ind",
+      "seated": "Fik bord",
+      "cancelled": "Forlod køen",
+      "no_show": "Udeblev"
+    },
+    "signedOutTitle": "Dine besøg samles her",
+    "signedOutBody": "Log ind, før du stiller dig i kø, så gemmes hvert besøg – også hvor længe du faktisk ventede.",
+    "emptyTitle": "Ingen besøg endnu",
+    "emptyBody": "Stil dig i kø et sted, så dukker besøget op her."
+  }
+}

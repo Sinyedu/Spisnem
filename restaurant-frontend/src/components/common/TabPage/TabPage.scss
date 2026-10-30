@@ -1,0 +1,25 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+// Phone-only, matching the frame the rest of the app uses. Bottom padding clears the tab bar.
+.tab-page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  min-height: 100dvh;
+  max-width: $phone-frame;
+  margin-inline: auto;
+  padding:
+    calc(#{$space-6} + env(safe-area-inset-top))
+    $space-5
+    calc(#{$tab-bar-height} + #{$space-6} + env(safe-area-inset-bottom));
+  background: $color-background;
+  color: $color-foreground;
+
+  &__title {
+    font-family: var(--heading);
+    font-size: $font-title;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+}

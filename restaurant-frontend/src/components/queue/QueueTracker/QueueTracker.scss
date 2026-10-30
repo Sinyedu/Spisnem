@@ -1,0 +1,42 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$dot-size: 0.5rem;
+// Sits just under the map's search bar and filter chips.
+$below-map-header: calc(#{$space-4} + #{$touch-target} + #{$space-2} + #{$space-1} + #{$space-10} + #{$space-4});
+
+.queue-tracker {
+  position: fixed;
+  z-index: 30;
+  top: calc(#{$below-map-header} + env(safe-area-inset-top));
+  right: calc(#{$space-4} + env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  min-height: $space-10;
+  padding: 0 $space-4;
+  border-radius: $border-radius-pill;
+  background: $color-ink;
+  color: $color-paper;
+  font-size: $font-small;
+  font-weight: 600;
+  box-shadow: $drop-shadow;
+
+  &--called {
+    background: $color-terracotta;
+  }
+
+  &__dot {
+    width: $dot-size;
+    height: $dot-size;
+    border-radius: $border-radius-full;
+    background: $color-success-soft;
+    animation: tracker-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes tracker-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}

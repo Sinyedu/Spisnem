@@ -1,0 +1,23 @@
+language: "en-US"
+
+reviews:
+  auto_review:
+    enabled: true
+    base_branches:
+      - "main"
+      - "development"
+
+  path_instructions:
+    - path: "**/*.{ts,tsx}"
+      instructions: |
+        Focus on actual bugs, security vulnerabilities,
+        race conditions, and maintainability.
+
+        Prioritize:
+        - Restaurant tenant isolation
+        - Authentication and authorization
+        - Queue concurrency and duplicate entries
+        - TypeScript type safety
+        - Error handling and API contracts
+
+        Avoid unnecessary stylistic suggestions.

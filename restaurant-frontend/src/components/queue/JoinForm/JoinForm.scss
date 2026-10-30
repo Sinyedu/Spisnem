@@ -1,0 +1,82 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    color: $color-muted;
+    font-size: $font-small;
+    font-weight: 500;
+
+    input {
+      height: $button-height;
+      padding: 0 $space-4;
+      border: $border-thin;
+      border-radius: $border-radius-card;
+      background: $color-paper;
+      color: $color-ink;
+      // 1rem keeps iOS Safari from zooming in when the field is focused.
+      font-size: $font-body;
+      font-weight: 400;
+
+      &:focus {
+        border-color: $color-ink;
+        outline: none;
+      }
+
+      &::placeholder {
+        color: $color-muted;
+      }
+    }
+  }
+
+  &__estimate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+    padding: $space-3 $space-4;
+    border-radius: $border-radius-card;
+    background: $color-blush;
+    color: $color-muted;
+    font-size: $font-small;
+
+    strong {
+      color: $color-terracotta;
+      font-weight: 600;
+    }
+
+    &--closed {
+      background: $color-sand;
+    }
+  }
+
+  &__error {
+    color: $color-terracotta;
+    font-size: $font-small;
+  }
+
+  &__submit {
+    min-height: $button-height;
+    border-radius: $border-radius-pill;
+    background: $color-terracotta;
+    color: $color-paper;
+    font-weight: 600;
+    transition: background $duration-fast $ease-out;
+
+    &:active {
+      background: $color-terracotta-dark;
+    }
+
+    &:disabled {
+      background: $color-line;
+      color: $color-muted;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@use "../../../styles/abstracts/colors" as *;
+@use "../../../styles/abstracts/variables" as *;
+
+$image-size: 3.5rem;
+
+.dish-list {
+  list-style: none;
+  border: $border-thin;
+  border-radius: $border-radius-card;
+  background: $color-paper;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3 $space-4;
+
+    & + & {
+      border-top: $border-thin;
+    }
+  }
+
+  &__image {
+    flex: none;
+    width: $image-size;
+    height: $image-size;
+    border-radius: $border-radius-large;
+    object-fit: cover;
+  }
+
+  &__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__description {
+    overflow: hidden;
+    color: $color-muted;
+    font-size: $font-small;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__price {
+    flex: none;
+    font-weight: 600;
+  }
+}
