@@ -38,6 +38,7 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
+.pnpm-store/
 
 # Optional local database files
 *.sqlite

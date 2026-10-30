@@ -220,6 +220,7 @@
   },
   "history": {
     "title": "Your visits",
+    "loadFailed": "Could not load your visit history.",
     "waitComparison": "Promised {{promised}} min · waited {{waited}} min",
     "status": {
       "waiting": "In line",
